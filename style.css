@@ -160,7 +160,64 @@ button{ font-family:inherit; cursor:pointer; }
 .btn-ghost{ border: var(--border); color: var(--ivory); }
 .btn-ghost:hover{ border-color: var(--gold); color: var(--gold); }
 
+/* ---------- Section shared ---------- */
+.section{ padding: 90px 0; }
+.section-head{
+  display:flex; justify-content:space-between; align-items:flex-end;
+  margin-bottom: 46px; gap: 24px; flex-wrap:wrap;
+}
+.section-head h2{
+  font-family: var(--display);
+  font-size: clamp(2rem, 4vw, 2.8rem);
+  letter-spacing: 0.02em;
+}
+.section-head p{ color: var(--muted); max-width: 360px; font-size:0.95rem; }
+.stitch{
+  border: none;
+  border-top: 2px dashed rgba(244,236,216,0.18);
+  margin: 0;
+}
 
+/* ---------- Categories ---------- */
+.cat-grid{
+  display:grid;
+  grid-template-columns: repeat(4, 1fr);
+  gap: 20px;
+}
+.cat-card{
+  position:relative;
+  height: 320px;
+  border-radius: 10px;
+  overflow:hidden;
+  border: var(--border);
+  display:flex; align-items:flex-end;
+  padding: 22px;
+  transition: transform .25s;
+}
+.cat-card:hover{ transform: translateY(-6px); }
+.cat-card::before{
+  content:''; position:absolute; inset:0; z-index:0;
+}
+.cat-card.mujer::before{ background: linear-gradient(160deg,#3a222c, var(--dahlia) 130%); }
+.cat-card.hombre::before{ background: linear-gradient(160deg,#22201c,#3f4a3a 130%); }
+.cat-card.accesorios::before{ background: linear-gradient(160deg,#2a251d,#e3b23c 150%); }
+.cat-card.novedades::before{ background: linear-gradient(160deg,#231f2b,#6c5ce0 150%); }
+.cat-card span{
+  position:relative; z-index:1;
+  font-family: var(--display);
+  font-size: 1.5rem;
+  letter-spacing: 0.04em;
+}
+.cat-card small{
+  position:relative; z-index:1;
+  display:block;
+  font-family: var(--mono);
+  font-size: 0.7rem;
+  color: rgba(244,236,216,0.75);
+  margin-top:4px;
+}
+
+/* ---------- Reveal animation (por si se usa en próximas secciones) ---------- */
 .reveal{ opacity:0; transform: translateY(24px); transition: opacity .6s ease, transform .6s ease; }
 .reveal.is-visible{ opacity:1; transform: translateY(0); }
 @media (prefers-reduced-motion: reduce){
@@ -170,6 +227,9 @@ button{ font-family:inherit; cursor:pointer; }
 }
 
 /* ---------- Responsive ---------- */
+@media (max-width: 960px){
+  .cat-grid{ grid-template-columns: repeat(2,1fr); }
+}
 @media (max-width: 680px){
   .nav-links{
     position:absolute; top:76px; left:0; right:0;
@@ -179,4 +239,5 @@ button{ font-family:inherit; cursor:pointer; }
   }
   .nav-links.open{ display:flex; }
   .menu-toggle{ display:flex; }
+  .cat-grid{ grid-template-columns: 1fr; }
 }
