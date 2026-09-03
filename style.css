@@ -50,7 +50,7 @@ button{ font-family:inherit; cursor:pointer; }
 }
 .logo .logo-flower{ flex-shrink:0; }
 
-.nav-links{ display:flex; gap:36px; }
+.nav-links{ display:flex; gap:28px; }
 .nav-links a{
   font-size: 0.85rem;
   letter-spacing: 0.12em;
@@ -433,6 +433,114 @@ button{ font-family:inherit; cursor:pointer; }
   margin-bottom: 18px;
 }
 .about-copy p{ color: var(--muted); margin-bottom: 16px; max-width: 480px; }
+.about-mission{ color: var(--ivory); }
+.about-mission strong{ color: var(--gold); font-weight:600; }
+.about-info{
+  list-style:none;
+  font-family: var(--mono);
+  font-size: 0.82rem;
+  color: var(--muted);
+  margin: 4px 0 24px;
+}
+.about-info li{ margin-bottom: 8px; }
+
+/* ---------- Contacto ---------- */
+.contact-grid{
+  display:grid;
+  grid-template-columns: 1.2fr 0.8fr;
+  gap: 50px;
+  align-items: start;
+}
+.contact-form{
+  background: var(--surface);
+  border: var(--border);
+  border-radius: 10px;
+  padding: 28px;
+}
+.contact-form textarea{
+  width: 100%;
+  background: var(--bg);
+  border: var(--border);
+  color: var(--ivory);
+  padding: 10px 12px;
+  border-radius: 4px;
+  font-size: 0.9rem;
+  font-family: var(--body-font);
+  resize: vertical;
+}
+.contact-msg{
+  font-family: var(--mono);
+  font-size: 0.78rem;
+  color: var(--gold);
+  margin-top: 14px;
+}
+.contact-side-block{ margin-bottom: 32px; }
+.contact-side-block h4{
+  font-size: 0.78rem; letter-spacing: 0.14em; text-transform:uppercase;
+  color: var(--muted); margin-bottom: 14px;
+}
+
+/* ---------- Redes sociales ---------- */
+.social-icons{ display:flex; gap:10px; }
+.social-icon{
+  width: 42px; height: 42px;
+  border-radius: 50%;
+  border: var(--border);
+  display:flex; align-items:center; justify-content:center;
+  font-family: var(--mono);
+  font-size: 0.68rem;
+  letter-spacing: 0.02em;
+  color: var(--ivory);
+  transition: border-color .2s, color .2s, transform .2s;
+}
+.social-icon:hover{ border-color: var(--gold); color: var(--gold); transform: translateY(-3px); }
+.social-icon--sm{ width: 32px; height: 32px; font-size: 0.6rem; }
+.footer-social{ margin-top: 16px; }
+
+/* ---------- Pantalla de login / crear cuenta ---------- */
+.auth-page{ min-height: 100vh; }
+.auth-logo{ text-decoration:none; }
+.auth-tabs{
+  display:flex;
+  justify-content:center;
+  gap: 8px;
+  margin-bottom: 26px;
+}
+.auth-tab{
+  background:none;
+  border: var(--border);
+  color: var(--muted);
+  padding: 10px 22px;
+  border-radius: 999px;
+  font-family: var(--mono);
+  font-size: 0.78rem;
+  letter-spacing: 0.06em;
+  text-transform: uppercase;
+  transition: background .2s, color .2s, border-color .2s;
+}
+.auth-tab.active{
+  background: var(--gold);
+  color: var(--bg);
+  border-color: var(--gold);
+  font-weight: 600;
+}
+.auth-card{
+  text-align: left;
+  background: var(--surface);
+  border: var(--border);
+  border-radius: 10px;
+  padding: 28px;
+}
+.auth-form{ display:none; }
+.auth-form.active{ display:block; }
+.auth-back{
+  display:inline-block;
+  margin-top: 26px;
+  font-family: var(--mono);
+  font-size: 0.78rem;
+  color: var(--muted);
+}
+.auth-back:hover{ color: var(--gold); }
 
 /* ---------- Footer ---------- */
 footer{
@@ -489,6 +597,7 @@ footer{
   .cat-grid, .prod-grid{ grid-template-columns: repeat(2,1fr); }
   .about .wrap{ grid-template-columns: 1fr; }
   .footer-grid{ grid-template-columns: 1fr 1fr; }
+  .contact-grid{ grid-template-columns: 1fr; }
 }
 @media (max-width: 680px){
   .nav-links{
@@ -502,7 +611,6 @@ footer{
   .cat-grid, .prod-grid{ grid-template-columns: 1fr; }
   .footer-grid{ grid-template-columns: 1fr; gap:28px; }
   .benefits .wrap{ flex-direction:column; align-items:flex-start; gap:16px; }
-  #profileBtn .profile-label{ display:none; }
   .header-actions{ gap:8px; }
   .cart-btn{ padding: 8px 10px; }
 }

@@ -27,9 +27,10 @@ if ('IntersectionObserver' in window) {
 
   document.querySelectorAll('.reveal').forEach(el => observer.observe(el));
 } else {
- 
+  // Si el navegador no soporta IntersectionObserver, muestra todo directo
   document.querySelectorAll('.reveal').forEach(el => el.classList.add('is-visible'));
 }
+
 
 // guardamos los correos en localStorage como si fuera una lista de suscriptores.
 const newsletterForm = document.getElementById('newsletterForm');
@@ -53,45 +54,63 @@ if (newsletterForm) {
   });
 }
 
-// Si ya iniciaste sesión
+// Si ya iniciaste sesión, ya no te pide que te unas al club por correo
 const newsletterClub = document.getElementById('newsletterClub');
 if (newsletterClub && isLoggedIn()) {
   newsletterClub.style.display = 'none';
 }
 
-// Mensaje de bienvenida justo después de iniciar sesión (una sola vez)
+// Mensaje de bienvenida justo después de iniciar sesión 
 if (localStorage.getItem('dahlia_just_logged_in') === 'true') {
   showToast('Sesión iniciada exitosamente');
   localStorage.removeItem('dahlia_just_logged_in');
 }
 
-// Carrito: si no has iniciado sesión, te pide hacerlo antes de ver tu carrito.
+// muestra "Iniciar sesión" o "Mi cuenta" según si hay sesión activa
+const navAuthLink = document.getElementById('navAuthLink');
+if (navAuthLink) {
+  if (isLoggedIn()) {
+    navAuthLink.textContent = 'Mi cuenta';
+    navAuthLink.setAttribute('href', 'perfil.html');
+  } else {
+    navAuthLink.textContent = 'Iniciar sesión';
+    navAuthLink.setAttribute('href', 'login.html');
+  }
+}
 
+// Carrito: si no has iniciado sesión, te manda a la pantalla de login
+// (y de ahí regresas directo al carrito). Si ya iniciaste sesión, te lleva
+// a la página del carrito.
 const cartBtn = document.getElementById('cartBtn');
 if (cartBtn) {
   cartBtn.addEventListener('click', () => {
     if (!isLoggedIn()) {
-      showToast('Inicia sesión para ver tu carrito');
-      setTimeout(() => {
-        window.location.href = 'index.html';
-      }, 1600);
+      window.location.href = 'login.html?redirect=carrito.html';
     } else {
       window.location.href = 'carrito.html';
     }
   });
 }
 
-// Perfil: mismo comportamiento — requiere sesión iniciada.
-const profileBtn = document.getElementById('profileBtn');
-if (profileBtn) {
-  profileBtn.addEventListener('click', () => {
-    if (!isLoggedIn()) {
-      showToast('Inicia sesión para ver tu perfil');
-      setTimeout(() => {
-        window.location.href = 'index.html';
-      }, 1600);
-    } else {
-      window.location.href = 'perfil.html';
-    }
+// Formulario de contacto simulado
+const contactForm = document.getElementById('contactForm');
+const contactMsg = document.getElementById('contactMsg');
+
+if (contactForm) {
+  contactForm.addEventListener('submit', (event) => {
+    event.preventDefault();
+
+    const name = document.getElementById('contactName').value.trim();
+    const email = document.getElementById('contactEmail').value.trim();
+    const message = document.getElementById('contactMessage').value.trim();
+    if (!name || !email || !message) return;
+
+    const messages = JSON.parse(localStorage.getItem('dahlia_contact_messages') || '[]');
+    messages.push({ name, email, message, date: new Date().toISOString() });
+    localStorage.setItem('dahlia_contact_messages', JSON.stringify(messages));
+
+    contactForm.reset();
+    contactMsg.textContent = 'Mensaje enviado (simulado).';
+    contactMsg.hidden = false;
   });
 }

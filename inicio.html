@@ -19,9 +19,9 @@
         <a href="#categorias">Catálogo</a>
         <a href="#nosotros">Nosotros</a>
         <a href="#contacto">Contacto</a>
+        <a href="login.html" id="navAuthLink">Iniciar sesión</a>
       </nav>
       <div class="header-actions">
-        <button class="cart-btn" id="profileBtn" aria-label="Ver perfil">👤 <span class="profile-label">Perfil</span></button>
         <button class="cart-btn" id="cartBtn" aria-label="Ver carrito">🛍 Carrito (0)</button>
         <button class="menu-toggle" id="menuToggle" aria-label="Abrir menú" aria-expanded="false">
           <span></span><span></span><span></span>
@@ -44,7 +44,7 @@
         <h1>Viste tu manera<br>de <em>florecer</em>.</h1>
         <p>Piezas para cada versión de ti: casual, elegante, del diario o de ocasión. Nueva colección disponible hoy.</p>
         <div class="hero-ctas">
-          <a href="#categorias" class="btn btn-primary">Ver catálogo</a>
+          <a href="#categorias" class="btn btn-primary">Ver productos</a>
           <a href="#nosotros" class="btn btn-ghost">Nuestra historia</a>
         </div>
       </div>
@@ -141,12 +141,67 @@
         <h2>Ropa pensada para cada quien, no para un solo molde.</h2>
         <p>Dahlia nació de la idea de que la moda no debe encasillarte. Diseñamos y seleccionamos piezas versátiles, cómodas y con carácter, para el trabajo, el diario o esa ocasión especial.</p>
         <p>Cada prenda pasa por manos locales antes de llegar a las tuyas.</p>
+        <p class="about-mission"><strong>¿Qué vendemos?</strong> Ropa y accesorios para mujer, hombre y toda ocasión: básicos del diario, piezas de temporada y detalles para completar tu outfit.</p>
+        <ul class="about-info">
+          <li>📍 Aguascalientes, Ags., México</li>
+          <li>🕒 Lunes a sábado, 10:00–20:00 hrs</li>
+        </ul>
         <a href="#contacto" class="btn btn-ghost">Conócenos mejor</a>
       </div>
     </div>
   </section>
 
-  <footer id="contacto">
+  <hr class="stitch">
+
+  <section class="section reveal" id="contacto">
+    <div class="wrap">
+      <div class="section-head">
+        <div>
+          <h2>Hablemos</h2>
+          <p>¿Dudas, pedidos especiales o solo quieres saludar? Escríbenos.</p>
+        </div>
+      </div>
+      <div class="contact-grid">
+        <form class="contact-form" id="contactForm">
+          <div class="login-field">
+            <label for="contactName">Nombre</label>
+            <input type="text" id="contactName" placeholder="Tu nombre" required>
+          </div>
+          <div class="login-field">
+            <label for="contactEmail">Correo</label>
+            <input type="email" id="contactEmail" placeholder="tu@correo.com" required>
+          </div>
+          <div class="login-field">
+            <label for="contactMessage">Mensaje</label>
+            <textarea id="contactMessage" rows="4" placeholder="Cuéntanos qué necesitas..." required></textarea>
+          </div>
+          <button type="submit" class="btn btn-primary">Enviar</button>
+          <p class="contact-msg" id="contactMsg" hidden></p>
+        </form>
+
+        <div class="contact-side">
+          <div class="contact-side-block">
+            <h4>Visítanos</h4>
+            <ul class="about-info">
+              <li>📍 Aguascalientes, Ags., México</li>
+              <li>🕒 Lunes a sábado, 10:00–20:00 hrs</li>
+            </ul>
+          </div>
+          <div class="contact-side-block">
+            <h4>Síguenos</h4>
+            <div class="social-icons">
+              <a href="#" class="social-icon" aria-label="Instagram">IG</a>
+              <a href="#" class="social-icon" aria-label="Facebook">FB</a>
+              <a href="#" class="social-icon" aria-label="TikTok">TK</a>
+              <a href="#" class="social-icon" aria-label="WhatsApp">WA</a>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <footer>
     <div class="wrap">
       <div class="footer-grid">
         <div>
@@ -170,7 +225,7 @@
             <li><a href="#">Envíos</a></li>
             <li><a href="#">Cambios y devoluciones</a></li>
             <li><a href="#">Guía de tallas</a></li>
-            <li><a href="#">Contacto</a></li>
+            <li><a href="#contacto">Contacto</a></li>
           </ul>
         </div>
         <div id="newsletterClub">
@@ -181,6 +236,12 @@
             <button type="submit">Unirme</button>
           </form>
           <p class="newsletter-msg" id="newsletterMsg" hidden></p>
+          <div class="social-icons footer-social">
+            <a href="#" class="social-icon social-icon--sm" aria-label="Instagram">IG</a>
+            <a href="#" class="social-icon social-icon--sm" aria-label="Facebook">FB</a>
+            <a href="#" class="social-icon social-icon--sm" aria-label="TikTok">TK</a>
+            <a href="#" class="social-icon social-icon--sm" aria-label="WhatsApp">WA</a>
+          </div>
         </div>
       </div>
       <div class="footer-bottom">
