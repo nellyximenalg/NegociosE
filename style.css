@@ -425,6 +425,9 @@ button{ font-family:inherit; cursor:pointer; }
 .about-visual{
   height: 340px; border-radius: 10px; border: var(--border);
   background: linear-gradient(140deg, var(--surface-alt), #3a2e22 60%, var(--gold));
+  width: 100%;
+  object-fit: cover;
+  display: block;
 }
 .about-copy .eyebrow{ margin-bottom:16px; }
 .about-copy h2{
