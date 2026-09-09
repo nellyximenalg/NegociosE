@@ -326,6 +326,36 @@ button{ font-family:inherit; cursor:pointer; }
 .placeholder-section .btn{ margin-top: 6px; }
 #logoutBtn{ margin-top: 10px; }
 
+/* ---------- Secciones del perfil (Mis datos, Mis compras) ---------- */
+.profile-sections{
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 18px;
+  margin: 28px 0;
+  text-align: left;
+}
+.profile-card{
+  background: var(--surface);
+  border: var(--border);
+  border-radius: 10px;
+  padding: 20px;
+}
+.profile-card h4{
+  font-size: 0.76rem; letter-spacing: 0.12em; text-transform: uppercase;
+  color: var(--muted); margin-bottom: 10px;
+}
+.profile-card p{ color: var(--ivory); font-size: 0.9rem; }
+
+/* ---------- Errores de validación en formularios ---------- */
+.field-invalid{ border-color: var(--brick) !important; }
+.field-error{
+  display: block;
+  color: var(--brick);
+  font-family: var(--mono);
+  font-size: 0.72rem;
+  margin-top: 6px;
+}
+
 /* ---------- Section shared ---------- */
 .section{ padding: 90px 0; }
 .section-head{
@@ -616,4 +646,125 @@ footer{
   .benefits .wrap{ flex-direction:column; align-items:flex-start; gap:16px; }
   .header-actions{ gap:8px; }
   .cart-btn{ padding: 8px 10px; }
+}
+
+/* ---------- Catálogo ---------- */
+.catalog-page{ padding-top: 60px; }
+.filter-tabs{
+  display: flex;
+  gap: 10px;
+  flex-wrap: wrap;
+  margin-bottom: 40px;
+}
+.filter-tab{
+  background: none;
+  border: var(--border);
+  color: var(--muted);
+  padding: 9px 18px;
+  border-radius: 999px;
+  font-family: var(--mono);
+  font-size: 0.76rem;
+  letter-spacing: 0.06em;
+  text-transform: uppercase;
+  transition: background .2s, color .2s, border-color .2s;
+}
+.filter-tab:hover{ border-color: var(--gold); color: var(--gold); }
+.filter-tab.active{
+  background: var(--gold);
+  color: var(--bg);
+  border-color: var(--gold);
+  font-weight: 600;
+}
+.prod-detail-btn{
+  display: block;
+  width: 100%;
+  text-align: center;
+  margin-top: 12px;
+  padding: 10px 16px;
+  font-size: 0.76rem;
+}
+.catalog-cta{ text-align: center; margin-top: 44px; }
+
+/* ---------- Detalle de producto ---------- */
+.product-detail{ padding-top: 50px; }
+.back-btn{ margin-bottom: 32px; }
+.product-detail-grid{
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 56px;
+  align-items: start;
+}
+.product-detail-image{
+  height: 460px;
+  border-radius: 12px;
+}
+.product-detail-info{ padding-top: 6px; }
+.product-detail-name{
+  font-family: var(--display);
+  font-size: clamp(2rem, 4vw, 2.8rem);
+  letter-spacing: 0.02em;
+  margin: 10px 0 6px;
+}
+.product-detail-price{
+  font-family: var(--mono);
+  font-size: 1.3rem;
+  color: var(--gold);
+  margin-bottom: 20px;
+}
+.product-detail-desc{
+  color: var(--muted);
+  margin-bottom: 28px;
+  max-width: 440px;
+}
+.option-group{ margin-bottom: 26px; }
+.option-label{
+  display: block;
+  font-family: var(--mono);
+  font-size: 0.76rem;
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+  color: var(--muted);
+  margin-bottom: 12px;
+}
+.option-selected-name{
+  color: var(--ivory);
+  text-transform: none;
+  letter-spacing: 0;
+  font-family: var(--body-font);
+}
+.option-pills{ display: flex; gap: 8px; flex-wrap: wrap; }
+.option-pill{
+  background: none;
+  border: var(--border);
+  color: var(--ivory);
+  padding: 8px 16px;
+  border-radius: 6px;
+  font-family: var(--mono);
+  font-size: 0.8rem;
+  transition: border-color .2s, background .2s, color .2s;
+}
+.option-pill:hover{ border-color: var(--gold); }
+.option-pill.active{
+  background: var(--gold);
+  color: var(--bg);
+  border-color: var(--gold);
+  font-weight: 600;
+}
+.option-swatches{ display: flex; gap: 10px; }
+.option-swatch{
+  width: 34px; height: 34px;
+  border-radius: 50%;
+  border: 2px solid transparent;
+  outline: 1px solid rgba(244,236,216,0.2);
+  outline-offset: 2px;
+  cursor: pointer;
+  transition: outline-color .2s, transform .2s;
+}
+.option-swatch:hover{ transform: scale(1.08); }
+.option-swatch.active{ outline-color: var(--gold); outline-width: 2px; }
+.product-add-btn{ width: 100%; max-width: 320px; }
+
+@media (max-width: 800px){
+  .product-detail-grid{ grid-template-columns: 1fr; }
+  .product-detail-image{ height: 320px; }
 }

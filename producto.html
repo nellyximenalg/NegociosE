@@ -3,7 +3,7 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Dahlia — Mi perfil</title>
+<title>Dahlia — Producto</title>
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Bebas+Neue&family=Work+Sans:wght@400;500;600&family=IBM+Plex+Mono:wght@500&display=swap" rel="stylesheet">
@@ -30,46 +30,38 @@
     </div>
   </header>
 
-  <section class="section placeholder-section">
+  <section class="section product-detail">
     <div class="wrap">
-      <span class="eyebrow">Tu perfil</span>
-      <h2 class="placeholder-title" id="profileGreeting">Hola</h2>
-      <p class="placeholder-text" id="profileEmailText">Cargando tu información...</p>
+      <a href="catalogo.html" class="btn btn-ghost back-btn">← Regresar al catálogo</a>
 
-      <div class="profile-sections">
-        <div class="profile-card">
-          <h4>Mis datos</h4>
-          <p id="profileDataText">—</p>
-        </div>
-        <div class="profile-card">
-          <h4>Mis compras</h4>
-          <p>Próximamente vas a poder ver aquí el historial de tus pedidos.</p>
+      <div class="product-detail-grid" id="productRoot">
+        <div class="prod-image product-detail-image" id="productImage"></div>
+        <div class="product-detail-info">
+          <span class="prod-sku" id="productSku"></span>
+          <h1 class="product-detail-name" id="productName"></h1>
+          <div class="product-detail-price" id="productPrice"></div>
+          <p class="product-detail-desc" id="productDesc"></p>
+
+          <div class="option-group">
+            <span class="option-label">Talla</span>
+            <div class="option-pills" id="sizeOptions"></div>
+          </div>
+
+          <div class="option-group">
+            <span class="option-label">Color <span id="selectedColorName" class="option-selected-name"></span></span>
+            <div class="option-swatches" id="colorOptions"></div>
+          </div>
+
+          <button class="btn btn-primary product-add-btn" id="addToCartBtn">Agregar al carrito</button>
+          <p class="contact-msg" id="productMsg" hidden></p>
         </div>
       </div>
-
-      <button class="btn btn-ghost" id="logoutBtn">Cerrar sesión</button>
     </div>
   </section>
 
   <script src="auth.js"></script>
+  <script src="products.js"></script>
   <script src="script.js"></script>
-  <script>
-    const savedEmail = localStorage.getItem('dahlia_user_email');
-    const displayName = getDisplayName();
-
-    document.getElementById('profileGreeting').textContent = savedEmail ? `Hola, ${displayName}` : 'No hay sesión activa';
-    document.getElementById('profileEmailText').textContent = savedEmail
-      ? `Sesión iniciada como: ${savedEmail}`
-      : 'Inicia sesión para ver tu perfil.';
-    document.getElementById('profileDataText').textContent = savedEmail
-      ? `Nombre: ${displayName} · Correo: ${savedEmail}`
-      : 'Sin datos todavía.';
-
-    document.getElementById('logoutBtn').addEventListener('click', () => {
-      localStorage.removeItem('dahlia_logged_in');
-      localStorage.removeItem('dahlia_user_email');
-      window.location.href = 'index.html';
-    });
-  </script>
+  <script src="producto.js"></script>
 </body>
 </html>

@@ -16,7 +16,7 @@
       <a href="#inicio" class="logo"><svg class="logo-flower" width="16" height="16" viewBox="0 0 32 32" fill="none" xmlns="http://www.w3.org/2000/svg" aria-hidden="true"><circle cx="16" cy="9" r="6" fill="var(--dahlia)"/><circle cx="23" cy="16" r="6" fill="var(--gold)"/><circle cx="16" cy="23" r="6" fill="var(--dahlia)"/><circle cx="9" cy="16" r="6" fill="var(--gold)"/><circle cx="16" cy="16" r="4.5" fill="var(--bg)"/></svg>DAHLIA</a>
       <nav class="nav-links" id="navLinks">
         <a href="#inicio">Inicio</a>
-        <a href="#categorias">Catálogo</a>
+        <a href="catalogo.html">Catálogo</a>
         <a href="#nosotros">Nosotros</a>
         <a href="#contacto">Contacto</a>
         <a href="login.html" id="navAuthLink">Iniciar sesión</a>
@@ -44,7 +44,7 @@
         <h1>Viste tu manera<br>de <em>florecer</em>.</h1>
         <p>Piezas para cada versión de ti: casual, elegante, del diario o de ocasión. Nueva colección disponible hoy.</p>
         <div class="hero-ctas">
-          <a href="#categorias" class="btn btn-primary">Ver productos</a>
+          <a href="catalogo.html" class="btn btn-primary">Ver productos</a>
           <a href="#nosotros" class="btn btn-ghost">Nuestra historia</a>
         </div>
       </div>
@@ -60,10 +60,10 @@
         <p>Cuatro líneas, una sola actitud. Encuentra tu talla y tu estilo.</p>
       </div>
       <div class="cat-grid">
-        <a class="cat-card mujer" href="#"><span>Mujer<small>Ver colección →</small></span></a>
-        <a class="cat-card hombre" href="#"><span>Hombre<small>Ver colección →</small></span></a>
-        <a class="cat-card accesorios" href="#"><span>Accesorios<small>Ver colección →</small></span></a>
-        <a class="cat-card novedades" href="#"><span>Novedades<small>Recién llegado →</small></span></a>
+        <a class="cat-card mujer" href="catalogo.html?cat=mujer"><span>Mujer<small>Ver colección →</small></span></a>
+        <a class="cat-card hombre" href="catalogo.html?cat=hombre"><span>Hombre<small>Ver colección →</small></span></a>
+        <a class="cat-card accesorios" href="catalogo.html?cat=accesorios"><span>Accesorios<small>Ver colección →</small></span></a>
+        <a class="cat-card novedades" href="catalogo.html?cat=novedades"><span>Novedades<small>Recién llegado →</small></span></a>
       </div>
     </div>
   </section>
@@ -74,62 +74,13 @@
         <h2>Lo más buscado</h2>
         <p>Las piezas que no dejan de venderse esta temporada.</p>
       </div>
-      <div class="prod-grid">
-        <div class="prod-card">
-          <div class="prod-image"></div>
-          <div class="prod-tag">
-            <div style="display:flex;align-items:center;">
-              <span class="hole"></span>
-              <div>
-                <div class="prod-name"></div>
-                <div class="prod-sku"></div>
-              </div>
-            </div>
-            <span class="prod-price"></span>
-          </div>
-        </div>
-        <div class="prod-card">
-          <div class="prod-image"></div>
-          <div class="prod-tag">
-            <div style="display:flex;align-items:center;">
-              <span class="hole"></span>
-              <div>
-                <div class="prod-name"></div>
-                <div class="prod-sku"></div>
-              </div>
-            </div>
-            <span class="prod-price"></span>
-          </div>
-        </div>
-        <div class="prod-card">
-          <div class="prod-image"></div>
-          <div class="prod-tag">
-            <div style="display:flex;align-items:center;">
-              <span class="hole"></span>
-              <div>
-                <div class="prod-name"></div>
-                <div class="prod-sku"></div>
-              </div>
-            </div>
-            <span class="prod-price"></span>
-          </div>
-        </div>
-        <div class="prod-card">
-          <div class="prod-image"></div>
-          <div class="prod-tag">
-            <div style="display:flex;align-items:center;">
-              <span class="hole"></span>
-              <div>
-                <div class="prod-name"></div>
-                <div class="prod-sku"></div>
-              </div>
-            </div>
-            <span class="prod-price"></span>
-          </div>
-        </div>
+      <div class="prod-grid" id="featuredGrid"></div>
+      <div class="catalog-cta">
+        <a href="catalogo.html" class="btn btn-ghost">Ver todo el catálogo →</a>
       </div>
     </div>
   </section>
+
 
   <hr class="stitch">
 
@@ -213,10 +164,10 @@
         <div>
           <h4>Tienda</h4>
           <ul>
-            <li><a href="#categorias">Mujer</a></li>
-            <li><a href="#categorias">Hombre</a></li>
-            <li><a href="#categorias">Accesorios</a></li>
-            <li><a href="#categorias">Novedades</a></li>
+            <li><a href="catalogo.html?cat=mujer">Mujer</a></li>
+            <li><a href="catalogo.html?cat=hombre">Hombre</a></li>
+            <li><a href="catalogo.html?cat=accesorios">Accesorios</a></li>
+            <li><a href="catalogo.html?cat=novedades">Novedades</a></li>
           </ul>
         </div>
         <div>
@@ -252,6 +203,7 @@
   </footer>
 
   <script src="auth.js"></script>
+  <script src="products.js"></script>
   <script src="script.js"></script>
 </body>
 </html>
