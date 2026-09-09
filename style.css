@@ -421,6 +421,7 @@ button{ font-family:inherit; cursor:pointer; }
 }
 .prod-card{ position:relative; }
 .prod-image{
+  display: block;
   height: 260px;
   border-radius: 10px;
   border: var(--border);

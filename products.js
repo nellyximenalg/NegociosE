@@ -1,5 +1,4 @@
-// Catálogo de productos simulado (sin backend ni base de datos real).
-// Cada producto tiene: id, nombre, categoría, precio, sku, "foto" (degradado),
+// Catálogo de productos
 // tallas, colores, descripción y si aparece como destacado en Inicio.
 
 const PRODUCTS = [
@@ -126,6 +125,131 @@ const PRODUCTS = [
       { name: 'Vino', hex: '#7a2f4d' }
     ],
     description: 'Suéter de punto suave con cuello alto. Se ve bien solo o en capas con una chamarra.',
+    featured: false
+  },
+  {
+    id: 9,
+    name: 'Falda Plisada',
+    category: 'mujer',
+    price: 610,
+    sku: 'DHL-103',
+    gradient: 'linear-gradient(150deg,#2a1f22,#7a2f4d)',
+    sizes: ['XS', 'S', 'M', 'L'],
+    colors: [
+      { name: 'Vino', hex: '#7a2f4d' },
+      { name: 'Negro', hex: '#231f1a' },
+      { name: 'Beige', hex: '#c9b79c' }
+    ],
+    description: 'Falda plisada a media pierna, con caída con movimiento. Ideal para combinar con blusa o suéter.',
+    featured: false
+  },
+  {
+    id: 10,
+    name: 'Chamarra de Mezclilla',
+    category: 'mujer',
+    price: 850,
+    sku: 'DHL-104',
+    gradient: 'linear-gradient(150deg,#1f2733,#4a6a8a)',
+    sizes: ['XS', 'S', 'M', 'L', 'XL'],
+    colors: [
+      { name: 'Azul claro', hex: '#7a9ab8' },
+      { name: 'Azul oscuro', hex: '#2b3550' }
+    ],
+    description: 'Chamarra de mezclilla clásica, corte entallado. Un básico que nunca pasa de moda.',
+    featured: false
+  },
+  {
+    id: 11,
+    name: 'Playera Básica',
+    category: 'hombre',
+    price: 320,
+    sku: 'DHL-203',
+    gradient: 'linear-gradient(150deg,#221f1c,#8a8578)',
+    sizes: ['S', 'M', 'L', 'XL', 'XXL'],
+    colors: [
+      { name: 'Blanco', hex: '#f4ecd8' },
+      { name: 'Negro', hex: '#231f1a' },
+      { name: 'Gris', hex: '#6b6a63' },
+      { name: 'Vino', hex: '#7a2f4d' }
+    ],
+    description: 'Playera de algodón suave, corte recto. El básico que va con todo tu clóset.',
+    featured: false
+  },
+  {
+    id: 12,
+    name: 'Suéter Tejido',
+    category: 'hombre',
+    price: 590,
+    sku: 'DHL-204',
+    gradient: 'linear-gradient(150deg,#231f1a,#4a3826)',
+    sizes: ['S', 'M', 'L', 'XL'],
+    colors: [
+      { name: 'Café', hex: '#4a3826' },
+      { name: 'Azul marino', hex: '#2b3550' },
+      { name: 'Gris', hex: '#6b6a63' }
+    ],
+    description: 'Suéter de punto grueso, ideal para los días más fríos. Se ve bien solo o encima de una camisa.',
+    featured: false
+  },
+  {
+    id: 13,
+    name: 'Bufanda de Punto',
+    category: 'accesorios',
+    price: 340,
+    sku: 'DHL-303',
+    gradient: 'linear-gradient(150deg,#2a251d,#c1443c)',
+    sizes: ['Único'],
+    colors: [
+      { name: 'Terracota', hex: '#c1443c' },
+      { name: 'Beige', hex: '#c9b79c' },
+      { name: 'Negro', hex: '#231f1a' }
+    ],
+    description: 'Bufanda tejida, suave y abrigadora. El accesorio que le da personalidad a cualquier outfit de invierno.',
+    featured: false
+  },
+  {
+    id: 14,
+    name: 'Lentes de Sol',
+    category: 'accesorios',
+    price: 450,
+    sku: 'DHL-304',
+    gradient: 'linear-gradient(150deg,#1c1c1c,#3a3a3a)',
+    sizes: ['Único'],
+    colors: [
+      { name: 'Negro', hex: '#231f1a' },
+      { name: 'Café', hex: '#4a3826' }
+    ],
+    description: 'Lentes de sol con protección UV y armazón resistente. El toque final para tu look del día.',
+    featured: false
+  },
+  {
+    id: 15,
+    name: 'Falda Cargo',
+    category: 'novedades',
+    price: 690,
+    sku: 'DHL-403',
+    gradient: 'linear-gradient(150deg,#211d17,#7c8a63)',
+    sizes: ['XS', 'S', 'M', 'L'],
+    colors: [
+      { name: 'Caqui', hex: '#7c8a63' },
+      { name: 'Negro', hex: '#231f1a' }
+    ],
+    description: 'Falda cargo con bolsas laterales, mezcla lo funcional con lo urbano. Parte de la colección nueva.',
+    featured: false
+  },
+  {
+    id: 16,
+    name: 'Vestido de Punto',
+    category: 'novedades',
+    price: 760,
+    sku: 'DHL-404',
+    gradient: 'linear-gradient(150deg,#2a1f22,#d9769b)',
+    sizes: ['XS', 'S', 'M', 'L'],
+    colors: [
+      { name: 'Rosa dalia', hex: '#d9769b' },
+      { name: 'Crema', hex: '#f4ecd8' }
+    ],
+    description: 'Vestido de punto entallado, cómodo y abrigador sin perder silueta. Recién llegado a la colección.',
     featured: false
   }
 ];
