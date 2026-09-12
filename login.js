@@ -1,5 +1,5 @@
 // A qué página regresar después de iniciar sesión.
-
+// Por default manda a Perfil; si vienes del carrito o de un producto, regresa ahí.
 function getRedirectTarget() {
   const params = new URLSearchParams(window.location.search);
   const target = params.get('redirect');
@@ -34,14 +34,16 @@ function showSignup() {
 tabLogin.addEventListener('click', showLogin);
 tabSignup.addEventListener('click', showSignup);
 
-
+// Login simulado: ningún campo es obligatorio. Si escribes un correo, se
+// revisa que tenga formato válido; si lo dejas vacío, entra de todos modos.
+// Siempre muestra el mensaje de "sesión iniciada" al entrar.
 loginForm.addEventListener('submit', (event) => {
   event.preventDefault();
 
   const emailInput = document.getElementById('loginEmail');
   const email = emailInput.value.trim();
 
-  if (!isValidEmail(email)) {
+  if (email && !isValidEmail(email)) {
     setFieldError(emailInput, 'Ingresa un correo válido, ej: tu@correo.com');
     return;
   }
@@ -54,7 +56,9 @@ loginForm.addEventListener('submit', (event) => {
   window.location.href = getRedirectTarget();
 });
 
-// Registro simulado
+// Registro simulado: ningún campo es obligatorio. No inicia sesión
+// automáticamente. Solo confirma el registro y te regresa a la pestaña
+
 const signupMsg = document.getElementById('signupMsg');
 
 signupForm.addEventListener('submit', (event) => {
@@ -65,24 +69,28 @@ signupForm.addEventListener('submit', (event) => {
   const name = nameInput.value.trim();
   const email = emailInput.value.trim();
 
-  if (!isValidEmail(email)) {
+  if (email && !isValidEmail(email)) {
     setFieldError(emailInput, 'Ingresa un correo válido, ej: tu@correo.com');
     return;
   }
   clearFieldError(emailInput);
 
-  // Guardamos el nombre para poder mostrarlo después en el perfil 
-  const accounts = JSON.parse(localStorage.getItem('dahlia_accounts') || '{}');
-  accounts[email] = { name };
-  localStorage.setItem('dahlia_accounts', JSON.stringify(accounts));
+  // Guardamos el nombre para poder mostrarlo después en el perfil (simulado)
+  if (email) {
+    const accounts = JSON.parse(localStorage.getItem('dahlia_accounts') || '{}');
+    accounts[email] = { name };
+    localStorage.setItem('dahlia_accounts', JSON.stringify(accounts));
+  }
 
   signupForm.reset();
-  signupMsg.textContent = 'Registro exitoso (simulado).';
+  signupMsg.textContent = 'Cuenta creada correctamente (simulado).';
   signupMsg.hidden = false;
 
   setTimeout(() => {
     signupMsg.hidden = true;
     showLogin();
-    document.getElementById('loginEmail').value = email;
+    if (email) {
+      document.getElementById('loginEmail').value = email;
+    }
   }, 1400);
 });

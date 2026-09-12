@@ -54,15 +54,17 @@
   <script src="auth.js"></script>
   <script src="script.js"></script>
   <script>
-    const savedEmail = localStorage.getItem('dahlia_user_email');
-    const displayName = getDisplayName();
+    const loggedIn = isLoggedIn();
+    const savedEmail = localStorage.getItem('dahlia_user_email') || '';
+    const rawName = getDisplayName();
+    const displayName = loggedIn ? (rawName === 'Invitada/o' ? 'Cliente Dahlia' : rawName) : 'Invitada/o';
 
-    document.getElementById('profileGreeting').textContent = savedEmail ? `Hola, ${displayName}` : 'No hay sesión activa';
-    document.getElementById('profileEmailText').textContent = savedEmail
-      ? `Sesión iniciada como: ${savedEmail}`
+    document.getElementById('profileGreeting').textContent = loggedIn ? `Hola, ${displayName}` : 'No hay sesión activa';
+    document.getElementById('profileEmailText').textContent = loggedIn
+      ? (savedEmail ? `Sesión iniciada como: ${savedEmail}` : 'Sesión iniciada (sin correo registrado).')
       : 'Inicia sesión para ver tu perfil.';
-    document.getElementById('profileDataText').textContent = savedEmail
-      ? `Nombre: ${displayName} · Correo: ${savedEmail}`
+    document.getElementById('profileDataText').textContent = loggedIn
+      ? `Nombre: ${displayName} · Correo: ${savedEmail || 'No proporcionado'}`
       : 'Sin datos todavía.';
 
     document.getElementById('logoutBtn').addEventListener('click', () => {
