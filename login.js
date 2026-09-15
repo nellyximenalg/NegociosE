@@ -34,20 +34,12 @@ function showSignup() {
 tabLogin.addEventListener('click', showLogin);
 tabSignup.addEventListener('click', showSignup);
 
-// Login simulado: ningún campo es obligatorio. Si escribes un correo, se
-// revisa que tenga formato válido; si lo dejas vacío, entra de todos modos.
+// Login simulado
 // Siempre muestra el mensaje de "sesión iniciada" al entrar.
 loginForm.addEventListener('submit', (event) => {
   event.preventDefault();
 
-  const emailInput = document.getElementById('loginEmail');
-  const email = emailInput.value.trim();
-
-  if (email && !isValidEmail(email)) {
-    setFieldError(emailInput, 'Ingresa un correo válido, ej: tu@correo.com');
-    return;
-  }
-  clearFieldError(emailInput);
+  const email = document.getElementById('loginEmail').value.trim();
 
   localStorage.setItem('dahlia_logged_in', 'true');
   localStorage.setItem('dahlia_user_email', email);
@@ -56,26 +48,18 @@ loginForm.addEventListener('submit', (event) => {
   window.location.href = getRedirectTarget();
 });
 
-// Registro simulado: ningún campo es obligatorio. No inicia sesión
-// automáticamente. Solo confirma el registro y te regresa a la pestaña
-
+// Registro simulado: ningún campo es obligatorio ni se valida. No inicia
+// sesión automáticamente. Solo confirma el registro y te regresa a la
+// pestaña de "Iniciar sesión"
 const signupMsg = document.getElementById('signupMsg');
 
 signupForm.addEventListener('submit', (event) => {
   event.preventDefault();
 
-  const nameInput = document.getElementById('signupName');
-  const emailInput = document.getElementById('signupEmail');
-  const name = nameInput.value.trim();
-  const email = emailInput.value.trim();
+  const name = document.getElementById('signupName').value.trim();
+  const email = document.getElementById('signupEmail').value.trim();
 
-  if (email && !isValidEmail(email)) {
-    setFieldError(emailInput, 'Ingresa un correo válido, ej: tu@correo.com');
-    return;
-  }
-  clearFieldError(emailInput);
-
-  // Guardamos el nombre para poder mostrarlo después en el perfil (simulado)
+  // Guardamos el nombre para poder mostrarlo después en el perfil 
   if (email) {
     const accounts = JSON.parse(localStorage.getItem('dahlia_accounts') || '{}');
     accounts[email] = { name };

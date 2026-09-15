@@ -1,4 +1,4 @@
-// Menú hamburguesa 
+// Menú hamburguesa (móvil) — solo aplica en páginas que tengan header con nav
 const menuToggle = document.getElementById('menuToggle');
 const navLinks = document.getElementById('navLinks');
 
@@ -8,7 +8,7 @@ if (menuToggle && navLinks) {
     menuToggle.setAttribute('aria-expanded', isOpen);
   });
 
-  
+  // Cierra el menú al hacer clic en un link
   navLinks.querySelectorAll('a').forEach(link => {
     link.addEventListener('click', () => navLinks.classList.remove('open'));
   });
@@ -27,7 +27,7 @@ if ('IntersectionObserver' in window) {
 
   document.querySelectorAll('.reveal').forEach(el => observer.observe(el));
 } else {
-  
+
   document.querySelectorAll('.reveal').forEach(el => el.classList.add('is-visible'));
 }
 
@@ -43,12 +43,6 @@ if (newsletterForm) {
     const emailInput = document.getElementById('newsletterEmail');
     const email = emailInput.value.trim();
 
-    if (!isValidEmail(email)) {
-      setFieldError(emailInput, 'Correo inválido');
-      return;
-    }
-    clearFieldError(emailInput);
-
     const emails = JSON.parse(localStorage.getItem('dahlia_newsletter_emails') || '[]');
     emails.push(email);
     localStorage.setItem('dahlia_newsletter_emails', JSON.stringify(emails));
@@ -59,13 +53,13 @@ if (newsletterForm) {
   });
 }
 
-// Si ya iniciaste sesión, ya no te pide que te unas al club por correo
+// Si ya iniciaste sesión
 const newsletterClub = document.getElementById('newsletterClub');
 if (newsletterClub && isLoggedIn()) {
   newsletterClub.style.display = 'none';
 }
 
-// Mensaje de bienvenida justo después de iniciar sesión
+// Mensaje de bienvenida justo después de iniciar sesión (una sola vez)
 if (localStorage.getItem('dahlia_just_logged_in') === 'true') {
   showToast('Sesión iniciada exitosamente');
   localStorage.removeItem('dahlia_just_logged_in');
@@ -85,7 +79,7 @@ if (navAuthLink) {
 
 // Carrito: si no has iniciado sesión, te manda a la pantalla de login
 // (y de ahí regresas directo al carrito). Si ya iniciaste sesión, te lleva
-// a la página del carrito (por ahora vacía).
+// a la página del carrito.
 const cartBtn = document.getElementById('cartBtn');
 if (cartBtn) {
   cartBtn.addEventListener('click', () => {
@@ -97,7 +91,7 @@ if (cartBtn) {
   });
 }
 
-// Formulario de contacto simulado
+// Formulario de contacto simulado: no hay backend ni base de datos todavía.
 const contactForm = document.getElementById('contactForm');
 const contactMsg = document.getElementById('contactMsg');
 
@@ -105,27 +99,16 @@ if (contactForm) {
   contactForm.addEventListener('submit', (event) => {
     event.preventDefault();
 
-    const nameInput = document.getElementById('contactName');
-    const emailInput = document.getElementById('contactEmail');
-    const messageInput = document.getElementById('contactMessage');
-
-    const name = nameInput.value.trim();
-    const email = emailInput.value.trim();
-    const message = messageInput.value.trim();
-    if (!name || !message) return;
-
-    if (!isValidEmail(email)) {
-      setFieldError(emailInput, 'Ingresa un correo válido, ej: tu@correo.com');
-      return;
-    }
-    clearFieldError(emailInput);
+    const name = document.getElementById('contactName').value.trim();
+    const email = document.getElementById('contactEmail').value.trim();
+    const message = document.getElementById('contactMessage').value.trim();
 
     const messages = JSON.parse(localStorage.getItem('dahlia_contact_messages') || '[]');
     messages.push({ name, email, message, date: new Date().toISOString() });
     localStorage.setItem('dahlia_contact_messages', JSON.stringify(messages));
 
     contactForm.reset();
-    contactMsg.textContent = 'Mensaje enviado (simulado).';
+    contactMsg.textContent = 'Mensaje enviado.';
     contactMsg.hidden = false;
   });
 }

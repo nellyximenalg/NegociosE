@@ -3,7 +3,7 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Dahlia — Bienvenida</title>
+<title>Dahlia — Bienvenid@</title>
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Bebas+Neue&family=Work+Sans:wght@400;500;600&family=IBM+Plex+Mono:wght@500&display=swap" rel="stylesheet">
@@ -37,7 +37,18 @@
     </div>
   </main>
 
-  
+  <section class="section novedades-promo">
+    <div class="wrap">
+      <div class="section-head">
+        <div>
+          <h2>Recién llegado</h2>
+          <p>Las piezas más nuevas de la temporada, antes que nadie.</p>
+        </div>
+        <a href="catalogo.html?cat=novedades" class="btn btn-ghost">Ver todas las novedades</a>
+      </div>
+      <div class="prod-grid prod-grid--promo" id="novedadesGrid"></div>
+    </div>
+  </section>
 
   <div class="benefits">
     <div class="wrap">
@@ -78,7 +89,7 @@
           <h4>Únete al club</h4>
           <p style="color:var(--muted); font-size:0.85rem; margin-bottom:6px;">Ofertas y novedades directo a tu correo.</p>
           <form class="newsletter" id="newsletterForm">
-            <input type="email" id="newsletterEmail" placeholder="tu@correo.com" aria-label="Correo electrónico" required>
+            <input type="text" id="newsletterEmail" placeholder="tu@correo.com" aria-label="Correo electrónico">
             <button type="submit">Unirme</button>
           </form>
           <p class="newsletter-msg" id="newsletterMsg" hidden></p>
