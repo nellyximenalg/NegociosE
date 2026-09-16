@@ -1,4 +1,4 @@
-// Funciones compartidas de "sesión" simulada (sin backend, todo con localStorage)
+// Funciones compartidas de "sesión" simulada 
 
 function isLoggedIn() {
   return localStorage.getItem('dahlia_logged_in') === 'true';

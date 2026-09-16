@@ -130,7 +130,7 @@ if (featuredGrid && typeof PRODUCTS !== 'undefined') {
         </div>
         <span class="prod-price">$${p.price}</span>
       </div>
-      <a href="producto.html?id=${p.id}" class="btn btn-ghost prod-detail-btn">Ver detalle</a>
+      <a href="producto.html?id=${p.id}" class="btn btn-ghost prod-detail-btn">Ver detalles</a>
     </div>
   `).join('');
 }
@@ -152,7 +152,7 @@ if (novedadesGrid && typeof PRODUCTS !== 'undefined') {
         </div>
         <span class="prod-price">$${p.price}</span>
       </div>
-      <a href="producto.html?id=${p.id}" class="btn btn-ghost prod-detail-btn">Ver detalle</a>
+      <a href="producto.html?id=${p.id}" class="btn btn-ghost prod-detail-btn">Ver detalles</a>
     </div>
   `).join('');
 }

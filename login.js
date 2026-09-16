@@ -67,7 +67,7 @@ signupForm.addEventListener('submit', (event) => {
   }
 
   signupForm.reset();
-  signupMsg.textContent = 'Cuenta creada correctamente (simulado).';
+  signupMsg.textContent = 'Cuenta creada correctamente.';
   signupMsg.hidden = false;
 
   setTimeout(() => {

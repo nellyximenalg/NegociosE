@@ -35,25 +35,43 @@
       <a href="catalogo.html" class="btn btn-ghost back-btn">← Regresar al catálogo</a>
 
       <div class="product-detail-grid" id="productRoot">
-        <div class="prod-image product-detail-image" id="productImage"></div>
+        <div class="product-gallery">
+          <div class="prod-image product-detail-image" id="productImage"></div>
+          <div class="gallery-thumbs" id="productThumbs"></div>
+        </div>
         <div class="product-detail-info">
           <span class="prod-sku" id="productSku"></span>
           <h1 class="product-detail-name" id="productName"></h1>
           <div class="product-detail-price" id="productPrice"></div>
+          <p class="price-per-unit" id="pricePerUnit" hidden></p>
           <p class="product-detail-desc" id="productDesc"></p>
 
           <div class="option-group">
-            <span class="option-label">Talla</span>
+            <span class="option-label">Talla <span id="selectedSizeName" class="option-selected-name"></span></span>
             <div class="option-pills" id="sizeOptions"></div>
+            <div class="size-measurements" id="sizeMeasurements" hidden></div>
           </div>
 
           <div class="option-group">
             <span class="option-label">Color <span id="selectedColorName" class="option-selected-name"></span></span>
             <div class="option-swatches" id="colorOptions"></div>
+            <p class="color-note" id="colorNote"></p>
           </div>
 
-          <button class="btn btn-primary product-add-btn" id="addToCartBtn">Agregar al carrito</button>
+          <div class="add-to-cart-row">
+            <div class="qty-stepper">
+              <button type="button" class="qty-btn" id="qtyMinus" aria-label="Restar cantidad">−</button>
+              <input type="number" class="qty-input" id="qtyInput" value="1" min="1" max="20" inputmode="numeric">
+              <button type="button" class="qty-btn" id="qtyPlus" aria-label="Sumar cantidad">+</button>
+            </div>
+            <button class="btn btn-primary product-add-btn" id="addToCartBtn">Agregar al carrito</button>
+          </div>
           <p class="contact-msg" id="productMsg" hidden></p>
+
+          <div class="product-details-block">
+            <h3>Detalles del producto</h3>
+            <ul class="product-details-list" id="productDetailsList"></ul>
+          </div>
         </div>
       </div>
     </div>

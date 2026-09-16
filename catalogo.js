@@ -1,4 +1,4 @@
-// Lee la categoría inicial desde la URL (ej. catalogo.html?cat=mujer)
+// Lee la categoría inicial desde la URL 
 function getCategoryParam() {
   const params = new URLSearchParams(window.location.search);
   return params.get('cat') || 'todos';
@@ -23,7 +23,7 @@ function renderProducts(category) {
         </div>
         <span class="prod-price">$${p.price}</span>
       </div>
-      <a href="producto.html?id=${p.id}" class="btn btn-ghost prod-detail-btn">Ver detalle</a>
+      <a href="producto.html?id=${p.id}" class="btn btn-ghost prod-detail-btn">Ver detalles</a>
     </div>
   `).join('');
 }
