@@ -138,7 +138,7 @@ if (featuredGrid && typeof PRODUCTS !== 'undefined') {
 // "Recién llegado" en la landing: renderiza productos de la categoría novedades
 const novedadesGrid = document.getElementById('novedadesGrid');
 if (novedadesGrid && typeof PRODUCTS !== 'undefined') {
-  const novedades = PRODUCTS.filter(p => p.category === 'novedades');
+  const novedades = PRODUCTS.filter(p => p.isNew);
   novedadesGrid.innerHTML = novedades.map(p => `
     <div class="prod-card">
       <a href="producto.html?id=${p.id}" class="prod-image" style="background:${p.gradient};"></a>

@@ -25,6 +25,7 @@ const PRODUCTS = [
       cuidado: 'Lavado a máquina en agua fría, ciclo delicado. Secar a la sombra para conservar el color.',
       origen: 'Diseñado en Aguascalientes y confeccionado por talleres locales aliados de Dahlia.'
     },
+    isNew: false,
     featured: true
   },
   {
@@ -52,6 +53,7 @@ const PRODUCTS = [
       cuidado: 'Lavado en seco recomendado, o ciclo delicado en bolsa de malla y agua fría.',
       origen: 'Diseñado en Aguascalientes y confeccionado por talleres locales aliados de Dahlia.'
     },
+    isNew: false,
     featured: false
   },
   {
@@ -78,6 +80,7 @@ const PRODUCTS = [
       cuidado: 'Lavado a mano en agua fría y secar en superficie plana para que no pierda la forma.',
       origen: 'Diseñado en Aguascalientes y confeccionado por talleres locales aliados de Dahlia.'
     },
+    isNew: false,
     featured: false
   },
   {
@@ -104,6 +107,7 @@ const PRODUCTS = [
       cuidado: 'Lavar del revés en agua fría, separado de otras prendas. Evitar secadora para conservar el color.',
       origen: 'Diseñado en Aguascalientes y confeccionado por talleres locales aliados de Dahlia.'
     },
+    isNew: false,
     featured: false
   },
   {
@@ -131,6 +135,7 @@ const PRODUCTS = [
       cuidado: 'Lavado a máquina en agua fría, ciclo delicado. Secar a la sombra para conservar el color.',
       origen: 'Diseñado en Aguascalientes y confeccionado por talleres locales aliados de Dahlia.'
     },
+    isNew: false,
     featured: false
   },
   {
@@ -156,6 +161,7 @@ const PRODUCTS = [
       cuidado: 'Lavado a máquina en agua fría, ciclo delicado. Secar a la sombra para conservar el color.',
       origen: 'Diseñado en Aguascalientes y confeccionado por talleres locales aliados de Dahlia.'
     },
+    isNew: false,
     featured: false
   },
   {
@@ -181,6 +187,7 @@ const PRODUCTS = [
       cuidado: 'Lavado a mano en agua fría y secar en superficie plana para que no pierda la forma.',
       origen: 'Diseñado en Aguascalientes y confeccionado por talleres locales aliados de Dahlia.'
     },
+    isNew: false,
     featured: false
   },
   {
@@ -206,6 +213,7 @@ const PRODUCTS = [
       cuidado: 'Lavado a máquina en agua fría, ciclo delicado. Secar a la sombra para conservar el color.',
       origen: 'Diseñado en Aguascalientes y confeccionado por talleres locales aliados de Dahlia.'
     },
+    isNew: false,
     featured: false
   },
   {
@@ -231,6 +239,7 @@ const PRODUCTS = [
       cuidado: 'Lavado a máquina en agua fría, ciclo delicado. Secar a la sombra para conservar el color.',
       origen: 'Diseñado en Aguascalientes y confeccionado por talleres locales aliados de Dahlia.'
     },
+    isNew: false,
     featured: false
   },
   {
@@ -257,6 +266,7 @@ const PRODUCTS = [
       cuidado: 'Lavado a mano o ciclo delicado en agua fría. Planchar tibio mientras la prenda esté ligeramente húmeda.',
       origen: 'Diseñado en Aguascalientes y confeccionado por talleres locales aliados de Dahlia.'
     },
+    isNew: false,
     featured: false
   },
   {
@@ -283,6 +293,7 @@ const PRODUCTS = [
       cuidado: 'Lavado a máquina en agua fría, ciclo delicado. Secar a la sombra para conservar el color.',
       origen: 'Diseñado en Aguascalientes y confeccionado por talleres locales aliados de Dahlia.'
     },
+    isNew: false,
     featured: false
   },
   {
@@ -309,6 +320,7 @@ const PRODUCTS = [
       cuidado: 'Lavado a máquina en agua fría, secado a baja temperatura para conservar la felpa interior.',
       origen: 'Diseñado en Aguascalientes y confeccionado por talleres locales aliados de Dahlia.'
     },
+    isNew: false,
     featured: false
   },
   {
@@ -336,6 +348,7 @@ const PRODUCTS = [
       cuidado: 'Lavado a máquina en agua fría, secar a la sombra y planchar tibio si es necesario.',
       origen: 'Diseñado en Aguascalientes y confeccionado por talleres locales aliados de Dahlia.'
     },
+    isNew: false,
     featured: true
   },
   {
@@ -363,6 +376,7 @@ const PRODUCTS = [
       cuidado: 'Lavado a máquina en agua fría, secar a la sombra y planchar tibio si es necesario.',
       origen: 'Diseñado en Aguascalientes y confeccionado por talleres locales aliados de Dahlia.'
     },
+    isNew: false,
     featured: false
   },
   {
@@ -391,6 +405,7 @@ const PRODUCTS = [
       cuidado: 'Lavado a máquina en agua fría, ciclo delicado. Secar a la sombra para conservar el color.',
       origen: 'Diseñado en Aguascalientes y confeccionado por talleres locales aliados de Dahlia.'
     },
+    isNew: false,
     featured: false
   },
   {
@@ -417,6 +432,7 @@ const PRODUCTS = [
       cuidado: 'Lavado a mano en agua fría y secar en superficie plana para que no pierda la forma.',
       origen: 'Diseñado en Aguascalientes y confeccionado por talleres locales aliados de Dahlia.'
     },
+    isNew: false,
     featured: false
   },
   {
@@ -442,6 +458,7 @@ const PRODUCTS = [
       cuidado: 'Lavado a máquina en agua fría, ciclo delicado. Secar a la sombra para conservar el color.',
       origen: 'Diseñado en Aguascalientes y confeccionado por talleres locales aliados de Dahlia.'
     },
+    isNew: false,
     featured: false
   },
   {
@@ -469,6 +486,7 @@ const PRODUCTS = [
       cuidado: 'Lavado a máquina en agua fría, ciclo delicado. Secar a la sombra para conservar el color.',
       origen: 'Diseñado en Aguascalientes y confeccionado por talleres locales aliados de Dahlia.'
     },
+    isNew: false,
     featured: false
   },
   {
@@ -496,6 +514,7 @@ const PRODUCTS = [
       cuidado: 'Lavado a máquina en agua fría, secado a baja temperatura para conservar la felpa interior.',
       origen: 'Diseñado en Aguascalientes y confeccionado por talleres locales aliados de Dahlia.'
     },
+    isNew: false,
     featured: false
   },
   {
@@ -522,6 +541,7 @@ const PRODUCTS = [
       cuidado: 'Lavado a mano o ciclo delicado en agua fría. Planchar tibio mientras la prenda esté ligeramente húmeda.',
       origen: 'Diseñado en Aguascalientes y confeccionado por talleres locales aliados de Dahlia.'
     },
+    isNew: false,
     featured: false
   },
   {
@@ -548,6 +568,7 @@ const PRODUCTS = [
       cuidado: 'Lavado a máquina en agua fría, ciclo delicado. Secar a la sombra para conservar el color.',
       origen: 'Diseñado en Aguascalientes y confeccionado por talleres locales aliados de Dahlia.'
     },
+    isNew: false,
     featured: false
   },
   {
@@ -575,6 +596,7 @@ const PRODUCTS = [
       cuidado: 'Lavado a máquina en agua fría, secar a la sombra y planchar tibio si es necesario.',
       origen: 'Diseñado en Aguascalientes y confeccionado por talleres locales aliados de Dahlia.'
     },
+    isNew: false,
     featured: false
   },
   {
@@ -600,6 +622,7 @@ const PRODUCTS = [
       cuidado: 'Lavado a máquina en ciclo suave, agua fría. No planchar directamente sobre el relleno.',
       origen: 'Diseñado en Aguascalientes y confeccionado por talleres locales aliados de Dahlia.'
     },
+    isNew: false,
     featured: false
   },
   {
@@ -626,6 +649,7 @@ const PRODUCTS = [
       cuidado: 'Lavado a máquina en agua fría, ciclo delicado. Secar a la sombra para conservar el color.',
       origen: 'Diseñado en Aguascalientes y confeccionado por talleres locales aliados de Dahlia.'
     },
+    isNew: false,
     featured: false
   },
   {
@@ -649,6 +673,7 @@ const PRODUCTS = [
       origen: 'Diseñado en Aguascalientes y confeccionado por talleres locales aliados de Dahlia.',
       dimensiones: 'Largo ajustable de 90 a 120 cm, ancho de 3.5 cm.'
     },
+    isNew: false,
     featured: false
   },
   {
@@ -672,6 +697,7 @@ const PRODUCTS = [
       origen: 'Diseñado en Aguascalientes y confeccionado por talleres locales aliados de Dahlia.',
       dimensiones: 'Contorno ajustable de 54 a 60 cm.'
     },
+    isNew: false,
     featured: true
   },
   {
@@ -696,6 +722,7 @@ const PRODUCTS = [
       origen: 'Diseñado en Aguascalientes y confeccionado por talleres locales aliados de Dahlia.',
       dimensiones: 'Aproximadamente 180 x 30 cm.'
     },
+    isNew: false,
     featured: false
   },
   {
@@ -719,6 +746,7 @@ const PRODUCTS = [
       origen: 'Diseñado en Aguascalientes y confeccionado por talleres locales aliados de Dahlia.',
       dimensiones: 'Ancho de armazón: 14 cm. Incluye estuche.'
     },
+    isNew: false,
     featured: false
   },
   {
@@ -742,6 +770,7 @@ const PRODUCTS = [
       origen: 'Diseñado en Aguascalientes y confeccionado por talleres locales aliados de Dahlia.',
       dimensiones: '30 x 42 x 15 cm. Capacidad aproximada de 18 litros.'
     },
+    isNew: false,
     featured: false
   },
   {
@@ -765,6 +794,7 @@ const PRODUCTS = [
       origen: 'Diseñado en Aguascalientes y confeccionado por talleres locales aliados de Dahlia.',
       dimensiones: '11 x 9 cm, con 4 compartimentos internos.'
     },
+    isNew: false,
     featured: false
   },
   {
@@ -788,6 +818,7 @@ const PRODUCTS = [
       origen: 'Diseñado en Aguascalientes y confeccionado por talleres locales aliados de Dahlia.',
       dimensiones: 'Caja de 38 mm, correa ajustable de 16 a 21 cm.'
     },
+    isNew: false,
     featured: false
   },
   {
@@ -811,6 +842,7 @@ const PRODUCTS = [
       origen: 'Diseñado en Aguascalientes y confeccionado por talleres locales aliados de Dahlia.',
       dimensiones: 'Aproximadamente 55 x 55 cm.'
     },
+    isNew: false,
     featured: false
   },
   {
@@ -835,6 +867,7 @@ const PRODUCTS = [
       origen: 'Diseñado en Aguascalientes y confeccionado por talleres locales aliados de Dahlia.',
       dimensiones: 'Talla única, cómodo para pie de 24 a 28 cm.'
     },
+    isNew: false,
     featured: false
   },
   {
@@ -859,6 +892,7 @@ const PRODUCTS = [
       origen: 'Diseñado en Aguascalientes y confeccionado por talleres locales aliados de Dahlia.',
       dimensiones: 'Talla única con puño elástico ajustable.'
     },
+    isNew: false,
     featured: false
   },
   {
@@ -882,6 +916,7 @@ const PRODUCTS = [
       origen: 'Diseñado en Aguascalientes y confeccionado por talleres locales aliados de Dahlia.',
       dimensiones: 'Ajustable de 16 a 20 cm de contorno de muñeca.'
     },
+    isNew: false,
     featured: false
   },
   {
@@ -905,12 +940,13 @@ const PRODUCTS = [
       origen: 'Diseñado en Aguascalientes y confeccionado por talleres locales aliados de Dahlia.',
       dimensiones: 'Contorno de 56 a 58 cm, ala de 8 cm.'
     },
+    isNew: false,
     featured: false
   },
   {
     id: 37,
     name: 'Chamarra Acolchada',
-    category: 'novedades',
+    category: 'hombre',
     price: 990,
     sku: 'DHL-401',
     gradient: 'linear-gradient(150deg,#2a251d,#c1443c)',
@@ -930,12 +966,13 @@ const PRODUCTS = [
       cuidado: 'Lavado a máquina en ciclo suave, agua fría. No planchar directamente sobre el relleno.',
       origen: 'Diseñado en Aguascalientes y confeccionado por talleres locales aliados de Dahlia.'
     },
+    isNew: true,
     featured: true
   },
   {
     id: 38,
     name: 'Suéter Cuello Alto',
-    category: 'novedades',
+    category: 'mujer',
     price: 590,
     sku: 'DHL-402',
     gradient: 'linear-gradient(150deg,#22201c,#7c8a63)',
@@ -956,12 +993,13 @@ const PRODUCTS = [
       cuidado: 'Lavado a mano en agua fría y secar en superficie plana para que no pierda la forma.',
       origen: 'Diseñado en Aguascalientes y confeccionado por talleres locales aliados de Dahlia.'
     },
+    isNew: true,
     featured: false
   },
   {
     id: 39,
     name: 'Falda Cargo',
-    category: 'novedades',
+    category: 'mujer',
     price: 690,
     sku: 'DHL-403',
     gradient: 'linear-gradient(150deg,#211d17,#7c8a63)',
@@ -981,12 +1019,13 @@ const PRODUCTS = [
       cuidado: 'Lavado a máquina en agua fría, ciclo delicado. Secar a la sombra para conservar el color.',
       origen: 'Diseñado en Aguascalientes y confeccionado por talleres locales aliados de Dahlia.'
     },
+    isNew: true,
     featured: false
   },
   {
     id: 40,
     name: 'Vestido de Punto',
-    category: 'novedades',
+    category: 'mujer',
     price: 760,
     sku: 'DHL-404',
     gradient: 'linear-gradient(150deg,#2a1f22,#d9769b)',
@@ -1006,12 +1045,13 @@ const PRODUCTS = [
       cuidado: 'Lavado a mano en agua fría y secar en superficie plana para que no pierda la forma.',
       origen: 'Diseñado en Aguascalientes y confeccionado por talleres locales aliados de Dahlia.'
     },
+    isNew: true,
     featured: false
   },
   {
     id: 41,
     name: 'Abrigo Largo',
-    category: 'novedades',
+    category: 'hombre',
     price: 1290,
     sku: 'DHL-405',
     gradient: 'linear-gradient(150deg,#1c1c1c,#4a3826)',
@@ -1032,12 +1072,13 @@ const PRODUCTS = [
       cuidado: 'Lavado a máquina en agua fría, ciclo delicado. Secar a la sombra para conservar el color.',
       origen: 'Diseñado en Aguascalientes y confeccionado por talleres locales aliados de Dahlia.'
     },
+    isNew: true,
     featured: true
   },
   {
     id: 42,
     name: 'Blazer Estructurado',
-    category: 'novedades',
+    category: 'mujer',
     price: 940,
     sku: 'DHL-406',
     gradient: 'linear-gradient(150deg,#211d17,#2b3550)',
@@ -1058,12 +1099,13 @@ const PRODUCTS = [
       cuidado: 'Lavado a máquina en agua fría, ciclo delicado. Secar a la sombra para conservar el color.',
       origen: 'Diseñado en Aguascalientes y confeccionado por talleres locales aliados de Dahlia.'
     },
+    isNew: true,
     featured: false
   },
   {
     id: 43,
     name: 'Conjunto Deportivo',
-    category: 'novedades',
+    category: 'hombre',
     price: 780,
     sku: 'DHL-407',
     gradient: 'linear-gradient(150deg,#221f1c,#6c5ce0)',
@@ -1084,12 +1126,13 @@ const PRODUCTS = [
       cuidado: 'Lavado a máquina en agua fría, secado a baja temperatura para conservar la felpa interior.',
       origen: 'Diseñado en Aguascalientes y confeccionado por talleres locales aliados de Dahlia.'
     },
+    isNew: true,
     featured: false
   },
   {
     id: 44,
     name: 'Vestido Satinado',
-    category: 'novedades',
+    category: 'mujer',
     price: 890,
     sku: 'DHL-408',
     gradient: 'linear-gradient(150deg,#2a1f22,#e3b23c)',
@@ -1110,12 +1153,13 @@ const PRODUCTS = [
       cuidado: 'Lavado en seco recomendado, o ciclo delicado en bolsa de malla y agua fría.',
       origen: 'Diseñado en Aguascalientes y confeccionado por talleres locales aliados de Dahlia.'
     },
+    isNew: true,
     featured: false
   },
   {
     id: 45,
     name: 'Chamarra Vinil',
-    category: 'novedades',
+    category: 'hombre',
     price: 1050,
     sku: 'DHL-409',
     gradient: 'linear-gradient(150deg,#1c1c1c,#3a3a3a)',
@@ -1134,12 +1178,13 @@ const PRODUCTS = [
       cuidado: 'Limpiar con paño húmedo. No lavar en máquina ni exponer a fuentes de calor directas.',
       origen: 'Diseñado en Aguascalientes y confeccionado por talleres locales aliados de Dahlia.'
     },
+    isNew: true,
     featured: false
   },
   {
     id: 46,
     name: 'Pantalón Wide Leg',
-    category: 'novedades',
+    category: 'mujer',
     price: 710,
     sku: 'DHL-410',
     gradient: 'linear-gradient(150deg,#211d17,#c9b79c)',
@@ -1160,12 +1205,13 @@ const PRODUCTS = [
       cuidado: 'Lavado a máquina en agua fría, ciclo delicado. Secar a la sombra para conservar el color.',
       origen: 'Diseñado en Aguascalientes y confeccionado por talleres locales aliados de Dahlia.'
     },
+    isNew: true,
     featured: false
   },
   {
     id: 47,
     name: 'Top Corset',
-    category: 'novedades',
+    category: 'mujer',
     price: 460,
     sku: 'DHL-411',
     gradient: 'linear-gradient(150deg,#2a1f22,#c1443c)',
@@ -1185,12 +1231,13 @@ const PRODUCTS = [
       cuidado: 'Lavado a máquina en agua fría, ciclo delicado. Secar a la sombra para conservar el color.',
       origen: 'Diseñado en Aguascalientes y confeccionado por talleres locales aliados de Dahlia.'
     },
+    isNew: true,
     featured: false
   },
   {
     id: 48,
     name: 'Gabardina Oversize',
-    category: 'novedades',
+    category: 'hombre',
     price: 980,
     sku: 'DHL-412',
     gradient: 'linear-gradient(150deg,#211d17,#c9b79c)',
@@ -1210,6 +1257,7 @@ const PRODUCTS = [
       cuidado: 'Guardar en su estuche, limpiar el lente con paño de microfibra.',
       origen: 'Diseñado en Aguascalientes y confeccionado por talleres locales aliados de Dahlia.'
     },
+    isNew: true,
     featured: false
   }
 ];

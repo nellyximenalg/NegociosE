@@ -110,10 +110,24 @@ button{ font-family:inherit; cursor:pointer; }
 .hero{
   padding: 90px 0 100px;
   position: relative;
+  overflow: hidden;
+  background:
+    radial-gradient(ellipse 60% 55% at 50% 15%, rgba(217,118,155,0.12), transparent 70%),
+    var(--bg);
+}
+.hero::before{
+  content:'';
+  position:absolute; inset:0;
+  background-image: url('img/pattern-flower.png');
+  background-repeat: repeat;
+  opacity: 0.22;
+  pointer-events: none;
 }
 .hero .wrap{
   max-width: 640px;
   text-align: center;
+  position: relative;
+  z-index: 1;
 }
 .hero .wrap > div{
   margin: 0 auto;

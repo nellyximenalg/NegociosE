@@ -1,4 +1,4 @@
-// Lee la categoría inicial desde la URL 
+// Lee la categoría inicial desde la URL (ej. catalogo.html?cat=mujer)
 function getCategoryParam() {
   const params = new URLSearchParams(window.location.search);
   return params.get('cat') || 'todos';
@@ -6,9 +6,14 @@ function getCategoryParam() {
 
 function renderProducts(category) {
   const grid = document.getElementById('catalogGrid');
-  const list = category === 'todos'
-    ? PRODUCTS
-    : PRODUCTS.filter(p => p.category === category);
+  let list;
+  if (category === 'todos') {
+    list = PRODUCTS;
+  } else if (category === 'novedades') {
+    list = PRODUCTS.filter(p => p.isNew);
+  } else {
+    list = PRODUCTS.filter(p => p.category === category);
+  }
 
   grid.innerHTML = list.map(p => `
     <div class="prod-card">
