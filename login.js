@@ -34,6 +34,17 @@ function showSignup() {
 tabLogin.addEventListener('click', showLogin);
 tabSignup.addEventListener('click', showSignup);
 
+// Botones de "mostrar/ocultar contraseña"
+document.querySelectorAll('.input-toggle').forEach((btn) => {
+  btn.addEventListener('click', () => {
+    const input = document.getElementById(btn.dataset.toggle);
+    const showing = input.type === 'text';
+    input.type = showing ? 'password' : 'text';
+    btn.classList.toggle('is-visible', !showing);
+    btn.setAttribute('aria-label', showing ? 'Mostrar contraseña' : 'Ocultar contraseña');
+  });
+});
+
 // Login simulado
 // Siempre muestra el mensaje de "sesión iniciada" al entrar.
 loginForm.addEventListener('submit', (event) => {
