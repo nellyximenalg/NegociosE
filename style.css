@@ -945,6 +945,43 @@ footer{
 
 /* ---------- Catálogo ---------- */
 .catalog-page{ padding-top: 60px; }
+.catalog-search{
+  position: relative;
+  max-width: 420px;
+  margin-bottom: 24px;
+}
+.catalog-search-icon{
+  position: absolute;
+  left: 16px;
+  top: 50%;
+  transform: translateY(-50%);
+  font-size: 0.9rem;
+  opacity: 0.6;
+  pointer-events: none;
+}
+.catalog-search input{
+  width: 100%;
+  background: var(--surface);
+  border: var(--border);
+  color: var(--ivory);
+  padding: 12px 16px 12px 42px;
+  border-radius: 999px;
+  font-family: var(--body-font);
+  font-size: 0.92rem;
+  transition: border-color .2s;
+}
+.catalog-search input::placeholder{ color: var(--muted); }
+.catalog-search input:focus{
+  outline: none;
+  border-color: var(--gold);
+}
+.catalog-empty{
+  color: var(--muted);
+  font-family: var(--mono);
+  font-size: 0.9rem;
+  padding: 40px 0;
+  text-align: center;
+}
 .filter-tabs{
   display: flex;
   gap: 10px;

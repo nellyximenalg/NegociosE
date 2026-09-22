@@ -39,6 +39,11 @@
         </div>
       </div>
 
+      <div class="catalog-search">
+        <span class="catalog-search-icon" aria-hidden="true">🔍</span>
+        <input type="text" id="searchInput" placeholder="Buscar productos..." aria-label="Buscar productos">
+      </div>
+
       <div class="filter-tabs" id="filterTabs">
         <button type="button" class="filter-tab" data-cat="todos">Todos</button>
         <button type="button" class="filter-tab" data-cat="mujer">Mujer</button>
@@ -47,6 +52,7 @@
         <button type="button" class="filter-tab" data-cat="novedades">Novedades</button>
       </div>
 
+      <p class="catalog-empty" id="catalogEmpty" hidden>No encontramos productos que coincidan con tu búsqueda.</p>
       <div class="prod-grid catalog-grid" id="catalogGrid"></div>
     </div>
   </section>
