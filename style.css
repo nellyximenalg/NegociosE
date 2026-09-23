@@ -1027,14 +1027,15 @@ footer{
   align-items: start;
 }
 .product-detail-image{
-  height: 460px;
+  height: 560px;
   border-radius: 12px;
   position: relative;
   display:flex; align-items:center; justify-content:center;
+  background: var(--surface);
 }
 .product-main-photo{
   width:100%; height:100%;
-  object-fit: cover;
+  object-fit: contain;
   border-radius: 12px;
 }
 .placeholder-note{
@@ -1221,5 +1222,5 @@ footer{
 
 @media (max-width: 800px){
   .product-detail-grid{ grid-template-columns: 1fr; }
-  .product-detail-image{ height: 320px; }
+  .product-detail-image{ height: 420px; }
 }

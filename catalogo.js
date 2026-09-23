@@ -57,7 +57,7 @@ function renderProducts() {
 
   grid.innerHTML = list.map(p => `
     <div class="prod-card">
-      <a href="producto.html?id=${p.id}" class="prod-image" style="background:${p.gradient};"></a>
+      <a href="producto.html?id=${p.id}" class="prod-image" data-product-id="${p.id}" style="background:${p.gradient};"></a>
       <div class="prod-tag">
         <div style="display:flex;align-items:center;">
           <span class="hole"></span>
@@ -71,6 +71,8 @@ function renderProducts() {
       <a href="producto.html?id=${p.id}" class="btn btn-ghost prod-detail-btn">Ver detalles</a>
     </div>
   `).join('');
+
+  applyCardImages(grid);
 }
 
 // Actualiza la URL sin recargar la página, para poder compartir el link filtrado/buscado
