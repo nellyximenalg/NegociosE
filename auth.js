@@ -141,22 +141,9 @@ function renderProductCard(p) {
   `;
 }
 
-// Botón de "agregar rápido" desde la tarjeta: misma regla que en el detalle
-// del producto (simulado, y pide iniciar sesión si no hay sesión activa),
-// usando la talla y el color por defecto (los primeros de la lista).
-function quickAddToCart(product) {
-  if (!isLoggedIn()) {
-    const redirect = encodeURIComponent(`producto.html?id=${product.id}`);
-    window.location.href = `login.html?redirect=${redirect}`;
-    return;
-  }
-  const color = product.colors && product.colors[0];
-  const size = product.sizes && product.sizes[0];
-  const detail = [size ? `talla ${size.label}` : null, color ? `color ${color.name}` : null].filter(Boolean).join(', ');
-  showToast(`Agregado al carrito: ${product.name}${detail ? ' (' + detail + ')' : ''} (simulado).`);
-}
-
-// Conecta los botones "agregar rápido" (ícono de bolsa) de las tarjetas de un contenedor.
+// Botón de "agregar" desde la tarjeta: si no hay sesión, primero pide
+// iniciar sesión (igual que en el detalle del producto); si ya hay sesión,
+// abre una ventana para elegir color, talla y cantidad antes de agregar.
 function attachProductCardEvents(container) {
   if (!container || typeof PRODUCTS === 'undefined') return;
   container.querySelectorAll('.prod-add-btn').forEach(btn => {
@@ -164,7 +151,188 @@ function attachProductCardEvents(container) {
       event.preventDefault();
       const id = parseInt(btn.dataset.productId, 10);
       const product = PRODUCTS.find(p => p.id === id);
-      if (product) quickAddToCart(product);
+      if (!product) return;
+      if (!isLoggedIn()) {
+        const redirect = encodeURIComponent(`producto.html?id=${product.id}`);
+        window.location.href = `login.html?redirect=${redirect}`;
+        return;
+      }
+      openAddToCartModal(product);
     });
   });
+}
+
+// ---------- Ventana modal: elegir color, talla y cantidad antes de agregar ----------
+let addToCartModalEl = null;
+
+function buildAddToCartModal() {
+  const overlay = document.createElement('div');
+  overlay.className = 'modal-overlay';
+  overlay.id = 'addToCartModal';
+  overlay.innerHTML = `
+    <div class="modal-panel" role="dialog" aria-modal="true" aria-labelledby="modalProductName">
+      <button type="button" class="modal-close" aria-label="Cerrar">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M18 6 6 18"/><path d="M6 6l12 12"/></svg>
+      </button>
+      <div class="modal-product">
+        <div class="modal-product-image" id="modalProductImage"></div>
+        <div class="modal-product-info">
+          <p class="prod-sku" id="modalProductSku"></p>
+          <h3 id="modalProductName"></h3>
+          <p class="modal-product-price" id="modalProductPrice"></p>
+          <p class="price-per-unit" id="modalPricePerUnit" hidden></p>
+        </div>
+      </div>
+
+      <div class="option-group">
+        <span class="option-label">Color <span class="option-selected-name" id="modalColorName"></span></span>
+        <div class="option-swatches" id="modalColorOptions"></div>
+      </div>
+
+      <div class="option-group">
+        <span class="option-label">Talla <span class="option-selected-name" id="modalSizeName"></span></span>
+        <div class="option-pills" id="modalSizeOptions"></div>
+      </div>
+
+      <div class="add-to-cart-row">
+        <div class="qty-stepper">
+          <button type="button" class="qty-btn" id="modalQtyMinus" aria-label="Restar cantidad">−</button>
+          <input type="number" class="qty-input" id="modalQtyInput" value="1" min="1" max="20" inputmode="numeric">
+          <button type="button" class="qty-btn" id="modalQtyPlus" aria-label="Sumar cantidad">+</button>
+        </div>
+        <button type="button" class="btn btn-primary product-add-btn" id="modalConfirmAdd">Agregar al carrito</button>
+      </div>
+    </div>
+  `;
+  document.body.appendChild(overlay);
+
+  overlay.addEventListener('click', (event) => {
+    if (event.target === overlay) closeAddToCartModal();
+  });
+  overlay.querySelector('.modal-close').addEventListener('click', closeAddToCartModal);
+  document.addEventListener('keydown', (event) => {
+    if (event.key === 'Escape' && overlay.classList.contains('open')) closeAddToCartModal();
+  });
+
+  return overlay;
+}
+
+function closeAddToCartModal() {
+  if (!addToCartModalEl) return;
+  addToCartModalEl.classList.remove('open');
+  document.body.classList.remove('modal-open');
+}
+
+function openAddToCartModal(product) {
+  const overlay = addToCartModalEl || (addToCartModalEl = buildAddToCartModal());
+
+  let selectedColor = product.colors[0];
+  let selectedSize = product.sizes[0];
+  let quantity = 1;
+
+  const imageEl = overlay.querySelector('#modalProductImage');
+  const skuEl = overlay.querySelector('#modalProductSku');
+  const nameEl = overlay.querySelector('#modalProductName');
+  const priceEl = overlay.querySelector('#modalProductPrice');
+  const pricePerUnitEl = overlay.querySelector('#modalPricePerUnit');
+  const colorNameEl = overlay.querySelector('#modalColorName');
+  const colorOptionsEl = overlay.querySelector('#modalColorOptions');
+  const sizeNameEl = overlay.querySelector('#modalSizeName');
+  const sizeOptionsEl = overlay.querySelector('#modalSizeOptions');
+  const qtyInput = overlay.querySelector('#modalQtyInput');
+  const qtyMinus = overlay.querySelector('#modalQtyMinus');
+  const qtyPlus = overlay.querySelector('#modalQtyPlus');
+  const confirmBtn = overlay.querySelector('#modalConfirmAdd');
+
+  skuEl.textContent = product.sku;
+  nameEl.textContent = product.name;
+
+  function formatPrice(n) {
+    return n.toLocaleString('es-MX');
+  }
+
+  function renderPrice() {
+    priceEl.textContent = `$${formatPrice(product.price * quantity)} MXN`;
+    if (quantity > 1) {
+      pricePerUnitEl.textContent = `$${formatPrice(product.price)} MXN c/u × ${quantity}`;
+      pricePerUnitEl.hidden = false;
+    } else {
+      pricePerUnitEl.hidden = true;
+    }
+  }
+
+  function updateImage() {
+    imageEl.style.background = selectedColor.hex ? `linear-gradient(160deg, ${selectedColor.hex}, #1c1a17 140%)` : product.gradient;
+    imageEl.innerHTML = '';
+    const src = selectedColor.images && selectedColor.images[0];
+    if (!src) return;
+    const test = new Image();
+    test.onload = () => {
+      imageEl.style.background = 'none';
+      imageEl.innerHTML = `<img src="${src}" alt="${product.name}">`;
+    };
+    test.src = src;
+  }
+
+  function renderColors() {
+    colorOptionsEl.innerHTML = '';
+    product.colors.forEach(color => {
+      const swatch = document.createElement('button');
+      swatch.type = 'button';
+      swatch.className = 'option-swatch' + (color.name === selectedColor.name ? ' active' : '');
+      swatch.style.background = color.hex;
+      swatch.title = color.name;
+      swatch.setAttribute('aria-label', color.name);
+      swatch.addEventListener('click', () => {
+        selectedColor = color;
+        renderColors();
+        updateImage();
+      });
+      colorOptionsEl.appendChild(swatch);
+    });
+    colorNameEl.textContent = `· ${selectedColor.name}`;
+  }
+
+  function renderSizes() {
+    sizeOptionsEl.innerHTML = '';
+    product.sizes.forEach(size => {
+      const pill = document.createElement('button');
+      pill.type = 'button';
+      pill.className = 'option-pill' + (size.label === selectedSize.label ? ' active' : '');
+      pill.textContent = size.label;
+      pill.addEventListener('click', () => {
+        selectedSize = size;
+        renderSizes();
+      });
+      sizeOptionsEl.appendChild(pill);
+    });
+    sizeNameEl.textContent = `· ${selectedSize.label}`;
+  }
+
+  function setQuantity(n) {
+    quantity = Math.min(20, Math.max(1, n || 1));
+    qtyInput.value = quantity;
+    renderPrice();
+  }
+
+  qtyMinus.onclick = () => setQuantity(quantity - 1);
+  qtyPlus.onclick = () => setQuantity(quantity + 1);
+  qtyInput.oninput = () => {
+    const n = parseInt(qtyInput.value, 10);
+    if (!isNaN(n)) setQuantity(n);
+  };
+
+  confirmBtn.onclick = () => {
+    closeAddToCartModal();
+    const totalTxt = `$${formatPrice(product.price * quantity)} MXN`;
+    showToast(`Agregado al carrito: ${quantity} x ${product.name}, talla ${selectedSize.label}, color ${selectedColor.name} (${totalTxt}).`);
+  };
+
+  renderColors();
+  renderSizes();
+  setQuantity(1);
+  updateImage();
+
+  overlay.classList.add('open');
+  document.body.classList.add('modal-open');
 }
