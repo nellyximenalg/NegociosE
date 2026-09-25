@@ -55,24 +55,10 @@ function renderProducts() {
   }
   emptyState.hidden = true;
 
-  grid.innerHTML = list.map(p => `
-    <div class="prod-card">
-      <a href="producto.html?id=${p.id}" class="prod-image" data-product-id="${p.id}" style="background:${p.gradient};"></a>
-      <div class="prod-tag">
-        <div style="display:flex;align-items:center;">
-          <span class="hole"></span>
-          <div>
-            <div class="prod-name">${p.name}</div>
-            <div class="prod-sku">${p.sku}</div>
-          </div>
-        </div>
-        <span class="prod-price">$${p.price}</span>
-      </div>
-      <a href="producto.html?id=${p.id}" class="btn btn-ghost prod-detail-btn">Ver detalles</a>
-    </div>
-  `).join('');
+  grid.innerHTML = list.map(renderProductCard).join('');
 
   applyCardImages(grid);
+  attachProductCardEvents(grid);
 }
 
 // Actualiza la URL sin recargar la página, para poder compartir el link filtrado/buscado

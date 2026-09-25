@@ -65,15 +65,18 @@ if (localStorage.getItem('dahlia_just_logged_in') === 'true') {
   localStorage.removeItem('dahlia_just_logged_in');
 }
 
-// Nav: muestra "Iniciar sesión" o "Mi cuenta" según si hay sesión activa
+// Nav: el ícono de perfil apunta a "Mi cuenta" o "Iniciar sesión" según si hay sesión activa
 const navAuthLink = document.getElementById('navAuthLink');
 if (navAuthLink) {
   if (isLoggedIn()) {
-    navAuthLink.textContent = 'Mi cuenta';
     navAuthLink.setAttribute('href', 'perfil.html');
+    navAuthLink.setAttribute('aria-label', 'Mi cuenta');
+    navAuthLink.setAttribute('title', 'Mi cuenta');
+    navAuthLink.classList.add('is-authenticated');
   } else {
-    navAuthLink.textContent = 'Iniciar sesión';
     navAuthLink.setAttribute('href', 'login.html');
+    navAuthLink.setAttribute('aria-label', 'Iniciar sesión');
+    navAuthLink.setAttribute('title', 'Iniciar sesión');
   }
 }
 
@@ -117,44 +120,16 @@ if (contactForm) {
 const featuredGrid = document.getElementById('featuredGrid');
 if (featuredGrid && typeof PRODUCTS !== 'undefined') {
   const featured = PRODUCTS.filter(p => p.featured);
-  featuredGrid.innerHTML = featured.map(p => `
-    <div class="prod-card">
-      <a href="producto.html?id=${p.id}" class="prod-image" data-product-id="${p.id}" style="background:${p.gradient};"></a>
-      <div class="prod-tag">
-        <div style="display:flex;align-items:center;">
-          <span class="hole"></span>
-          <div>
-            <div class="prod-name">${p.name}</div>
-            <div class="prod-sku">${p.sku}</div>
-          </div>
-        </div>
-        <span class="prod-price">$${p.price}</span>
-      </div>
-      <a href="producto.html?id=${p.id}" class="btn btn-ghost prod-detail-btn">Ver detalles</a>
-    </div>
-  `).join('');
+  featuredGrid.innerHTML = featured.map(renderProductCard).join('');
   applyCardImages(featuredGrid);
+  attachProductCardEvents(featuredGrid);
 }
 
 // "Recién llegado" en la landing: renderiza productos de la categoría novedades
 const novedadesGrid = document.getElementById('novedadesGrid');
 if (novedadesGrid && typeof PRODUCTS !== 'undefined') {
   const novedades = PRODUCTS.filter(p => p.isNew);
-  novedadesGrid.innerHTML = novedades.map(p => `
-    <div class="prod-card">
-      <a href="producto.html?id=${p.id}" class="prod-image" data-product-id="${p.id}" style="background:${p.gradient};"></a>
-      <div class="prod-tag">
-        <div style="display:flex;align-items:center;">
-          <span class="hole"></span>
-          <div>
-            <div class="prod-name">${p.name}</div>
-            <div class="prod-sku">${p.sku}</div>
-          </div>
-        </div>
-        <span class="prod-price">$${p.price}</span>
-      </div>
-      <a href="producto.html?id=${p.id}" class="btn btn-ghost prod-detail-btn">Ver detalles</a>
-    </div>
-  `).join('');
+  novedadesGrid.innerHTML = novedades.map(renderProductCard).join('');
   applyCardImages(novedadesGrid);
+  attachProductCardEvents(novedadesGrid);
 }
