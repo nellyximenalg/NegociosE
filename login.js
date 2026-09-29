@@ -69,11 +69,13 @@ signupForm.addEventListener('submit', (event) => {
 
   const name = document.getElementById('signupName').value.trim();
   const email = document.getElementById('signupEmail').value.trim();
+  const phone = document.getElementById('signupPhone').value.trim();
+  const birthdate = document.getElementById('signupBirthdate').value;
 
-  // Guardamos el nombre para poder mostrarlo después en el perfil 
+  // Guardamos los datos para poder mostrarlos después en el perfil
   if (email) {
     const accounts = JSON.parse(localStorage.getItem('dahlia_accounts') || '{}');
-    accounts[email] = { name };
+    accounts[email] = { ...(accounts[email] || {}), name, phone, birthdate };
     localStorage.setItem('dahlia_accounts', JSON.stringify(accounts));
   }
 

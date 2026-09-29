@@ -202,8 +202,14 @@ if (!product) {
       window.location.href = `login.html?redirect=${redirect}`;
       return;
     }
+    const sizeObj = product.sizes.find(s => s.label === selectedSize);
+    const colorObj = product.colors.find(c => c.name === selectedColor);
+    addToCart(product, sizeObj, colorObj, quantity);
     const totalTxt = `$${formatPrice(product.price * quantity)} MXN`;
     productMsg.textContent = `Agregado al carrito: ${quantity} x talla ${selectedSize}, color ${selectedColor} (${totalTxt}).`;
     productMsg.hidden = false;
   });
+
+  // ---------- Productos relacionados ----------
+  renderRelatedProducts(product, document.getElementById('relatedGrid'));
 }

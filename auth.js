@@ -4,6 +4,85 @@ function isLoggedIn() {
   return localStorage.getItem('dahlia_logged_in') === 'true';
 }
 
+// ---------- Carrito real (guardado en localStorage, ligado a la cuenta) ----------
+function formatPrice(n) {
+  return n.toLocaleString('es-MX');
+}
+
+function getCartKey() {
+  const email = localStorage.getItem('dahlia_user_email') || 'invitada';
+  return `dahlia_cart_${email}`;
+}
+
+function getCart() {
+  if (!isLoggedIn()) return [];
+  try {
+    return JSON.parse(localStorage.getItem(getCartKey())) || [];
+  } catch (e) {
+    return [];
+  }
+}
+
+function saveCart(cart) {
+  localStorage.setItem(getCartKey(), JSON.stringify(cart));
+  updateCartBadge();
+}
+
+// Agrega un producto al carrito (o suma la cantidad si ya estaba esa combinación
+// exacta de talla y color).
+function addToCart(product, size, color, quantity) {
+  const cart = getCart();
+  const lineId = `${product.id}__${size.label}__${color.name}`;
+  const existing = cart.find(item => item.lineId === lineId);
+  if (existing) {
+    existing.qty = Math.min(20, existing.qty + quantity);
+  } else {
+    cart.push({
+      lineId,
+      productId: product.id,
+      name: product.name,
+      sku: product.sku,
+      price: product.price,
+      size: size.label,
+      color: color.name,
+      image: (color.images && color.images[0]) || '',
+      gradient: product.gradient,
+      qty: quantity
+    });
+  }
+  saveCart(cart);
+}
+
+function updateCartItemQty(lineId, qty) {
+  const cart = getCart();
+  const item = cart.find(i => i.lineId === lineId);
+  if (!item) return;
+  item.qty = Math.max(1, Math.min(20, qty));
+  saveCart(cart);
+}
+
+function removeCartItem(lineId) {
+  const cart = getCart().filter(i => i.lineId !== lineId);
+  saveCart(cart);
+}
+
+function getCartCount() {
+  return getCart().reduce((sum, i) => sum + i.qty, 0);
+}
+
+function getCartTotals() {
+  const cart = getCart();
+  const subtotal = cart.reduce((sum, i) => sum + i.price * i.qty, 0);
+  return { subtotal, total: subtotal };
+}
+
+// Actualiza la insignia numérica del carrito en el header, en todas las páginas.
+function updateCartBadge() {
+  document.querySelectorAll('#cartCount').forEach(el => {
+    el.textContent = getCartCount();
+  });
+}
+
 
 function getDisplayName() {
   const email = localStorage.getItem('dahlia_user_email');
@@ -11,6 +90,20 @@ function getDisplayName() {
   const accounts = JSON.parse(localStorage.getItem('dahlia_accounts') || '{}');
   if (accounts[email] && accounts[email].name) return accounts[email].name;
   return email.split('@')[0];
+}
+
+// Datos guardados de la cuenta (nombre, teléfono, fecha de nacimiento,
+// dirección, método de pago), todo ligado al correo de la sesión actual.
+function getAccount(email) {
+  const accounts = JSON.parse(localStorage.getItem('dahlia_accounts') || '{}');
+  return accounts[email] || {};
+}
+
+function saveAccount(email, patch) {
+  if (!email) return;
+  const accounts = JSON.parse(localStorage.getItem('dahlia_accounts') || '{}');
+  accounts[email] = { ...(accounts[email] || {}), ...patch };
+  localStorage.setItem('dahlia_accounts', JSON.stringify(accounts));
 }
 
 // Validación simple de correo (formato básico: algo@algo.algo)
@@ -247,10 +340,6 @@ function openAddToCartModal(product) {
   skuEl.textContent = product.sku;
   nameEl.textContent = product.name;
 
-  function formatPrice(n) {
-    return n.toLocaleString('es-MX');
-  }
-
   function renderPrice() {
     priceEl.textContent = `$${formatPrice(product.price * quantity)} MXN`;
     if (quantity > 1) {
@@ -323,6 +412,7 @@ function openAddToCartModal(product) {
   };
 
   confirmBtn.onclick = () => {
+    addToCart(product, selectedSize, selectedColor, quantity);
     closeAddToCartModal();
     const totalTxt = `$${formatPrice(product.price * quantity)} MXN`;
     showToast(`Agregado al carrito: ${quantity} x ${product.name}, talla ${selectedSize.label}, color ${selectedColor.name} (${totalTxt}).`);
@@ -336,3 +426,106 @@ function openAddToCartModal(product) {
   overlay.classList.add('open');
   document.body.classList.add('modal-open');
 }
+
+// ---------- Productos relacionados ("Nuestros clientes también vieron") ----------
+// Selección determinista (no aleatoria) a partir del id del producto actual,
+// para que la lista no cambie en cada recarga: primero busca en la misma
+// categoría y, si no hay suficientes, completa con el resto del catálogo.
+function getRelatedProducts(product, count = 4) {
+  if (typeof PRODUCTS === 'undefined') return [];
+  const rotate = (arr, id) => {
+    if (arr.length === 0) return [];
+    const start = id % arr.length;
+    return arr.slice(start).concat(arr.slice(0, start));
+  };
+  const sameCategory = PRODUCTS.filter(p => p.id !== product.id && p.category === product.category);
+  const picked = rotate(sameCategory, product.id).slice(0, count);
+  if (picked.length < count) {
+    const rest = PRODUCTS.filter(p => p.id !== product.id && p.category !== product.category);
+    picked.push(...rotate(rest, product.id).slice(0, count - picked.length));
+  }
+  return picked;
+}
+
+function renderRelatedProducts(product, container, count = 4) {
+  if (!container) return;
+  const related = getRelatedProducts(product, count);
+  container.innerHTML = related.map(renderProductCard).join('');
+  applyCardImages(container);
+  attachProductCardEvents(container);
+}
+
+// ---------- Ventana modal: términos y condiciones (antes de "Ir a pagar") ----------
+let termsModalEl = null;
+
+function buildTermsModal() {
+  const overlay = document.createElement('div');
+  overlay.className = 'modal-overlay';
+  overlay.id = 'termsModal';
+  overlay.innerHTML = `
+    <div class="modal-panel modal-panel--terms" role="dialog" aria-modal="true" aria-labelledby="termsTitle">
+      <button type="button" class="modal-close" aria-label="Cerrar">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M18 6 6 18"/><path d="M6 6l12 12"/></svg>
+      </button>
+      <h3 id="termsTitle">Términos y condiciones</h3>
+      <div class="terms-body">
+        <p>Al crear una cuenta o realizar una compra en Dahlia, aceptas los siguientes términos y condiciones. Te recomendamos leerlos antes de continuar.</p>
+        <p><strong>1. Productos y precios:</strong> todos los precios se muestran en pesos mexicanos (MXN) e incluyen IVA. Dahlia se reserva el derecho de modificar precios, promociones y disponibilidad de productos sin previo aviso. Las imágenes son ilustrativas; el color real puede variar ligeramente según tu pantalla.</p>
+        <p><strong>2. Cuenta y registro:</strong> eres responsable de la veracidad de los datos que proporcionas (nombre, correo, dirección) y de mantener la confidencialidad de tu contraseña. Dahlia no comparte tus datos personales con terceros sin tu consentimiento, salvo cuando sea necesario para procesar tu pedido o por requerimiento legal.</p>
+        <p><strong>3. Proceso de compra y pago:</strong> al confirmar un pedido generas una oferta de compra sujeta a disponibilidad de inventario. Aceptamos las formas de pago indicadas en el sitio; el cargo se procesa de forma segura y el pedido se confirma una vez validado el pago.</p>
+        <p><strong>4. Envíos:</strong> los tiempos de entrega son estimados y pueden variar según tu ubicación y el servicio de paquetería. Dahlia no se hace responsable por retrasos ocasionados por la paquetería, desastres naturales o causas de fuerza mayor.</p>
+        <p><strong>5. Cambios y devoluciones:</strong> cuentas con 30 días naturales a partir de la recepción del pedido para solicitar un cambio o devolución, siempre que el producto conserve sus etiquetas originales y no haya sido usado. Consulta la sección "Cambios y devoluciones" para más detalles.</p>
+        <p><strong>6. Propiedad intelectual:</strong> el contenido de este sitio (logotipo, textos, fotografías y diseño) es propiedad de Dahlia y no puede reproducirse sin autorización.</p>
+        <p><strong>7. Modificaciones:</strong> Dahlia puede actualizar estos términos en cualquier momento; los cambios entran en vigor al publicarse en el sitio.</p>
+        <p>Si tienes dudas sobre estos términos, puedes contactarnos desde la sección "Contacto".</p>
+      </div>
+      <label class="checkbox-field">
+        <input type="checkbox" id="termsCheckbox"> He leído y acepto los términos y condiciones.
+      </label>
+      <div class="modal-actions">
+        <button type="button" class="btn btn-ghost" id="termsCancel">Cancelar</button>
+        <button type="button" class="btn btn-primary" id="termsAccept" disabled>Aceptar y continuar</button>
+      </div>
+    </div>
+  `;
+  document.body.appendChild(overlay);
+
+  overlay.addEventListener('click', (event) => {
+    if (event.target === overlay) closeTermsModal();
+  });
+  overlay.querySelector('.modal-close').addEventListener('click', closeTermsModal);
+  overlay.querySelector('#termsCancel').addEventListener('click', closeTermsModal);
+  document.addEventListener('keydown', (event) => {
+    if (event.key === 'Escape' && overlay.classList.contains('open')) closeTermsModal();
+  });
+
+  return overlay;
+}
+
+function closeTermsModal() {
+  if (!termsModalEl) return;
+  termsModalEl.classList.remove('open');
+  document.body.classList.remove('modal-open');
+}
+
+// Abre el modal de términos y condiciones; si la persona acepta, ejecuta onAccept.
+function openTermsModal(onAccept) {
+  const overlay = termsModalEl || (termsModalEl = buildTermsModal());
+  const checkbox = overlay.querySelector('#termsCheckbox');
+  const acceptBtn = overlay.querySelector('#termsAccept');
+
+  checkbox.checked = false;
+  acceptBtn.disabled = true;
+  checkbox.onchange = () => { acceptBtn.disabled = !checkbox.checked; };
+
+  acceptBtn.onclick = () => {
+    closeTermsModal();
+    if (onAccept) onAccept();
+  };
+
+  overlay.classList.add('open');
+  document.body.classList.add('modal-open');
+}
+
+// Mantiene la insignia del carrito al día en cuanto carga cualquier página.
+updateCartBadge();

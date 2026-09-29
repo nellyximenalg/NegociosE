@@ -35,48 +35,164 @@
     </div>
   </header>
 
-  <section class="section placeholder-section">
+  <section class="section account-page">
     <div class="wrap">
-      <span class="eyebrow">Tu perfil</span>
-      <h2 class="placeholder-title" id="profileGreeting">Hola</h2>
-      <p class="placeholder-text" id="profileEmailText">Cargando tu información...</p>
+      <div class="account-header">
+        <span class="eyebrow">Tu perfil</span>
+        <h1 id="profileGreeting">Hola</h1>
+        <p id="profileEmailText">Cargando tu información...</p>
+      </div>
 
-      <div class="profile-sections">
-        <div class="profile-card">
-          <h4>Mis datos</h4>
-          <p id="profileDataText">—</p>
-        </div>
-        <div class="profile-card">
-          <h4>Mis compras</h4>
-          <p>Próximamente vas a poder ver aquí el historial de tus pedidos.</p>
+      <div class="account-layout" id="accountLayout" hidden>
+        <nav class="account-nav">
+          <button type="button" class="account-nav-btn active" data-panel="pedidos">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M20 7 12 3 4 7v10l8 4 8-4V7Z"/><path d="M4 7l8 4 8-4"/><path d="M12 11v10"/></svg>
+            Pedidos
+          </button>
+          <button type="button" class="account-nav-btn" data-panel="cuenta">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><circle cx="12" cy="12" r="3"/><path d="M19.4 15a1.65 1.65 0 0 0 .33 1.82l.06.06a2 2 0 1 1-2.83 2.83l-.06-.06a1.65 1.65 0 0 0-1.82-.33 1.65 1.65 0 0 0-1 1.51V21a2 2 0 0 1-4 0v-.09A1.65 1.65 0 0 0 9 19.4a1.65 1.65 0 0 0-1.82.33l-.06.06a2 2 0 1 1-2.83-2.83l.06-.06a1.65 1.65 0 0 0 .33-1.82 1.65 1.65 0 0 0-1.51-1H3a2 2 0 0 1 0-4h.09A1.65 1.65 0 0 0 4.6 9a1.65 1.65 0 0 0-.33-1.82l-.06-.06a2 2 0 1 1 2.83-2.83l.06.06a1.65 1.65 0 0 0 1.82.33H9a1.65 1.65 0 0 0 1-1.51V3a2 2 0 0 1 4 0v.09a1.65 1.65 0 0 0 1 1.51 1.65 1.65 0 0 0 1.82-.33l.06-.06a2 2 0 1 1 2.83 2.83l-.06.06a1.65 1.65 0 0 0-.33 1.82V9a1.65 1.65 0 0 0 1.51 1H21a2 2 0 0 1 0 4h-.09a1.65 1.65 0 0 0-1.51 1Z"/></svg>
+            Configuración de la cuenta
+          </button>
+          <button type="button" class="account-nav-btn account-nav-logout" id="logoutBtn">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M9 21H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h4"/><path d="M16 17l5-5-5-5"/><path d="M21 12H9"/></svg>
+            Cerrar sesión
+          </button>
+        </nav>
+
+        <div class="account-content">
+          <!-- Pedidos -->
+          <div class="account-panel active" id="panel-pedidos">
+            <h2 class="account-panel-title">Pedidos</h2>
+            <div class="account-card">
+              <p class="placeholder-text" style="margin-bottom:0;">Próximamente vas a poder ver aquí el historial de tus pedidos.</p>
+            </div>
+          </div>
+
+          <!-- Configuración de la cuenta -->
+          <div class="account-panel" id="panel-cuenta">
+            <h2 class="account-panel-title">Configuración de la cuenta</h2>
+
+            <div class="account-card">
+              <h3>Editar mi información</h3>
+              <form id="infoForm">
+                <div class="form-row-2">
+                  <div class="login-field">
+                    <label for="infoName">Nombre</label>
+                    <input type="text" id="infoName">
+                  </div>
+                  <div class="login-field">
+                    <label for="infoEmail">Correo</label>
+                    <input type="text" id="infoEmail" disabled>
+                  </div>
+                </div>
+                <div class="form-row-2">
+                  <div class="login-field">
+                    <label for="infoPhone">Teléfono</label>
+                    <input type="tel" id="infoPhone" placeholder="10 dígitos" inputmode="tel">
+                  </div>
+                  <div class="login-field">
+                    <label for="infoBirthdate">Fecha de nacimiento</label>
+                    <input type="date" id="infoBirthdate">
+                  </div>
+                </div>
+                <button type="submit" class="btn btn-primary">Guardar cambios</button>
+                <p class="contact-msg" id="infoMsg" hidden></p>
+              </form>
+            </div>
+
+            <div class="account-card">
+              <h3>Contraseña</h3>
+              <form id="passwordForm">
+                <div class="form-row-2">
+                  <div class="login-field">
+                    <label for="newPassword">Nueva contraseña</label>
+                    <input type="password" id="newPassword" placeholder="••••••••">
+                  </div>
+                  <div class="login-field">
+                    <label for="confirmPassword">Confirmar contraseña</label>
+                    <input type="password" id="confirmPassword" placeholder="••••••••">
+                  </div>
+                </div>
+                <button type="submit" class="btn btn-primary">Actualizar contraseña</button>
+                <p class="contact-msg" id="passwordMsg" hidden></p>
+              </form>
+            </div>
+
+            <div class="account-card">
+              <h3>Dirección de envío</h3>
+              <form id="addressForm">
+                <div class="login-field">
+                  <label for="addrStreet">Calle y número</label>
+                  <input type="text" id="addrStreet" placeholder="Calle, número exterior/interior">
+                </div>
+                <div class="form-row-2">
+                  <div class="login-field">
+                    <label for="addrColonia">Colonia</label>
+                    <input type="text" id="addrColonia">
+                  </div>
+                  <div class="login-field">
+                    <label for="addrCity">Ciudad</label>
+                    <input type="text" id="addrCity">
+                  </div>
+                </div>
+                <div class="form-row-2">
+                  <div class="login-field">
+                    <label for="addrState">Estado</label>
+                    <input type="text" id="addrState">
+                  </div>
+                  <div class="login-field">
+                    <label for="addrZip">Código postal</label>
+                    <input type="text" id="addrZip" inputmode="numeric" maxlength="5">
+                  </div>
+                </div>
+                <div class="login-field">
+                  <label for="addrCountry">País</label>
+                  <input type="text" id="addrCountry" value="México">
+                </div>
+                <button type="submit" class="btn btn-primary">Guardar dirección</button>
+                <p class="contact-msg" id="addressMsg" hidden></p>
+              </form>
+            </div>
+
+            <div class="account-card">
+              <h3>Método de pago</h3>
+              <p class="account-card-note">Simulado: no se procesa ningún cobro real. Por seguridad, solo guardamos los últimos 4 dígitos de la tarjeta.</p>
+              <div id="savedCardInfo" class="saved-card" hidden></div>
+              <form id="paymentForm">
+                <div class="login-field">
+                  <label for="cardName">Nombre en la tarjeta</label>
+                  <input type="text" id="cardName">
+                </div>
+                <div class="login-field">
+                  <label for="cardNumber">Número de tarjeta</label>
+                  <input type="text" id="cardNumber" placeholder="•••• •••• •••• ••••" inputmode="numeric" maxlength="19">
+                </div>
+                <div class="form-row-2">
+                  <div class="login-field">
+                    <label for="cardExpiry">Vencimiento</label>
+                    <input type="text" id="cardExpiry" placeholder="MM/AA" maxlength="5">
+                  </div>
+                  <div class="login-field">
+                    <label for="cardCvv">CVV</label>
+                    <input type="password" id="cardCvv" inputmode="numeric" maxlength="4" placeholder="•••">
+                  </div>
+                </div>
+                <button type="submit" class="btn btn-primary">Guardar método de pago</button>
+                <p class="contact-msg" id="paymentMsg" hidden></p>
+              </form>
+            </div>
+          </div>
         </div>
       </div>
 
-      <button class="btn btn-ghost" id="logoutBtn">Cerrar sesión</button>
+      <div class="cart-placeholder" id="loggedOutPanel" hidden>
+        <a href="login.html?redirect=perfil.html" class="btn btn-primary">Iniciar sesión</a>
+      </div>
     </div>
   </section>
 
   <script src="auth.js"></script>
   <script src="script.js"></script>
-  <script>
-    const loggedIn = isLoggedIn();
-    const savedEmail = localStorage.getItem('dahlia_user_email') || '';
-    const rawName = getDisplayName();
-    const displayName = loggedIn ? (rawName === 'Invitada/o' ? 'Cliente Dahlia' : rawName) : 'Invitada/o';
-
-    document.getElementById('profileGreeting').textContent = loggedIn ? `Hola, ${displayName}` : 'No hay sesión activa';
-    document.getElementById('profileEmailText').textContent = loggedIn
-      ? (savedEmail ? `Sesión iniciada como: ${savedEmail}` : 'Sesión iniciada (sin correo registrado).')
-      : 'Inicia sesión para ver tu perfil.';
-    document.getElementById('profileDataText').textContent = loggedIn
-      ? `Nombre: ${displayName} · Correo: ${savedEmail || 'No proporcionado'}`
-      : 'Sin datos todavía.';
-
-    document.getElementById('logoutBtn').addEventListener('click', () => {
-      localStorage.removeItem('dahlia_logged_in');
-      localStorage.removeItem('dahlia_user_email');
-      window.location.href = 'index.html';
-    });
-  </script>
+  <script src="perfil.js"></script>
 </body>
 </html>
