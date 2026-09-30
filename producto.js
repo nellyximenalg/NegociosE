@@ -3,7 +3,7 @@ function getProductId() {
   return parseInt(params.get('id'), 10);
 }
 
-const product = PRODUCTS.find(p => p.id === getProductId());
+const product = getStoreProducts().find(p => p.id === getProductId());
 
 if (!product) {
   document.getElementById('productRoot').innerHTML =
@@ -14,6 +14,7 @@ if (!product) {
   document.getElementById('productSku').textContent = product.sku;
   document.getElementById('productName').textContent = product.name;
   document.getElementById('productDesc').textContent = product.description;
+  document.getElementById('productBadges').innerHTML = renderProductBadges(product);
 
   // ---------- Precio y cantidad ----------
   const priceEl = document.getElementById('productPrice');
@@ -28,10 +29,15 @@ if (!product) {
   }
 
   function renderPrice() {
-    const total = product.price * quantity;
-    priceEl.textContent = `$${formatPrice(total)} MXN`;
+    const unitPrice = getEffectivePrice(product);
+    const total = unitPrice * quantity;
+    if (isPromoActive(product) && product.discountPrice) {
+      priceEl.innerHTML = `<span class="prod-price-old">$${formatPrice(product.price)} MXN</span> $${formatPrice(total)} MXN`;
+    } else {
+      priceEl.textContent = `$${formatPrice(total)} MXN`;
+    }
     if (quantity > 1) {
-      pricePerUnitEl.textContent = `$${formatPrice(product.price)} MXN c/u × ${quantity}`;
+      pricePerUnitEl.textContent = `$${formatPrice(unitPrice)} MXN c/u × ${quantity}`;
       pricePerUnitEl.hidden = false;
     } else {
       pricePerUnitEl.hidden = true;
@@ -133,7 +139,7 @@ if (!product) {
   let selectedSize = product.sizes[0].label;
 
   function renderMeasurements(size) {
-    if (!size.measurements) {
+    if (!size.measurements || Object.keys(size.measurements).length === 0) {
       measurementsBox.hidden = true;
       measurementsBox.innerHTML = '';
       return;
@@ -205,7 +211,7 @@ if (!product) {
     const sizeObj = product.sizes.find(s => s.label === selectedSize);
     const colorObj = product.colors.find(c => c.name === selectedColor);
     addToCart(product, sizeObj, colorObj, quantity);
-    const totalTxt = `$${formatPrice(product.price * quantity)} MXN`;
+    const totalTxt = `$${formatPrice(getEffectivePrice(product) * quantity)} MXN`;
     productMsg.textContent = `Agregado al carrito: ${quantity} x talla ${selectedSize}, color ${selectedColor} (${totalTxt}).`;
     productMsg.hidden = false;
   });

@@ -1,0 +1,88 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Dahlia — Panel de administrador</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Bebas+Neue&family=Work+Sans:wght@400;500;600&family=IBM+Plex+Mono:wght@500&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="style.css">
+</head>
+<body>
+
+  <header class="admin-topbar">
+    <a href="inicio.html#inicio" class="logo"><svg class="logo-flower" width="16" height="16" viewBox="0 0 32 32" fill="none" xmlns="http://www.w3.org/2000/svg" aria-hidden="true"><circle cx="16" cy="9" r="6" fill="var(--dahlia)"/><circle cx="23" cy="16" r="6" fill="var(--gold)"/><circle cx="16" cy="23" r="6" fill="var(--dahlia)"/><circle cx="9" cy="16" r="6" fill="var(--gold)"/><circle cx="16" cy="16" r="4.5" fill="var(--bg)"/></svg>DAHLIA</a>
+    <span class="admin-topbar-tag">Panel de administrador</span>
+    <div class="admin-topbar-actions">
+      <a href="inicio.html#inicio" class="btn btn-ghost btn-sm">Ver tienda</a>
+      <button type="button" class="btn btn-ghost btn-sm" id="adminLogoutBtn">Cerrar sesión</button>
+    </div>
+  </header>
+
+  <div class="admin-layout">
+    <aside class="admin-sidebar">
+      <nav class="admin-nav" id="adminNav">
+        <button type="button" class="admin-nav-link active" data-view="resumen">Resumen</button>
+        <button type="button" class="admin-nav-link" data-view="productos">Productos</button>
+        <button type="button" class="admin-nav-link" data-view="pedidos">Pedidos</button>
+        <button type="button" class="admin-nav-link" data-view="promociones">Promociones</button>
+      </nav>
+    </aside>
+
+    <main class="admin-main">
+
+      <section class="admin-view active" id="view-resumen">
+        <h1>Resumen</h1>
+        <div class="admin-stats" id="adminStats"></div>
+      </section>
+
+      <section class="admin-view" id="view-productos">
+        <div class="admin-view-head">
+          <h1>Productos</h1>
+          <button type="button" class="btn btn-primary" id="btnAddProduct">+ Agregar producto</button>
+        </div>
+        <div class="admin-table-wrap">
+          <table class="admin-table">
+            <thead>
+              <tr><th></th><th>Nombre</th><th>SKU</th><th>Categoría</th><th>Precio</th><th>Etiquetas</th><th></th></tr>
+            </thead>
+            <tbody id="adminProductsBody"></tbody>
+          </table>
+        </div>
+      </section>
+
+      <section class="admin-view" id="view-pedidos">
+        <h1>Pedidos</h1>
+        <p class="admin-hint">Vista simulada: todavía no hay checkout real, así que estos pedidos son de ejemplo.</p>
+        <div class="admin-table-wrap">
+          <table class="admin-table">
+            <thead><tr><th>Pedido</th><th>Cliente</th><th>Productos</th><th>Total</th><th>Estado</th></tr></thead>
+            <tbody id="adminOrdersBody"></tbody>
+          </table>
+        </div>
+      </section>
+
+      <section class="admin-view" id="view-promociones">
+        <div class="admin-view-head">
+          <h1>Promociones</h1>
+          <button type="button" class="btn btn-primary" id="btnAddPromo">+ Agregar promoción</button>
+        </div>
+        <p class="admin-hint">Elige un producto, el porcentaje y la vigencia. También puedes marcar "Oferta" desde la sección Productos.</p>
+        <p class="admin-hint" id="adminPromosEmpty" hidden>Todavía no tienes ninguna promoción configurada.</p>
+        <div class="admin-table-wrap">
+          <table class="admin-table">
+            <thead><tr><th></th><th>Producto</th><th>Precio normal</th><th>% Descuento</th><th>Precio de oferta</th><th>Vigencia</th><th>Estado</th><th></th></tr></thead>
+            <tbody id="adminPromosBody"></tbody>
+          </table>
+        </div>
+      </section>
+
+    </main>
+  </div>
+
+  <script src="auth.js"></script>
+  <script src="products.js"></script>
+  <script src="admin.js"></script>
+</body>
+</html>

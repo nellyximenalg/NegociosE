@@ -51,12 +51,14 @@ loginForm.addEventListener('submit', (event) => {
   event.preventDefault();
 
   const email = document.getElementById('loginEmail').value.trim();
+  const isAdminAccount = email.toLowerCase() === ADMIN_EMAIL;
 
   localStorage.setItem('dahlia_logged_in', 'true');
   localStorage.setItem('dahlia_user_email', email);
+  localStorage.setItem('dahlia_user_role', isAdminAccount ? 'admin' : 'cliente');
   localStorage.setItem('dahlia_just_logged_in', 'true');
 
-  window.location.href = getRedirectTarget();
+  window.location.href = isAdminAccount ? 'admin.html' : getRedirectTarget();
 });
 
 // Registro simulado: ningún campo es obligatorio ni se valida. No inicia

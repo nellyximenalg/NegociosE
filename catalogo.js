@@ -22,13 +22,14 @@ let currentCategory = getCategoryParam();
 let currentQuery = getSearchParam();
 
 function getFilteredProducts() {
+  const allProducts = getStoreProducts();
   let list;
   if (currentCategory === 'todos') {
-    list = PRODUCTS;
+    list = allProducts;
   } else if (currentCategory === 'novedades') {
-    list = PRODUCTS.filter(p => p.isNew);
+    list = allProducts.filter(p => p.isNew);
   } else {
-    list = PRODUCTS.filter(p => p.category === currentCategory);
+    list = allProducts.filter(p => p.category === currentCategory);
   }
 
   const query = normalize(currentQuery.trim());

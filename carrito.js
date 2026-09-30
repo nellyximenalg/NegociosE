@@ -57,7 +57,7 @@ function renderCart() {
 // la que se guardó cuando se agregó al carrito), para que si luego subes o
 // corriges fotos, el carrito las muestre sin tener que volver a agregar el producto.
 function getItemImage(item) {
-  const product = (typeof PRODUCTS !== 'undefined') ? PRODUCTS.find(p => p.id === item.productId) : null;
+  const product = (typeof PRODUCTS !== 'undefined') ? getStoreProducts().find(p => p.id === item.productId) : null;
   const color = product && product.colors ? product.colors.find(c => c.name === item.color) : null;
   const liveImage = color && color.images && color.images[0];
   return liveImage || item.image || '';

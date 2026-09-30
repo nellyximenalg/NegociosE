@@ -4,6 +4,55 @@ function isLoggedIn() {
   return localStorage.getItem('dahlia_logged_in') === 'true';
 }
 
+// ---------- Rol de administrador (simulado) ----------
+const ADMIN_EMAIL = 'admin@dahlia.com';
+
+function isAdmin() {
+  return isLoggedIn() && localStorage.getItem('dahlia_user_role') === 'admin';
+}
+
+// Una promoción solo cuenta si el producto está marcado "Oferta" Y, si tiene
+// fechas de vigencia, hoy cae dentro de ese rango (sin fechas = siempre activa).
+function isPromoActive(product) {
+  if (!product.onSale) return false;
+  const today = new Date().toISOString().slice(0, 10);
+  if (product.saleStart && today < product.saleStart) return false;
+  if (product.saleEnd && today > product.saleEnd) return false;
+  return true;
+}
+
+// Precio a usar: si el producto está en oferta vigente, el precio con descuento.
+function getEffectivePrice(product) {
+  if (isPromoActive(product) && product.discountPrice) return product.discountPrice;
+  return product.price;
+}
+
+// ---------- Catálogo con los cambios del admin (simulado, guardado en localStorage) ----------
+function getAdminOverrides() {
+  try {
+    const raw = JSON.parse(localStorage.getItem('dahlia_admin_overrides'));
+    return Object.assign({ edits: {}, deletes: [], added: [] }, raw || {});
+  } catch (e) {
+    return { edits: {}, deletes: [], added: [] };
+  }
+}
+
+function saveAdminOverrides(overrides) {
+  localStorage.setItem('dahlia_admin_overrides', JSON.stringify(overrides));
+}
+
+// Devuelve el catálogo completo tal como debe verse en la tienda: los
+// productos originales (con las ediciones del admin aplicadas y sin los
+// que haya eliminado) más los productos nuevos que el admin haya agregado.
+function getStoreProducts() {
+  if (typeof PRODUCTS === 'undefined') return [];
+  const ov = getAdminOverrides();
+  const base = PRODUCTS
+    .filter(p => !ov.deletes.includes(p.id))
+    .map(p => (ov.edits[p.id] ? Object.assign({}, p, ov.edits[p.id]) : p));
+  return base.concat(ov.added);
+}
+
 // ---------- Carrito real (guardado en localStorage, ligado a la cuenta) ----------
 function formatPrice(n) {
   return n.toLocaleString('es-MX');
@@ -42,7 +91,7 @@ function addToCart(product, size, color, quantity) {
       productId: product.id,
       name: product.name,
       sku: product.sku,
-      price: product.price,
+      price: getEffectivePrice(product),
       size: size.label,
       color: color.name,
       image: (color.images && color.images[0]) || '',
@@ -174,9 +223,10 @@ function setCardImage(el, product) {
 // usando el atributo data-product-id que cada tarjeta debe traer.
 function applyCardImages(container) {
   if (!container || typeof PRODUCTS === 'undefined') return;
+  const products = getStoreProducts();
   container.querySelectorAll('.prod-image[data-product-id]').forEach(el => {
     const id = parseInt(el.dataset.productId, 10);
-    const product = PRODUCTS.find(p => p.id === id);
+    const product = products.find(p => p.id === id);
     if (product) setCardImage(el, product);
   });
 }
@@ -202,12 +252,29 @@ function renderStars(rating) {
   return html;
 }
 
+// Insignias "Nuevo" / "Oferta" sobre la imagen de la tarjeta.
+function renderProductBadges(p) {
+  const badges = [];
+  if (p.isNew) badges.push('<span class="prod-badge prod-badge--new">Nuevo</span>');
+  if (isPromoActive(p)) badges.push('<span class="prod-badge prod-badge--sale">Oferta</span>');
+  return badges.length ? `<div class="prod-badges">${badges.join('')}</div>` : '';
+}
+
+// Precio de la tarjeta: si está en oferta vigente, muestra el precio original
+// tachado junto con el precio con descuento.
+function renderPriceTag(p) {
+  if (isPromoActive(p) && p.discountPrice) {
+    return `<span class="prod-price"><span class="prod-price-old">$${p.price}</span> $${p.discountPrice}</span>`;
+  }
+  return `<span class="prod-price">$${p.price}</span>`;
+}
+
 // HTML de una tarjeta de producto, usado en el catálogo, destacados y novedades.
 function renderProductCard(p) {
   const { rating, reviews } = getProductRating(p);
   return `
     <div class="prod-card">
-      <a href="producto.html?id=${p.id}" class="prod-image" data-product-id="${p.id}" style="background:${p.gradient};"></a>
+      <a href="producto.html?id=${p.id}" class="prod-image" data-product-id="${p.id}" style="background:${p.gradient};">${renderProductBadges(p)}</a>
       <div class="prod-tag">
         <div style="display:flex;align-items:center;">
           <span class="hole"></span>
@@ -216,7 +283,7 @@ function renderProductCard(p) {
             <div class="prod-sku">${p.sku}</div>
           </div>
         </div>
-        <span class="prod-price">$${p.price}</span>
+        ${renderPriceTag(p)}
       </div>
       <div class="prod-rating">
         <span class="prod-stars">${renderStars(rating)}</span>
@@ -341,9 +408,9 @@ function openAddToCartModal(product) {
   nameEl.textContent = product.name;
 
   function renderPrice() {
-    priceEl.textContent = `$${formatPrice(product.price * quantity)} MXN`;
+    priceEl.textContent = `$${formatPrice(getEffectivePrice(product) * quantity)} MXN`;
     if (quantity > 1) {
-      pricePerUnitEl.textContent = `$${formatPrice(product.price)} MXN c/u × ${quantity}`;
+      pricePerUnitEl.textContent = `$${formatPrice(getEffectivePrice(product))} MXN c/u × ${quantity}`;
       pricePerUnitEl.hidden = false;
     } else {
       pricePerUnitEl.hidden = true;
@@ -433,15 +500,16 @@ function openAddToCartModal(product) {
 // categoría y, si no hay suficientes, completa con el resto del catálogo.
 function getRelatedProducts(product, count = 4) {
   if (typeof PRODUCTS === 'undefined') return [];
+  const allProducts = getStoreProducts();
   const rotate = (arr, id) => {
     if (arr.length === 0) return [];
     const start = id % arr.length;
     return arr.slice(start).concat(arr.slice(0, start));
   };
-  const sameCategory = PRODUCTS.filter(p => p.id !== product.id && p.category === product.category);
+  const sameCategory = allProducts.filter(p => p.id !== product.id && p.category === product.category);
   const picked = rotate(sameCategory, product.id).slice(0, count);
   if (picked.length < count) {
-    const rest = PRODUCTS.filter(p => p.id !== product.id && p.category !== product.category);
+    const rest = allProducts.filter(p => p.id !== product.id && p.category !== product.category);
     picked.push(...rotate(rest, product.id).slice(0, count - picked.length));
   }
   return picked;

@@ -68,7 +68,12 @@ if (localStorage.getItem('dahlia_just_logged_in') === 'true') {
 // Nav: el ícono de perfil apunta a "Mi cuenta" o "Iniciar sesión" según si hay sesión activa
 const navAuthLink = document.getElementById('navAuthLink');
 if (navAuthLink) {
-  if (isLoggedIn()) {
+  if (isAdmin()) {
+    navAuthLink.setAttribute('href', 'admin.html');
+    navAuthLink.setAttribute('aria-label', 'Panel de administrador');
+    navAuthLink.setAttribute('title', 'Panel de administrador');
+    navAuthLink.classList.add('is-authenticated');
+  } else if (isLoggedIn()) {
     navAuthLink.setAttribute('href', 'perfil.html');
     navAuthLink.setAttribute('aria-label', 'Mi cuenta');
     navAuthLink.setAttribute('title', 'Mi cuenta');
@@ -119,7 +124,7 @@ if (contactForm) {
 // Destacados en Inicio: renderiza productos reales desde products.js
 const featuredGrid = document.getElementById('featuredGrid');
 if (featuredGrid && typeof PRODUCTS !== 'undefined') {
-  const featured = PRODUCTS.filter(p => p.featured);
+  const featured = getStoreProducts().filter(p => p.featured);
   featuredGrid.innerHTML = featured.map(renderProductCard).join('');
   applyCardImages(featuredGrid);
   attachProductCardEvents(featuredGrid);
@@ -128,7 +133,7 @@ if (featuredGrid && typeof PRODUCTS !== 'undefined') {
 // "Recién llegado" en la landing: renderiza productos de la categoría novedades
 const novedadesGrid = document.getElementById('novedadesGrid');
 if (novedadesGrid && typeof PRODUCTS !== 'undefined') {
-  const novedades = PRODUCTS.filter(p => p.isNew);
+  const novedades = getStoreProducts().filter(p => p.isNew);
   novedadesGrid.innerHTML = novedades.map(renderProductCard).join('');
   applyCardImages(novedadesGrid);
   attachProductCardEvents(novedadesGrid);
