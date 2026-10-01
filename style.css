@@ -673,6 +673,7 @@ button{ font-family:inherit; cursor:pointer; }
 }
 .prod-badge--new{ background: var(--sage); }
 .prod-badge--sale{ background: var(--brick); color: var(--ivory); }
+.prod-badge--out{ background: var(--muted); color: var(--bg); }
 .prod-badges--detail{
   position:static;
   flex-direction:row;
@@ -2193,3 +2194,47 @@ body.modal-open{ overflow: hidden; }
 @media (max-width: 640px){
   .admin-form-row--3{ grid-template-columns: 1fr; }
 }
+
+/* ---------- Stock por talla (admin) ---------- */
+#pfStockWrap{ margin-top: 14px; }
+#pfStockWrap > label{
+  display:block;
+  font-size: 0.72rem;
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+  color: var(--muted);
+  margin-bottom: 8px;
+}
+.admin-stock-rows{ display: flex; flex-wrap: wrap; gap: 10px; }
+.admin-stock-row{
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  background: var(--surface-alt);
+  border-radius: 8px;
+  padding: 8px 12px;
+}
+.admin-stock-row input{
+  width: 70px;
+  background: var(--bg);
+  border: var(--border);
+  color: var(--ivory);
+  padding: 7px 9px;
+  border-radius: 4px;
+  font-size: 0.82rem;
+  font-family: var(--body-font);
+}
+.admin-stock-pill{
+  font-family: var(--mono);
+  font-size: 0.8rem;
+}
+.admin-stock-pill--out{ color: var(--brick); }
+
+/* ---------- Disponibilidad / stock en el detalle de producto ---------- */
+.size-stock-note{
+  font-size: 0.82rem;
+  color: var(--sage);
+  margin-top: 8px;
+}
+.size-stock-note--out{ color: var(--brick); font-weight: 600; }
+.option-pill--out{ opacity: 0.5; }

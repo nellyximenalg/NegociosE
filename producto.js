@@ -23,6 +23,7 @@ if (!product) {
   const qtyMinus = document.getElementById('qtyMinus');
   const qtyPlus = document.getElementById('qtyPlus');
   let quantity = 1;
+  let maxQty = 20;
 
   function formatPrice(n) {
     return n.toLocaleString('es-MX');
@@ -45,7 +46,7 @@ if (!product) {
   }
 
   function setQuantity(n) {
-    quantity = Math.min(20, Math.max(1, n || 1));
+    quantity = Math.min(maxQty || 1, Math.max(1, n || 1));
     qtyInput.value = quantity;
     renderPrice();
   }
@@ -55,7 +56,7 @@ if (!product) {
   qtyInput.addEventListener('change', () => setQuantity(parseInt(qtyInput.value, 10)));
   qtyInput.addEventListener('input', () => {
     const n = parseInt(qtyInput.value, 10);
-    if (!isNaN(n) && n >= 1 && n <= 20) {
+    if (!isNaN(n) && n >= 1 && n <= maxQty) {
       quantity = n;
       renderPrice();
     }
@@ -150,10 +151,47 @@ if (!product) {
       .join('');
   }
 
+  // Muestra cuántas unidades quedan de la talla elegida (si el admin captura
+  // stock para ella) y bloquea la compra cuando está en 0.
+  function updateStockUI(size) {
+    const stockNote = document.getElementById('sizeStockNote');
+    if (size.stock == null) {
+      stockNote.hidden = true;
+      maxQty = 20;
+      qtyMinus.disabled = false;
+      qtyPlus.disabled = false;
+      qtyInput.disabled = false;
+      addBtn.disabled = false;
+      addBtn.textContent = 'Agregar al carrito';
+      return;
+    }
+    stockNote.hidden = false;
+    if (size.stock === 0) {
+      stockNote.textContent = 'Agotado en esta talla.';
+      stockNote.classList.add('size-stock-note--out');
+      maxQty = 0;
+      qtyMinus.disabled = true;
+      qtyPlus.disabled = true;
+      qtyInput.disabled = true;
+      addBtn.disabled = true;
+      addBtn.textContent = 'Agotado';
+    } else {
+      stockNote.textContent = size.stock <= 5 ? `¡Últimas ${size.stock} disponibles!` : `${size.stock} disponibles`;
+      stockNote.classList.remove('size-stock-note--out');
+      maxQty = size.stock;
+      qtyMinus.disabled = false;
+      qtyPlus.disabled = false;
+      qtyInput.disabled = false;
+      addBtn.disabled = false;
+      addBtn.textContent = 'Agregar al carrito';
+      if (quantity > maxQty) setQuantity(maxQty);
+    }
+  }
+
   product.sizes.forEach((size, i) => {
     const btn = document.createElement('button');
     btn.type = 'button';
-    btn.className = 'option-pill' + (i === 0 ? ' active' : '');
+    btn.className = 'option-pill' + (i === 0 ? ' active' : '') + (size.stock === 0 ? ' option-pill--out' : '');
     btn.textContent = size.label;
     btn.addEventListener('click', () => {
       selectedSize = size.label;
@@ -161,6 +199,7 @@ if (!product) {
       sizeContainer.querySelectorAll('.option-pill').forEach(b => b.classList.remove('active'));
       btn.classList.add('active');
       renderMeasurements(size);
+      updateStockUI(size);
     });
     sizeContainer.appendChild(btn);
   });
@@ -201,6 +240,7 @@ if (!product) {
   // Agregar al carrito: simulado. Si no hay sesión, primero pide iniciar sesión.
   const addBtn = document.getElementById('addToCartBtn');
   const productMsg = document.getElementById('productMsg');
+  updateStockUI(product.sizes[0]);
 
   addBtn.addEventListener('click', () => {
     if (!isLoggedIn()) {

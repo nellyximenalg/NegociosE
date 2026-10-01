@@ -11,6 +11,16 @@ function isAdmin() {
   return isLoggedIn() && localStorage.getItem('dahlia_user_role') === 'admin';
 }
 
+// Suma el stock de todas las tallas. Si ninguna talla trae el campo "stock"
+// (como los productos originales del catálogo, que no lo manejan), regresa
+// null para indicar "no se controla inventario" en vez de "agotado".
+function getTotalStock(product) {
+  if (!product.sizes || !product.sizes.length) return null;
+  const tracked = product.sizes.filter(s => s.stock != null);
+  if (!tracked.length) return null;
+  return tracked.reduce((sum, s) => sum + (parseInt(s.stock, 10) || 0), 0);
+}
+
 // Una promoción solo cuenta si el producto está marcado "Oferta" Y, si tiene
 // fechas de vigencia, hoy cae dentro de ese rango (sin fechas = siempre activa).
 function isPromoActive(product) {
@@ -252,11 +262,12 @@ function renderStars(rating) {
   return html;
 }
 
-// Insignias "Nuevo" / "Oferta" sobre la imagen de la tarjeta.
+// Insignias "Nuevo" / "Oferta" / "Agotado" sobre la imagen de la tarjeta.
 function renderProductBadges(p) {
   const badges = [];
   if (p.isNew) badges.push('<span class="prod-badge prod-badge--new">Nuevo</span>');
   if (isPromoActive(p)) badges.push('<span class="prod-badge prod-badge--sale">Oferta</span>');
+  if (getTotalStock(p) === 0) badges.push('<span class="prod-badge prod-badge--out">Agotado</span>');
   return badges.length ? `<div class="prod-badges">${badges.join('')}</div>` : '';
 }
 

@@ -46,11 +46,16 @@ if (checkAdminAccess()) {
     const products = getStoreProducts();
     const promos = products.filter(p => isPromoActive(p)).length;
     const accounts = Object.keys(JSON.parse(localStorage.getItem('dahlia_accounts') || '{}')).length;
+    const stockTracked = products.map(p => getTotalStock(p)).filter(s => s !== null);
+    const totalStock = stockTracked.reduce((sum, s) => sum + s, 0);
+    const outOfStock = products.filter(p => getTotalStock(p) === 0).length;
     const stats = [
       { label: 'Productos', value: products.length },
       { label: 'Pedidos', value: FAKE_ORDERS.length },
       { label: 'Promociones activas', value: promos },
-      { label: 'Cuentas registradas', value: accounts + 128 }
+      { label: 'Cuentas registradas', value: accounts + 128 },
+      { label: 'Unidades en stock', value: stockTracked.length ? totalStock : '—' },
+      { label: 'Productos agotados', value: outOfStock }
     ];
     document.getElementById('adminStats').innerHTML = stats.map(s => `
       <div class="admin-stat-card">
@@ -88,6 +93,13 @@ if (checkAdminAccess()) {
   }
 
   // ---------- Tabla de productos ----------
+  function renderStockCell(p) {
+    const total = getTotalStock(p);
+    if (total === null) return '<span class="admin-field-hint">—</span>';
+    if (total === 0) return '<span class="admin-stock-pill admin-stock-pill--out">Agotado</span>';
+    return `<span class="admin-stock-pill">${total}</span>`;
+  }
+
   function renderProductsTable() {
     const products = getStoreProducts();
     document.getElementById('adminProductsBody').innerHTML = products.map(p => `
@@ -97,6 +109,7 @@ if (checkAdminAccess()) {
         <td>${p.sku}</td>
         <td>${capitalize(p.category)}</td>
         <td>${isPromoActive(p) && p.discountPrice ? `<span class="prod-price-old">$${p.price}</span> $${p.discountPrice}` : `$${p.price}`}</td>
+        <td>${renderStockCell(p)}</td>
         <td>${renderBadgesCell(p)}</td>
         <td class="admin-table-actions">
           <button type="button" class="btn btn-ghost btn-sm" data-edit="${p.id}">Editar</button>
@@ -235,6 +248,7 @@ if (checkAdminAccess()) {
     if (category === 'accesorios') {
       wrap.innerHTML = '<p class="admin-field-hint">Los accesorios solo manejan talla única — no hay nada que elegir aquí.</p>';
       overlay.querySelector('#pfMeasurementsWrap').innerHTML = '';
+      renderStockFields(overlay);
       return;
     }
 
@@ -262,7 +276,10 @@ if (checkAdminAccess()) {
     }
 
     wrap.querySelectorAll('input[type="checkbox"]').forEach(cb => {
-      cb.addEventListener('change', () => renderMeasurementFields(overlay, currentGroupKey()));
+      cb.addEventListener('change', () => {
+        renderMeasurementFields(overlay, currentGroupKey());
+        renderStockFields(overlay);
+      });
     });
 
     if (groups.length > 1) {
@@ -282,11 +299,13 @@ if (checkAdminAccess()) {
             group.hidden = group.dataset.sizeGroup !== tab.dataset.sizeType;
           });
           renderMeasurementFields(overlay, tab.dataset.sizeType);
+          renderStockFields(overlay);
         });
       });
     }
 
     renderMeasurementFields(overlay, currentGroupKey());
+    renderStockFields(overlay);
   }
 
   // Pinta un mini-formulario de medidas por cada talla marcada, para que la
@@ -345,6 +364,47 @@ if (checkAdminAccess()) {
         if (raw[key] && raw[key].trim()) clean[key] = raw[key].trim();
       });
       if (Object.keys(clean).length) result[label] = clean;
+    });
+    return result;
+  }
+
+  // ---------- Stock (cantidad disponible por talla) ----------
+  let stockState = {};
+
+  function renderStockFields(overlay) {
+    const stockWrap = overlay.querySelector('#pfStockWrap');
+    const category = overlay.querySelector('#pfCategory').value;
+    const labels = getSelectedSizeLabels(overlay, category);
+
+    if (!labels.length) {
+      stockWrap.innerHTML = '';
+      return;
+    }
+
+    stockWrap.innerHTML = `
+      <label>Stock disponible</label>
+      <div class="admin-stock-rows">
+        ${labels.map(label => `
+          <div class="admin-stock-row">
+            <span class="admin-measure-size">${label}</span>
+            <input type="number" min="0" data-stock-label="${label}" placeholder="0" value="${stockState[label] != null ? stockState[label] : ''}">
+          </div>
+        `).join('')}
+      </div>
+    `;
+
+    stockWrap.querySelectorAll('[data-stock-label]').forEach(input => {
+      input.addEventListener('input', () => {
+        stockState[input.dataset.stockLabel] = input.value;
+      });
+    });
+  }
+
+  function getStockForLabels(labels) {
+    const result = {};
+    labels.forEach(label => {
+      const n = parseInt(stockState[label], 10);
+      result[label] = isNaN(n) || n < 0 ? 0 : n;
     });
     return result;
   }
@@ -478,6 +538,7 @@ if (checkAdminAccess()) {
             <label>Tallas disponibles</label>
             <div id="pfSizesOptions"></div>
             <div id="pfMeasurementsWrap"></div>
+            <div id="pfStockWrap"></div>
           </div>
           <div class="admin-form-row admin-form-row--checks">
             <label class="checkbox-field"><input type="checkbox" id="pfIsNew"> Marcar como "Nuevo"</label>
@@ -592,11 +653,13 @@ if (checkAdminAccess()) {
     const category = editing ? editing.category : 'mujer';
     const existingLabels = editing && editing.sizes ? editing.sizes.map(s => s.label) : [];
     sizeMeasurementsState = {};
+    stockState = {};
     if (editing && editing.sizes) {
       editing.sizes.forEach(s => {
         if (s.measurements && Object.keys(s.measurements).length) {
           sizeMeasurementsState[s.label] = Object.assign({}, s.measurements);
         }
+        if (s.stock != null) stockState[s.label] = s.stock;
       });
     }
     renderSizeOptions(overlay, category, existingLabels);
@@ -634,9 +697,11 @@ if (checkAdminAccess()) {
 
     const selectedLabels = getSelectedSizeLabels(overlay, category);
     const measurementsByLabel = getMeasurementsForLabels(selectedLabels);
+    const stockByLabel = getStockForLabels(selectedLabels);
     const sizes = selectedLabels.map(label => ({
       label,
-      measurements: measurementsByLabel[label] || {}
+      measurements: measurementsByLabel[label] || {},
+      stock: stockByLabel[label]
     }));
 
     const details = {
