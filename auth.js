@@ -11,14 +11,22 @@ function isAdmin() {
   return isLoggedIn() && localStorage.getItem('dahlia_user_role') === 'admin';
 }
 
-// Suma el stock de todas las tallas. Si ninguna talla trae el campo "stock"
-// (como los productos originales del catálogo, que no lo manejan), regresa
-// null para indicar "no se controla inventario" en vez de "agotado".
+// Suma el stock de todos los colores y tallas. Si ningún color trae el campo
+// "stock" (como pasaría si nunca se ha capturado), regresa null para indicar
+// "no se controla inventario" en vez de "agotado".
 function getTotalStock(product) {
-  if (!product.sizes || !product.sizes.length) return null;
-  const tracked = product.sizes.filter(s => s.stock != null);
+  if (!product.colors || !product.colors.length) return null;
+  const tracked = product.colors.filter(c => c.stock && typeof c.stock === 'object');
   if (!tracked.length) return null;
-  return tracked.reduce((sum, s) => sum + (parseInt(s.stock, 10) || 0), 0);
+  return tracked.reduce((sum, c) => sum + Object.values(c.stock).reduce((s, v) => s + (parseInt(v, 10) || 0), 0), 0);
+}
+
+// Stock de una combinación específica color + talla. null = no controlado.
+function getStockFor(product, colorName, sizeLabel) {
+  const color = product.colors.find(c => c.name === colorName);
+  if (!color || !color.stock || typeof color.stock !== 'object') return null;
+  const v = color.stock[sizeLabel];
+  return v == null ? null : (parseInt(v, 10) || 0);
 }
 
 // Una promoción solo cuenta si el producto está marcado "Oferta" Y, si tiene

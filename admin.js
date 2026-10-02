@@ -248,7 +248,7 @@ if (checkAdminAccess()) {
     if (category === 'accesorios') {
       wrap.innerHTML = '<p class="admin-field-hint">Los accesorios solo manejan talla única — no hay nada que elegir aquí.</p>';
       overlay.querySelector('#pfMeasurementsWrap').innerHTML = '';
-      renderStockFields(overlay);
+      renderColorCards(overlay);
       return;
     }
 
@@ -278,7 +278,7 @@ if (checkAdminAccess()) {
     wrap.querySelectorAll('input[type="checkbox"]').forEach(cb => {
       cb.addEventListener('change', () => {
         renderMeasurementFields(overlay, currentGroupKey());
-        renderStockFields(overlay);
+        renderColorCards(overlay);
       });
     });
 
@@ -299,13 +299,13 @@ if (checkAdminAccess()) {
             group.hidden = group.dataset.sizeGroup !== tab.dataset.sizeType;
           });
           renderMeasurementFields(overlay, tab.dataset.sizeType);
-          renderStockFields(overlay);
+          renderColorCards(overlay);
         });
       });
     }
 
     renderMeasurementFields(overlay, currentGroupKey());
-    renderStockFields(overlay);
+    renderColorCards(overlay);
   }
 
   // Pinta un mini-formulario de medidas por cada talla marcada, para que la
@@ -368,47 +368,6 @@ if (checkAdminAccess()) {
     return result;
   }
 
-  // ---------- Stock (cantidad disponible por talla) ----------
-  let stockState = {};
-
-  function renderStockFields(overlay) {
-    const stockWrap = overlay.querySelector('#pfStockWrap');
-    const category = overlay.querySelector('#pfCategory').value;
-    const labels = getSelectedSizeLabels(overlay, category);
-
-    if (!labels.length) {
-      stockWrap.innerHTML = '';
-      return;
-    }
-
-    stockWrap.innerHTML = `
-      <label>Stock disponible</label>
-      <div class="admin-stock-rows">
-        ${labels.map(label => `
-          <div class="admin-stock-row">
-            <span class="admin-measure-size">${label}</span>
-            <input type="number" min="0" data-stock-label="${label}" placeholder="0" value="${stockState[label] != null ? stockState[label] : ''}">
-          </div>
-        `).join('')}
-      </div>
-    `;
-
-    stockWrap.querySelectorAll('[data-stock-label]').forEach(input => {
-      input.addEventListener('input', () => {
-        stockState[input.dataset.stockLabel] = input.value;
-      });
-    });
-  }
-
-  function getStockForLabels(labels) {
-    const result = {};
-    labels.forEach(label => {
-      const n = parseInt(stockState[label], 10);
-      result[label] = isNaN(n) || n < 0 ? 0 : n;
-    });
-    return result;
-  }
-
   // ---------- Colores del producto (paleta + tarjetas editables) ----------
   // Colores propios de Dahlia primero, luego una paleta extra para variedad.
   const COLOR_PALETTE = [
@@ -443,7 +402,7 @@ if (checkAdminAccess()) {
     `).join('');
     wrap.querySelectorAll('.admin-palette-swatch').forEach(btn => {
       btn.addEventListener('click', () => {
-        formColors.push({ hex: btn.dataset.hex, name: btn.dataset.name, note: '', images: ['', '', ''] });
+        formColors.push({ hex: btn.dataset.hex, name: btn.dataset.name, note: '', images: ['', '', ''], stock: {} });
         renderColorCards(overlay);
       });
     });
@@ -451,13 +410,17 @@ if (checkAdminAccess()) {
 
   function renderColorCards(overlay) {
     const list = overlay.querySelector('#pfColorsList');
+    const category = overlay.querySelector('#pfCategory').value;
+    const sizeLabels = getSelectedSizeLabels(overlay, category);
 
     if (!formColors.length) {
       list.innerHTML = '<p class="admin-field-hint">Elige uno o más colores de la paleta de arriba.</p>';
       return;
     }
 
-    list.innerHTML = formColors.map((c, i) => `
+    list.innerHTML = formColors.map((c, i) => {
+      if (!c.stock) c.stock = {};
+      return `
       <div class="admin-color-card" data-color-index="${i}">
         <div class="admin-color-card-head">
           <span class="admin-swatch admin-swatch--lg" style="background:${c.hex}"></span>
@@ -470,8 +433,22 @@ if (checkAdminAccess()) {
           <input type="text" class="pf-color-img" data-img-index="1" placeholder="Imagen 2 (ruta o URL)" value="${c.images[1]}">
           <input type="text" class="pf-color-img" data-img-index="2" placeholder="Imagen 3 (ruta o URL)" value="${c.images[2]}">
         </div>
+        ${sizeLabels.length ? `
+          <div class="admin-color-stock">
+            <label>Stock de este color por talla</label>
+            <div class="admin-stock-rows">
+              ${sizeLabels.map(label => `
+                <div class="admin-stock-row">
+                  <span class="admin-measure-size">${label}</span>
+                  <input type="number" min="0" data-stock-color="${i}" data-stock-label="${label}" placeholder="0" value="${c.stock[label] != null ? c.stock[label] : ''}">
+                </div>
+              `).join('')}
+            </div>
+          </div>
+        ` : ''}
       </div>
-    `).join('');
+    `;
+    }).join('');
 
     list.querySelectorAll('.admin-color-card').forEach(card => {
       const i = parseInt(card.dataset.colorIndex, 10);
@@ -480,6 +457,11 @@ if (checkAdminAccess()) {
       card.querySelectorAll('.pf-color-img').forEach(input => {
         input.addEventListener('input', (e) => {
           formColors[i].images[parseInt(e.target.dataset.imgIndex, 10)] = e.target.value;
+        });
+      });
+      card.querySelectorAll('[data-stock-label]').forEach(input => {
+        input.addEventListener('input', (e) => {
+          formColors[i].stock[e.target.dataset.stockLabel] = e.target.value;
         });
       });
     });
@@ -538,7 +520,6 @@ if (checkAdminAccess()) {
             <label>Tallas disponibles</label>
             <div id="pfSizesOptions"></div>
             <div id="pfMeasurementsWrap"></div>
-            <div id="pfStockWrap"></div>
           </div>
           <div class="admin-form-row admin-form-row--checks">
             <label class="checkbox-field"><input type="checkbox" id="pfIsNew"> Marcar como "Nuevo"</label>
@@ -644,7 +625,8 @@ if (checkAdminAccess()) {
           hex: c.hex,
           name: c.name || '',
           note: c.note || '',
-          images: [0, 1, 2].map(i => (c.images && c.images[i]) || '')
+          images: [0, 1, 2].map(i => (c.images && c.images[i]) || ''),
+          stock: Object.assign({}, c.stock || {})
         }))
       : [];
     renderColorCards(overlay);
@@ -653,13 +635,11 @@ if (checkAdminAccess()) {
     const category = editing ? editing.category : 'mujer';
     const existingLabels = editing && editing.sizes ? editing.sizes.map(s => s.label) : [];
     sizeMeasurementsState = {};
-    stockState = {};
     if (editing && editing.sizes) {
       editing.sizes.forEach(s => {
         if (s.measurements && Object.keys(s.measurements).length) {
           sizeMeasurementsState[s.label] = Object.assign({}, s.measurements);
         }
-        if (s.stock != null) stockState[s.label] = s.stock;
       });
     }
     renderSizeOptions(overlay, category, existingLabels);
@@ -697,11 +677,9 @@ if (checkAdminAccess()) {
 
     const selectedLabels = getSelectedSizeLabels(overlay, category);
     const measurementsByLabel = getMeasurementsForLabels(selectedLabels);
-    const stockByLabel = getStockForLabels(selectedLabels);
     const sizes = selectedLabels.map(label => ({
       label,
-      measurements: measurementsByLabel[label] || {},
-      stock: stockByLabel[label]
+      measurements: measurementsByLabel[label] || {}
     }));
 
     const details = {
@@ -711,13 +689,22 @@ if (checkAdminAccess()) {
     };
 
     // El primer color de la lista es el que define el degradado de la
-    // tarjeta (catálogo, inicio y tabla del admin).
-    const colors = formColors.map(c => ({
-      name: c.name.trim() || 'Color',
-      hex: c.hex,
-      note: c.note.trim(),
-      images: c.images.map(i => i.trim()).filter(Boolean)
-    }));
+    // tarjeta (catálogo, inicio y tabla del admin). El stock se guarda por
+    // talla dentro de cada color, para que varíe entre uno y otro.
+    const colors = formColors.map(c => {
+      const stock = {};
+      selectedLabels.forEach(label => {
+        const n = parseInt(c.stock[label], 10);
+        stock[label] = isNaN(n) || n < 0 ? 0 : n;
+      });
+      return {
+        name: c.name.trim() || 'Color',
+        hex: c.hex,
+        note: c.note.trim(),
+        images: c.images.map(i => i.trim()).filter(Boolean),
+        stock
+      };
+    });
     const gradient = `linear-gradient(150deg,#221f1a,${colors[0].hex})`;
 
     const ov = getAdminOverrides();

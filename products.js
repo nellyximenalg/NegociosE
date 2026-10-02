@@ -13,9 +13,9 @@ const PRODUCTS = [
       { label: 'L', measurements: { 'Busto/Pecho': '95 cm', 'Cintura': '75 cm', 'Cadera': '101 cm', 'Largo': '101 cm' } }
     ],
     colors: [
-      { name: 'Rosa dalia', hex: '#d9769b', images: ['img/productos/dhl-101-rosa-dalia-1.png', 'img/productos/dhl-101-rosa-dalia-2.png', 'img/productos/dhl-101-rosa-dalia-3.png'], note: 'nuestro tono insignia: vibrante, femenino y muy Dahlia.' },
-      { name: 'Negro', hex: '#231f1a', images: ['img/productos/dhl-101-negro-dalia-1.png', 'img/productos/dhl-101-negro-dalia-2.png', 'img/productos/dhl-101-negro-dalia-3.png'], note: 'un básico infalible que combina con prácticamente todo tu clóset.' },
-      { name: 'Beige', hex: '#c9b79c', images: ['img/productos/dhl-101-beige-dalia-1.png', 'img/productos/dhl-101-beige-dalia-2.png', 'img/productos/dhl-101-beige-dalia-3.png'], note: 'un neutro versátil que combina con casi cualquier prenda.' }
+      { name: 'Rosa dalia', hex: '#d9769b', images: ['img/productos/dhl-101-rosa-dalia-1.png', 'img/productos/dhl-101-rosa-dalia-2.png', 'img/productos/dhl-101-rosa-dalia-3.png'], note: 'nuestro tono insignia: vibrante, femenino y muy Dahlia.' , stock: { 'XS': 18, 'S': 9, 'M': 29, 'L': 0 } },
+      { name: 'Negro', hex: '#231f1a', images: ['img/productos/dhl-101-negro-dalia-1.png', 'img/productos/dhl-101-negro-dalia-2.png', 'img/productos/dhl-101-negro-dalia-3.png'], note: 'un básico infalible que combina con prácticamente todo tu clóset.' , stock: { 'XS': 20, 'S': 17, 'M': 20, 'L': 0 } },
+      { name: 'Beige', hex: '#c9b79c', images: ['img/productos/dhl-101-beige-dalia-1.png', 'img/productos/dhl-101-beige-dalia-2.png', 'img/productos/dhl-101-beige-dalia-3.png'], note: 'un neutro versátil que combina con casi cualquier prenda.' , stock: { 'XS': 14, 'S': 13, 'M': 20, 'L': 7 } }
     ],
     description: 'Vestido midi de caída suave, ideal para el trabajo o una cena. Tela ligera que no se pega y no se arruga fácil.',
     details: {
@@ -41,9 +41,9 @@ const PRODUCTS = [
       { label: 'XL', measurements: { 'Busto/Pecho': '100 cm', 'Cintura': '80 cm', 'Cadera': '106 cm', 'Largo': '73 cm' } }
     ],
     colors: [
-      { name: 'Dorado', hex: '#e3b23c', images: ['img/productos/dhl-102-dorado-dalia-1.png', 'img/productos/dhl-102-dorado-dalia-2.png', 'img/productos/dhl-102-dorado-dalia-3.png'], note: 'un tono llamativo pensado para destacar.' },
-      { name: 'Blanco hueso', hex: '#f4ecd8', images: ['img/productos/dhl-102-blanco-dalia-1.png', 'img/productos/dhl-102-blanco-dalia-2.png', 'img/productos/dhl-102-blanco-dalia-3.png'], note: 'un tono suave y elegante, ideal para looks de oficina.' },
-      { name: 'Vino', hex: '#7a2f4d', images: ['img/productos/dhl-102-vino-dalia-1.png', 'img/productos/dhl-102-vino-dalia-2.png', 'img/productos/dhl-102-vino-dalia-3.png'], note: 'un tono profundo que le da personalidad al look.' }
+      { name: 'Dorado', hex: '#e3b23c', images: ['img/productos/dhl-102-dorado-dalia-1.png', 'img/productos/dhl-102-dorado-dalia-2.png', 'img/productos/dhl-102-dorado-dalia-3.png'], note: 'un tono llamativo pensado para destacar.' , stock: { 'XS': 7, 'S': 5, 'M': 28, 'L': 21, 'XL': 24 } },
+      { name: 'Blanco hueso', hex: '#f4ecd8', images: ['img/productos/dhl-102-blanco-dalia-1.png', 'img/productos/dhl-102-blanco-dalia-2.png', 'img/productos/dhl-102-blanco-dalia-3.png'], note: 'un tono suave y elegante, ideal para looks de oficina.' , stock: { 'XS': 25, 'S': 25, 'M': 7, 'L': 14, 'XL': 5 } },
+      { name: 'Vino', hex: '#7a2f4d', images: ['img/productos/dhl-102-vino-dalia-1.png', 'img/productos/dhl-102-vino-dalia-2.png', 'img/productos/dhl-102-vino-dalia-3.png'], note: 'un tono profundo que le da personalidad al look.' , stock: { 'XS': 18, 'S': 25, 'M': 20, 'L': 8, 'XL': 0 } }
     ],
     description: 'Blusa con caída satinada y cuello sencillo. Combina con jeans o falda para looks de día o de noche.',
     details: {
@@ -68,9 +68,9 @@ const PRODUCTS = [
       { label: 'L', measurements: { 'Busto/Pecho': '95 cm', 'Cintura': '75 cm', 'Cadera': '101 cm', 'Largo': '55 cm' } }
     ],
     colors: [
-      { name: 'Vino', hex: '#7a2f4d', images: ['img/productos/dhl-103-vino-dalia-1.png', 'img/productos/dhl-103-vino-dalia-2.png', 'img/productos/dhl-103-vino-dalia-3.png'], note: 'un tono profundo que le da personalidad al look.' },
-      { name: 'Negro', hex: '#231f1a', images: ['img/productos/dhl-103-negro-dalia-1.png', 'img/productos/dhl-103-negro-dalia-2.png', 'img/productos/dhl-103-negro-dalia-3.png'], note: 'un básico infalible que combina con prácticamente todo tu clóset.' },
-      { name: 'Beige', hex: '#c9b79c', images: ['img/productos/dhl-103-beige-dalia-1.png', 'img/productos/dhl-103-beige-dalia-2.png', 'img/productos/dhl-103-beige-dalia-3.png'], note: 'un neutro versátil que combina con casi cualquier prenda.' }
+      { name: 'Vino', hex: '#7a2f4d', images: ['img/productos/dhl-103-vino-dalia-1.png', 'img/productos/dhl-103-vino-dalia-2.png', 'img/productos/dhl-103-vino-dalia-3.png'], note: 'un tono profundo que le da personalidad al look.' , stock: { 'XS': 27, 'S': 14, 'M': 29, 'L': 0 } },
+      { name: 'Negro', hex: '#231f1a', images: ['img/productos/dhl-103-negro-dalia-1.png', 'img/productos/dhl-103-negro-dalia-2.png', 'img/productos/dhl-103-negro-dalia-3.png'], note: 'un básico infalible que combina con prácticamente todo tu clóset.' , stock: { 'XS': 12, 'S': 24, 'M': 21, 'L': 22 } },
+      { name: 'Beige', hex: '#c9b79c', images: ['img/productos/dhl-103-beige-dalia-1.png', 'img/productos/dhl-103-beige-dalia-2.png', 'img/productos/dhl-103-beige-dalia-3.png'], note: 'un neutro versátil que combina con casi cualquier prenda.' , stock: { 'XS': 18, 'S': 11, 'M': 24, 'L': 23 } }
     ],
     description: 'Falda plisada a media pierna, con caída con movimiento. Ideal para combinar con blusa o suéter.',
     details: {
@@ -96,8 +96,8 @@ const PRODUCTS = [
       { label: 'XL', measurements: { 'Busto/Pecho': '100 cm', 'Cintura': '80 cm', 'Cadera': '106 cm', 'Largo': '67 cm' } }
     ],
     colors: [
-      { name: 'Azul claro', hex: '#7a9ab8', images: ['img/productos/dhl-104-claro-dalia-1.png', 'img/productos/dhl-104-claro-dalia-2.png', 'img/productos/dhl-104-claro-dalia-3.png'], note: 'un tono fresco, ideal para el clima cálido.' },
-      { name: 'Azul oscuro', hex: '#2b3550', images: ['img/productos/dhl-104-oscuro-dalia-1.png', 'img/productos/dhl-104-oscuro-dalia-2.png', 'img/productos/dhl-104-oscuro-dalia-3.png'], note: 'un tono profundo con mucho carácter.' }
+      { name: 'Azul claro', hex: '#7a9ab8', images: ['img/productos/dhl-104-claro-dalia-1.png', 'img/productos/dhl-104-claro-dalia-2.png', 'img/productos/dhl-104-claro-dalia-3.png'], note: 'un tono fresco, ideal para el clima cálido.' , stock: { 'XS': 27, 'S': 19, 'M': 9, 'L': 13, 'XL': 24 } },
+      { name: 'Azul oscuro', hex: '#2b3550', images: ['img/productos/dhl-104-oscuro-dalia-1.png', 'img/productos/dhl-104-oscuro-dalia-2.png', 'img/productos/dhl-104-oscuro-dalia-3.png'], note: 'un tono profundo con mucho carácter.' , stock: { 'XS': 0, 'S': 24, 'M': 12, 'L': 15, 'XL': 0 } }
     ],
     description: 'Chamarra de mezclilla clásica, corte entallado. Un básico que nunca pasa de moda.',
     details: {
@@ -123,9 +123,9 @@ const PRODUCTS = [
       { label: 'XL', measurements: { 'Busto/Pecho': '100 cm', 'Cintura': '80 cm', 'Cadera': '106 cm', 'Largo': '109 cm' } }
     ],
     colors: [
-      { name: 'Café', hex: '#4a3826', images: ['img/productos/dhl-105-cafe-dalia-1.png', 'img/productos/dhl-105-cafe-dalia-2.png', 'img/productos/dhl-105-cafe-dalia-3.png'], note: 'un tono cálido y clásico, fácil de combinar.' },
-      { name: 'Negro', hex: '#231f1a', images: ['img/productos/dhl-105-negro-dalia-1.png', 'img/productos/dhl-105-negro-dalia-2.png', 'img/productos/dhl-105-negro-dalia-3.png'], note: 'un básico infalible que combina con prácticamente todo tu clóset.' },
-      { name: 'Crema', hex: '#f4ecd8', images: ['img/productos/dhl-105-crema-dalia-1.png', 'img/productos/dhl-105-crema-dalia-2.png', 'img/productos/dhl-105-crema-dalia-3.png'], note: 'un tono cálido que suaviza cualquier combinación.' }
+      { name: 'Café', hex: '#4a3826', images: ['img/productos/dhl-105-cafe-dalia-1.png', 'img/productos/dhl-105-cafe-dalia-2.png', 'img/productos/dhl-105-cafe-dalia-3.png'], note: 'un tono cálido y clásico, fácil de combinar.' , stock: { 'XS': 21, 'S': 8, 'M': 10, 'L': 19, 'XL': 23 } },
+      { name: 'Negro', hex: '#231f1a', images: ['img/productos/dhl-105-negro-dalia-1.png', 'img/productos/dhl-105-negro-dalia-2.png', 'img/productos/dhl-105-negro-dalia-3.png'], note: 'un básico infalible que combina con prácticamente todo tu clóset.' , stock: { 'XS': 5, 'S': 20, 'M': 0, 'L': 0, 'XL': 19 } },
+      { name: 'Crema', hex: '#f4ecd8', images: ['img/productos/dhl-105-crema-dalia-1.png', 'img/productos/dhl-105-crema-dalia-2.png', 'img/productos/dhl-105-crema-dalia-3.png'], note: 'un tono cálido que suaviza cualquier combinación.' , stock: { 'XS': 10, 'S': 14, 'M': 15, 'L': 25, 'XL': 0 } }
     ],
     description: 'Pantalón de pierna ancha y cintura alta, fresco y cómodo para todo el día sin perder elegancia.',
     details: {
@@ -150,8 +150,8 @@ const PRODUCTS = [
       { label: 'L', measurements: { 'Busto/Pecho': '95 cm', 'Cintura': '75 cm', 'Cadera': '101 cm', 'Largo': '47 cm' } }
     ],
     colors: [
-      { name: 'Terracota', hex: '#c1443c', images: ['img/productos/dhl-106-terracota-dalia-1.png', 'img/productos/dhl-106-terracota-dalia-2.png', 'img/productos/dhl-106-terracota-dalia-3.png'], note: 'un tono cálido, ideal para la temporada de otoño.' },
-      { name: 'Negro', hex: '#231f1a', images: ['img/productos/dhl-106-negro-dalia-1.png', 'img/productos/dhl-106-negro-dalia-2.png', 'img/productos/dhl-106-negro-dalia-3.png'], note: 'un básico infalible que combina con prácticamente todo tu clóset.' }
+      { name: 'Terracota', hex: '#c1443c', images: ['img/productos/dhl-106-terracota-dalia-1.png', 'img/productos/dhl-106-terracota-dalia-2.png', 'img/productos/dhl-106-terracota-dalia-3.png'], note: 'un tono cálido, ideal para la temporada de otoño.' , stock: { 'XS': 29, 'S': 27, 'M': 26, 'L': 9 } },
+      { name: 'Negro', hex: '#231f1a', images: ['img/productos/dhl-106-negro-dalia-1.png', 'img/productos/dhl-106-negro-dalia-2.png', 'img/productos/dhl-106-negro-dalia-3.png'], note: 'un básico infalible que combina con prácticamente todo tu clóset.' , stock: { 'XS': 16, 'S': 0, 'M': 11, 'L': 25 } }
     ],
     description: 'Top con cuello halter, ideal para una salida de noche o combinado con blazer para la oficina.',
     details: {
@@ -175,9 +175,9 @@ const PRODUCTS = [
       { label: 'L', measurements: { 'Busto/Pecho': '95 cm', 'Cintura': '75 cm', 'Cadera': '101 cm', 'Largo': '71 cm' } }
     ],
     colors: [
-      { name: 'Sage', hex: '#7c8a63', images: ['img/productos/dhl-107-sage-dalia-1.png', 'img/productos/dhl-107-sage-dalia-2.png', 'img/productos/dhl-107-sage-dalia-3.png'], note: 'un verde suave inspirado en la naturaleza.' },
-      { name: 'Crema', hex: '#f4ecd8', images: ['img/productos/dhl-107-crema-dalia-1.png', 'img/productos/dhl-107-crema-dalia-2.png', 'img/productos/dhl-107-crema-dalia-3.png'], note: 'un tono cálido que suaviza cualquier combinación.' },
-      { name: 'Café', hex: '#4a3826', images: ['img/productos/dhl-107-cafe-dalia-1.png', 'img/productos/dhl-107-cafe-dalia-2.png', 'img/productos/dhl-107-cafe-dalia-3.png'], note: 'un tono cálido y clásico, fácil de combinar.' }
+      { name: 'Sage', hex: '#7c8a63', images: ['img/productos/dhl-107-sage-dalia-1.png', 'img/productos/dhl-107-sage-dalia-2.png', 'img/productos/dhl-107-sage-dalia-3.png'], note: 'un verde suave inspirado en la naturaleza.' , stock: { 'S': 23, 'M': 16, 'L': 0 } },
+      { name: 'Crema', hex: '#f4ecd8', images: ['img/productos/dhl-107-crema-dalia-1.png', 'img/productos/dhl-107-crema-dalia-2.png', 'img/productos/dhl-107-crema-dalia-3.png'], note: 'un tono cálido que suaviza cualquier combinación.' , stock: { 'S': 7, 'M': 6, 'L': 26 } },
+      { name: 'Café', hex: '#4a3826', images: ['img/productos/dhl-107-cafe-dalia-1.png', 'img/productos/dhl-107-cafe-dalia-2.png', 'img/productos/dhl-107-cafe-dalia-3.png'], note: 'un tono cálido y clásico, fácil de combinar.' , stock: { 'S': 22, 'M': 13, 'L': 13 } }
     ],
     description: 'Cárdigan tejido de corte holgado, perfecto para las mañanas frescas encima de cualquier outfit.',
     details: {
@@ -202,8 +202,8 @@ const PRODUCTS = [
       { label: 'L', measurements: { 'Busto/Pecho': '95 cm', 'Cintura': '75 cm', 'Cadera': '101 cm', 'Largo': '71 cm' } }
     ],
     colors: [
-      { name: 'Verde olivo', hex: '#3f4a3a', images: ['img/productos/dhl-108-verde-dalia-1.png', 'img/productos/dhl-108-verde-dalia-2.png', 'img/productos/dhl-108-verde-dalia-3.png'], note: 'un tono terroso muy fácil de combinar.' },
-      { name: 'Negro', hex: '#231f1a', images: ['img/productos/dhl-108-negro-dalia-1.png', 'img/productos/dhl-108-negro-dalia-2.png', 'img/productos/dhl-108-negro-dalia-3.png'], note: 'un básico infalible que combina con prácticamente todo tu clóset.' }
+      { name: 'Verde olivo', hex: '#3f4a3a', images: ['img/productos/dhl-108-verde-dalia-1.png', 'img/productos/dhl-108-verde-dalia-2.png', 'img/productos/dhl-108-verde-dalia-3.png'], note: 'un tono terroso muy fácil de combinar.' , stock: { 'XS': 20, 'S': 16, 'M': 22, 'L': 19 } },
+      { name: 'Negro', hex: '#231f1a', images: ['img/productos/dhl-108-negro-dalia-1.png', 'img/productos/dhl-108-negro-dalia-2.png', 'img/productos/dhl-108-negro-dalia-3.png'], note: 'un básico infalible que combina con prácticamente todo tu clóset.' , stock: { 'XS': 14, 'S': 0, 'M': 13, 'L': 6 } }
     ],
     description: 'Jumpsuit de una pieza, cómodo y práctico. Solo ponte unos aretes y ya estás lista.',
     details: {
@@ -228,8 +228,8 @@ const PRODUCTS = [
       { label: 'L', measurements: { 'Busto/Pecho': '95 cm', 'Cintura': '75 cm', 'Cadera': '101 cm', 'Largo': '55 cm' } }
     ],
     colors: [
-      { name: 'Negro', hex: '#231f1a', images: ['img/productos/dhl-109-negra-dalia-1.png', 'img/productos/dhl-109-negra-dalia-2.png', 'img/productos/dhl-109-negra-dalia-3.png'], note: 'un básico infalible que combina con prácticamente todo tu clóset.' },
-      { name: 'Gris', hex: '#6b6a63', images: ['img/productos/dhl-109-gris-dalia-1.png', 'img/productos/dhl-109-gris-dalia-2.png', 'img/productos/dhl-109-gris-dalia-3.png'], note: 'un neutro discreto que nunca pasa de moda.' }
+      { name: 'Negro', hex: '#231f1a', images: ['img/productos/dhl-109-negra-dalia-1.png', 'img/productos/dhl-109-negra-dalia-2.png', 'img/productos/dhl-109-negra-dalia-3.png'], note: 'un básico infalible que combina con prácticamente todo tu clóset.' , stock: { 'XS': 25, 'S': 18, 'M': 11, 'L': 11 } },
+      { name: 'Gris', hex: '#6b6a63', images: ['img/productos/dhl-109-gris-dalia-1.png', 'img/productos/dhl-109-gris-dalia-2.png', 'img/productos/dhl-109-gris-dalia-3.png'], note: 'un neutro discreto que nunca pasa de moda.' , stock: { 'XS': 29, 'S': 9, 'M': 18, 'L': 10 } }
     ],
     description: 'Falda lápiz de corte clásico, ideal para looks de oficina que se pueden vestir o desvestir.',
     details: {
@@ -255,8 +255,8 @@ const PRODUCTS = [
       { label: 'XL', measurements: { 'Busto/Pecho': '100 cm', 'Cintura': '80 cm', 'Cadera': '106 cm', 'Largo': '73 cm' } }
     ],
     colors: [
-      { name: 'Beige', hex: '#c9b79c', images: ['img/productos/dhl-110-beige-dalia-1.png', 'img/productos/dhl-110-beige-dalia-2.png', 'img/productos/dhl-110-beige-dalia-3.png'], note: 'un neutro versátil que combina con casi cualquier prenda.' },
-      { name: 'Blanco hueso', hex: '#f4ecd8', images: ['img/productos/dhl-110-blanco-dalia-1.png', 'img/productos/dhl-110-blanco-dalia-2.png', 'img/productos/dhl-110-blanco-dalia-3.png'], note: 'un tono suave y elegante, ideal para looks de oficina.' }
+      { name: 'Beige', hex: '#c9b79c', images: ['img/productos/dhl-110-beige-dalia-1.png', 'img/productos/dhl-110-beige-dalia-2.png', 'img/productos/dhl-110-beige-dalia-3.png'], note: 'un neutro versátil que combina con casi cualquier prenda.' , stock: { 'XS': 14, 'S': 7, 'M': 11, 'L': 19, 'XL': 28 } },
+      { name: 'Blanco hueso', hex: '#f4ecd8', images: ['img/productos/dhl-110-blanco-dalia-1.png', 'img/productos/dhl-110-blanco-dalia-2.png', 'img/productos/dhl-110-blanco-dalia-3.png'], note: 'un tono suave y elegante, ideal para looks de oficina.' , stock: { 'XS': 21, 'S': 11, 'M': 6, 'L': 23, 'XL': 26 } }
     ],
     description: 'Blusa de lino fresca, perfecta para los días calurosos sin perder un aire elegante.',
     details: {
@@ -282,8 +282,8 @@ const PRODUCTS = [
       { label: 'XL', measurements: { 'Busto/Pecho': '100 cm', 'Cintura': '80 cm', 'Cadera': '106 cm', 'Largo': '103 cm' } }
     ],
     colors: [
-      { name: 'Azul claro', hex: '#7a9ab8', images: ['img/productos/dhl-111-azul-dalia-1.png', 'img/productos/dhl-111-azul-dalia-2.png', 'img/productos/dhl-111-azul-dalia-3.png'], note: 'un tono fresco, ideal para el clima cálido.' },
-      { name: 'Blanco hueso', hex: '#f4ecd8', images: ['img/productos/dhl-111-blanco-dalia-1.png', 'img/productos/dhl-111-blanco-dalia-2.png', 'img/productos/dhl-111-blanco-dalia-3.png'], note: 'un tono suave y elegante, ideal para looks de oficina.' }
+      { name: 'Azul claro', hex: '#7a9ab8', images: ['img/productos/dhl-111-azul-dalia-1.png', 'img/productos/dhl-111-azul-dalia-2.png', 'img/productos/dhl-111-azul-dalia-3.png'], note: 'un tono fresco, ideal para el clima cálido.' , stock: { 'XS': 27, 'S': 25, 'M': 17, 'L': 21, 'XL': 25 } },
+      { name: 'Blanco hueso', hex: '#f4ecd8', images: ['img/productos/dhl-111-blanco-dalia-1.png', 'img/productos/dhl-111-blanco-dalia-2.png', 'img/productos/dhl-111-blanco-dalia-3.png'], note: 'un tono suave y elegante, ideal para looks de oficina.' , stock: { 'XS': 7, 'S': 19, 'M': 19, 'L': 10, 'XL': 19 } }
     ],
     description: 'Vestido tipo camisero con cinturón, versátil para la oficina o un brunch de fin de semana.',
     details: {
@@ -309,8 +309,8 @@ const PRODUCTS = [
       { label: 'XL', measurements: { 'Busto/Pecho': '100 cm', 'Cintura': '80 cm', 'Cadera': '106 cm', 'Largo': '73 cm' } }
     ],
     colors: [
-      { name: 'Negro', hex: '#231f1a', images: ['img/productos/dhl-112-negro-dalia-1.png', 'img/productos/dhl-112-negro-dalia-2.png', 'img/productos/dhl-112-negro-dalia-3.png'], note: 'un básico infalible que combina con prácticamente todo tu clóset.' },
-      { name: 'Azul marino', hex: '#2b3550', images: ['img/productos/dhl-112-azul-dalia-1.png', 'img/productos/dhl-112-azul-dalia-2.png', 'img/productos/dhl-112-azul-dalia-3.png'], note: 'un tono clásico con un toque más formal.' }
+      { name: 'Negro', hex: '#231f1a', images: ['img/productos/dhl-112-negro-dalia-1.png', 'img/productos/dhl-112-negro-dalia-2.png', 'img/productos/dhl-112-negro-dalia-3.png'], note: 'un básico infalible que combina con prácticamente todo tu clóset.' , stock: { 'XS': 24, 'S': 27, 'M': 10, 'L': 20, 'XL': 16 } },
+      { name: 'Azul marino', hex: '#2b3550', images: ['img/productos/dhl-112-azul-dalia-1.png', 'img/productos/dhl-112-azul-dalia-2.png', 'img/productos/dhl-112-azul-dalia-3.png'], note: 'un tono clásico con un toque más formal.' , stock: { 'XS': 14, 'S': 24, 'M': 18, 'L': 20, 'XL': 20 } }
     ],
     description: 'Leggings de compresión suave, ideales para entrenar o para el diario con una sudadera oversize.',
     details: {
@@ -336,9 +336,9 @@ const PRODUCTS = [
       { label: 'XXL', measurements: { 'Busto/Pecho': '105 cm', 'Cintura': '85 cm', 'Cadera': '111 cm', 'Largo': '75 cm' } }
     ],
     colors: [
-      { name: 'Azul marino', hex: '#2b3550', images: ['img/productos/dhl-201-azul-dalia-1.png', 'img/productos/dhl-201-azul-dalia-2.png', 'img/productos/dhl-201-azul-dalia-3.png'], note: 'un tono clásico con un toque más formal.' },
-      { name: 'Blanco', hex: '#f4ecd8', images: ['img/productos/dhl-201-blanco-dalia-1.png', 'img/productos/dhl-201-blanco-dalia-2.png', 'img/productos/dhl-201-blanco-dalia-3.png'], note: 'un tono limpio y fresco, perfecto para el día a día.' },
-      { name: 'Gris', hex: '#6b6a63', images: ['img/productos/dhl-201-gris-dalia-1.png', 'img/productos/dhl-201-gris-dalia-2.png', 'img/productos/dhl-201-gris-dalia-3.png'], note: 'un neutro discreto que nunca pasa de moda.' }
+      { name: 'Azul marino', hex: '#2b3550', images: ['img/productos/dhl-201-azul-dalia-1.png', 'img/productos/dhl-201-azul-dalia-2.png', 'img/productos/dhl-201-azul-dalia-3.png'], note: 'un tono clásico con un toque más formal.' , stock: { 'S': 16, 'M': 29, 'L': 26, 'XL': 16, 'XXL': 26 } },
+      { name: 'Blanco', hex: '#f4ecd8', images: ['img/productos/dhl-201-blanco-dalia-1.png', 'img/productos/dhl-201-blanco-dalia-2.png', 'img/productos/dhl-201-blanco-dalia-3.png'], note: 'un tono limpio y fresco, perfecto para el día a día.' , stock: { 'S': 0, 'M': 26, 'L': 5, 'XL': 25, 'XXL': 26 } },
+      { name: 'Gris', hex: '#6b6a63', images: ['img/productos/dhl-201-gris-dalia-1.png', 'img/productos/dhl-201-gris-dalia-2.png', 'img/productos/dhl-201-gris-dalia-3.png'], note: 'un neutro discreto que nunca pasa de moda.' , stock: { 'S': 6, 'M': 16, 'L': 17, 'XL': 26, 'XXL': 18 } }
     ],
     description: 'Camisa de algodón Oxford, corte regular. Perfecta para la oficina o para vestir casual con jeans.',
     details: {
@@ -364,9 +364,9 @@ const PRODUCTS = [
       { label: '36', measurements: { 'Cintura': '91 cm', 'Cadera': '105 cm', 'Largo de pierna': '104 cm' } }
     ],
     colors: [
-      { name: 'Caqui', hex: '#7c8a63', images: ['img/productos/dhl-202-caqui-dalia-1.png', 'img/productos/dhl-202-caqui-dalia-2.png', 'img/productos/dhl-202-caqui-dalia-3.png'], note: 'un neutro con un toque casual y urbano.' },
-      { name: 'Negro', hex: '#231f1a', images: ['img/productos/dhl-202-negro-dalia-1.png', 'img/productos/dhl-202-negro-dalia-2.png', 'img/productos/dhl-202-negro-dalia-3.png'], note: 'un básico infalible que combina con prácticamente todo tu clóset.' },
-      { name: 'Café', hex: '#4a3826', images: ['img/productos/dhl-202-cafe-dalia-1.png', 'img/productos/dhl-202-cafe-dalia-2.png', 'img/productos/dhl-202-cafe-dalia-3.png'], note: 'un tono cálido y clásico, fácil de combinar.' }
+      { name: 'Caqui', hex: '#7c8a63', images: ['img/productos/dhl-202-caqui-dalia-1.png', 'img/productos/dhl-202-caqui-dalia-2.png', 'img/productos/dhl-202-caqui-dalia-3.png'], note: 'un neutro con un toque casual y urbano.' , stock: { '28': 9, '30': 21, '32': 26, '34': 18, '36': 8 } },
+      { name: 'Negro', hex: '#231f1a', images: ['img/productos/dhl-202-negro-dalia-1.png', 'img/productos/dhl-202-negro-dalia-2.png', 'img/productos/dhl-202-negro-dalia-3.png'], note: 'un básico infalible que combina con prácticamente todo tu clóset.' , stock: { '28': 19, '30': 14, '32': 16, '34': 22, '36': 10 } },
+      { name: 'Café', hex: '#4a3826', images: ['img/productos/dhl-202-cafe-dalia-1.png', 'img/productos/dhl-202-cafe-dalia-2.png', 'img/productos/dhl-202-cafe-dalia-3.png'], note: 'un tono cálido y clásico, fácil de combinar.' , stock: { '28': 21, '30': 23, '32': 26, '34': 9, '36': 16 } }
     ],
     description: 'Pantalón chino de corte recto, cómodo para todo el día. Fácil de combinar con camisa o playera.',
     details: {
@@ -392,10 +392,10 @@ const PRODUCTS = [
       { label: 'XXL', measurements: { 'Busto/Pecho': '105 cm', 'Cintura': '85 cm', 'Cadera': '111 cm', 'Largo': '75 cm' } }
     ],
     colors: [
-      { name: 'Blanco', hex: '#f4ecd8', images: ['img/productos/dhl-203-blanco-dalia-1.png', 'img/productos/dhl-203-blanco-dalia-2.png', 'img/productos/dhl-203-blanco-dalia-3.png'], note: 'un tono limpio y fresco, perfecto para el día a día.' },
-      { name: 'Negro', hex: '#231f1a', images: ['img/productos/dhl-203-negro-dalia-1.png', 'img/productos/dhl-203-negro-dalia-2.png', 'img/productos/dhl-203-negro-dalia-3.png'], note: 'un básico infalible que combina con prácticamente todo tu clóset.' },
-      { name: 'Gris', hex: '#6b6a63', images: ['img/productos/dhl-203-gris-dalia-1.png', 'img/productos/dhl-203-gris-dalia-2.png', 'img/productos/dhl-203-gris-dalia-3.png'], note: 'un neutro discreto que nunca pasa de moda.' },
-      { name: 'Vino', hex: '#7a2f4d', images: ['img/productos/dhl-203-vino-dalia-1.png', 'img/productos/dhl-203-vino-dalia-2.png', 'img/productos/dhl-203-vino-dalia-3.png'], note: 'un tono profundo que le da personalidad al look.' }
+      { name: 'Blanco', hex: '#f4ecd8', images: ['img/productos/dhl-203-blanco-dalia-1.png', 'img/productos/dhl-203-blanco-dalia-2.png', 'img/productos/dhl-203-blanco-dalia-3.png'], note: 'un tono limpio y fresco, perfecto para el día a día.' , stock: { 'S': 7, 'M': 29, 'L': 27, 'XL': 20, 'XXL': 0 } },
+      { name: 'Negro', hex: '#231f1a', images: ['img/productos/dhl-203-negro-dalia-1.png', 'img/productos/dhl-203-negro-dalia-2.png', 'img/productos/dhl-203-negro-dalia-3.png'], note: 'un básico infalible que combina con prácticamente todo tu clóset.' , stock: { 'S': 16, 'M': 22, 'L': 22, 'XL': 10, 'XXL': 26 } },
+      { name: 'Gris', hex: '#6b6a63', images: ['img/productos/dhl-203-gris-dalia-1.png', 'img/productos/dhl-203-gris-dalia-2.png', 'img/productos/dhl-203-gris-dalia-3.png'], note: 'un neutro discreto que nunca pasa de moda.' , stock: { 'S': 20, 'M': 0, 'L': 12, 'XL': 10, 'XXL': 26 } },
+      { name: 'Vino', hex: '#7a2f4d', images: ['img/productos/dhl-203-vino-dalia-1.png', 'img/productos/dhl-203-vino-dalia-2.png', 'img/productos/dhl-203-vino-dalia-3.png'], note: 'un tono profundo que le da personalidad al look.' , stock: { 'S': 28, 'M': 18, 'L': 18, 'XL': 23, 'XXL': 27 } }
     ],
     description: 'Playera de algodón suave, corte recto. El básico que va con todo tu clóset.',
     details: {
@@ -420,9 +420,9 @@ const PRODUCTS = [
       { label: 'XL', measurements: { 'Busto/Pecho': '100 cm', 'Cintura': '80 cm', 'Cadera': '106 cm', 'Largo': '69 cm' } }
     ],
     colors: [
-      { name: 'Café', hex: '#4a3826', images: ['img/productos/dhl-204-cafe-dalia-1.png', 'img/productos/dhl-204-cafe-dalia-2.png', 'img/productos/dhl-204-cafe-dalia-3.png'], note: 'un tono cálido y clásico, fácil de combinar.' },
-      { name: 'Azul marino', hex: '#2b3550', images: ['img/productos/dhl-204-azul-dalia-1.png', 'img/productos/dhl-204-azul-dalia-2.png', 'img/productos/dhl-204-azul-dalia-3.png'], note: 'un tono clásico con un toque más formal.' },
-      { name: 'Gris', hex: '#6b6a63', images: ['img/productos/dhl-204-gris-dalia-1.png', 'img/productos/dhl-204-gris-dalia-2.png', 'img/productos/dhl-204-gris-dalia-3.png'], note: 'un neutro discreto que nunca pasa de moda.' }
+      { name: 'Café', hex: '#4a3826', images: ['img/productos/dhl-204-cafe-dalia-1.png', 'img/productos/dhl-204-cafe-dalia-2.png', 'img/productos/dhl-204-cafe-dalia-3.png'], note: 'un tono cálido y clásico, fácil de combinar.' , stock: { 'S': 5, 'M': 21, 'L': 8, 'XL': 21 } },
+      { name: 'Azul marino', hex: '#2b3550', images: ['img/productos/dhl-204-azul-dalia-1.png', 'img/productos/dhl-204-azul-dalia-2.png', 'img/productos/dhl-204-azul-dalia-3.png'], note: 'un tono clásico con un toque más formal.' , stock: { 'S': 25, 'M': 0, 'L': 13, 'XL': 26 } },
+      { name: 'Gris', hex: '#6b6a63', images: ['img/productos/dhl-204-gris-dalia-1.png', 'img/productos/dhl-204-gris-dalia-2.png', 'img/productos/dhl-204-gris-dalia-3.png'], note: 'un neutro discreto que nunca pasa de moda.' , stock: { 'S': 22, 'M': 7, 'L': 25, 'XL': 0 } }
     ],
     description: 'Suéter de punto grueso, ideal para los días más fríos. Se ve bien solo o encima de una camisa.',
     details: {
@@ -447,8 +447,8 @@ const PRODUCTS = [
       { label: 'XL', measurements: { 'Busto/Pecho': '100 cm', 'Cintura': '80 cm', 'Cadera': '106 cm', 'Largo': '67 cm' } }
     ],
     colors: [
-      { name: 'Negro', hex: '#231f1a', images: ['img/productos/dhl-205-negro-dalia-1.png', 'img/productos/dhl-205-negro-dalia-2.png', 'img/productos/dhl-205-negro-dalia-3.png'], note: 'un básico infalible que combina con prácticamente todo tu clóset.' },
-      { name: 'Verde olivo', hex: '#3f4a3a', images: ['img/productos/dhl-205-verde-dalia-1.png', 'img/productos/dhl-205-verde-dalia-2.png', 'img/productos/dhl-205-verde-dalia-3.png'], note: 'un tono terroso muy fácil de combinar.' }
+      { name: 'Negro', hex: '#231f1a', images: ['img/productos/dhl-205-negro-dalia-1.png', 'img/productos/dhl-205-negro-dalia-2.png', 'img/productos/dhl-205-negro-dalia-3.png'], note: 'un básico infalible que combina con prácticamente todo tu clóset.' , stock: { 'S': 7, 'M': 9, 'L': 26, 'XL': 12 } },
+      { name: 'Verde olivo', hex: '#3f4a3a', images: ['img/productos/dhl-205-verde-dalia-1.png', 'img/productos/dhl-205-verde-dalia-2.png', 'img/productos/dhl-205-verde-dalia-3.png'], note: 'un tono terroso muy fácil de combinar.' , stock: { 'S': 28, 'M': 25, 'L': 28, 'XL': 13 } }
     ],
     description: 'Chamarra bomber ligera, con cierre frontal y puños ajustados. Un clásico urbano renovado.',
     details: {
@@ -474,9 +474,9 @@ const PRODUCTS = [
       { label: '38', measurements: { 'Cintura': '97 cm', 'Cadera': '111 cm', 'Largo de pierna': '48 cm' } }
     ],
     colors: [
-      { name: 'Caqui', hex: '#7c8a63', images: ['img/productos/dhl-206-verde-dalia-1.png', 'img/productos/dhl-206-verde-dalia-2.png', 'img/productos/dhl-206-verde-dalia-3.png'], note: 'un neutro con un toque casual y urbano.' },
-      { name: 'Azul marino', hex: '#2b3550', images: ['img/productos/dhl-206-azul-dalia-1.png', 'img/productos/dhl-206-azul-dalia-2.png', 'img/productos/dhl-206-azul-dalia-3.png'], note: 'un tono clásico con un toque más formal.' },
-      { name: 'Gris', hex: '#6b6a63', images: ['img/productos/dhl-206-gris-dalia-1.png', 'img/productos/dhl-206-gris-dalia-2.png', 'img/productos/dhl-206-gris-dalia-3.png'], note: 'un neutro discreto que nunca pasa de moda.' }
+      { name: 'Caqui', hex: '#7c8a63', images: ['img/productos/dhl-206-verde-dalia-1.png', 'img/productos/dhl-206-verde-dalia-2.png', 'img/productos/dhl-206-verde-dalia-3.png'], note: 'un neutro con un toque casual y urbano.' , stock: { '30': 12, '32': 5, '34': 16, '36': 18, '38': 22 } },
+      { name: 'Azul marino', hex: '#2b3550', images: ['img/productos/dhl-206-azul-dalia-1.png', 'img/productos/dhl-206-azul-dalia-2.png', 'img/productos/dhl-206-azul-dalia-3.png'], note: 'un tono clásico con un toque más formal.' , stock: { '30': 27, '32': 20, '34': 29, '36': 9, '38': 9 } },
+      { name: 'Gris', hex: '#6b6a63', images: ['img/productos/dhl-206-gris-dalia-1.png', 'img/productos/dhl-206-gris-dalia-2.png', 'img/productos/dhl-206-gris-dalia-3.png'], note: 'un neutro discreto que nunca pasa de moda.' , stock: { '30': 11, '32': 5, '34': 12, '36': 21, '38': 23 } }
     ],
     description: 'Bermuda de corte relajado, perfecta para los días de calor sin perder un look cuidado.',
     details: {
@@ -502,9 +502,9 @@ const PRODUCTS = [
       { label: 'XXL', measurements: { 'Busto/Pecho': '105 cm', 'Cintura': '85 cm', 'Cadera': '111 cm', 'Largo': '73 cm' } }
     ],
     colors: [
-      { name: 'Gris', hex: '#6b6a63', images: ['img/productos/dhl-207-gris-dalia-1.png', 'img/productos/dhl-207-gris-dalia-2.png', 'img/productos/dhl-207-gris-dalia-3.png'], note: 'un neutro discreto que nunca pasa de moda.' },
-      { name: 'Negro', hex: '#231f1a', images: ['img/productos/dhl-207-negro-dalia-1.png', 'img/productos/dhl-207-negro-dalia-2.png', 'img/productos/dhl-207-negro-dalia-3.png'], note: 'un básico infalible que combina con prácticamente todo tu clóset.' },
-      { name: 'Vino', hex: '#7a2f4d', images: ['img/productos/dhl-207-vino-dalia-1.png', 'img/productos/dhl-207-vino-dalia-2.png', 'img/productos/dhl-207-vino-dalia-3.png'], note: 'un tono profundo que le da personalidad al look.' }
+      { name: 'Gris', hex: '#6b6a63', images: ['img/productos/dhl-207-gris-dalia-1.png', 'img/productos/dhl-207-gris-dalia-2.png', 'img/productos/dhl-207-gris-dalia-3.png'], note: 'un neutro discreto que nunca pasa de moda.' , stock: { 'S': 0, 'M': 25, 'L': 5, 'XL': 9, 'XXL': 28 } },
+      { name: 'Negro', hex: '#231f1a', images: ['img/productos/dhl-207-negro-dalia-1.png', 'img/productos/dhl-207-negro-dalia-2.png', 'img/productos/dhl-207-negro-dalia-3.png'], note: 'un básico infalible que combina con prácticamente todo tu clóset.' , stock: { 'S': 20, 'M': 22, 'L': 13, 'XL': 13, 'XXL': 15 } },
+      { name: 'Vino', hex: '#7a2f4d', images: ['img/productos/dhl-207-vino-dalia-1.png', 'img/productos/dhl-207-vino-dalia-2.png', 'img/productos/dhl-207-vino-dalia-3.png'], note: 'un tono profundo que le da personalidad al look.' , stock: { 'S': 28, 'M': 16, 'L': 16, 'XL': 18, 'XXL': 29 } }
     ],
     description: 'Sudadera con capucha de algodón afelpado, para los días de flojera con estilo.',
     details: {
@@ -529,9 +529,9 @@ const PRODUCTS = [
       { label: 'XL', measurements: { 'Busto/Pecho': '100 cm', 'Cintura': '80 cm', 'Cadera': '106 cm', 'Largo': '73 cm' } }
     ],
     colors: [
-      { name: 'Beige', hex: '#c9b79c', images: ['img/productos/dhl-208-beige-dalia-1.png', 'img/productos/dhl-208-beige-dalia-2.png', 'img/productos/dhl-208-beige-dalia-3.png'], note: 'un neutro versátil que combina con casi cualquier prenda.' },
-      { name: 'Blanco', hex: '#f4ecd8', images: ['img/productos/dhl-208-blanco-dalia-1.png', 'img/productos/dhl-208-blanco-dalia-2.png', 'img/productos/dhl-208-blanco-dalia-3.png'], note: 'un tono limpio y fresco, perfecto para el día a día.' },
-      { name: 'Azul claro', hex: '#7a9ab8', images: ['img/productos/dhl-208-azul-dalia-1.png', 'img/productos/dhl-208-azul-dalia-2.png', 'img/productos/dhl-208-azul-dalia-3.png'], note: 'un tono fresco, ideal para el clima cálido.' }
+      { name: 'Beige', hex: '#c9b79c', images: ['img/productos/dhl-208-beige-dalia-1.png', 'img/productos/dhl-208-beige-dalia-2.png', 'img/productos/dhl-208-beige-dalia-3.png'], note: 'un neutro versátil que combina con casi cualquier prenda.' , stock: { 'S': 16, 'M': 17, 'L': 13, 'XL': 24 } },
+      { name: 'Blanco', hex: '#f4ecd8', images: ['img/productos/dhl-208-blanco-dalia-1.png', 'img/productos/dhl-208-blanco-dalia-2.png', 'img/productos/dhl-208-blanco-dalia-3.png'], note: 'un tono limpio y fresco, perfecto para el día a día.' , stock: { 'S': 20, 'M': 25, 'L': 24, 'XL': 18 } },
+      { name: 'Azul claro', hex: '#7a9ab8', images: ['img/productos/dhl-208-azul-dalia-1.png', 'img/productos/dhl-208-azul-dalia-2.png', 'img/productos/dhl-208-azul-dalia-3.png'], note: 'un tono fresco, ideal para el clima cálido.' , stock: { 'S': 14, 'M': 19, 'L': 25, 'XL': 5 } }
     ],
     description: 'Camisa de lino fresca de manga larga, ideal para climas cálidos sin perder formalidad.',
     details: {
@@ -557,8 +557,8 @@ const PRODUCTS = [
       { label: '36', measurements: { 'Cintura': '91 cm', 'Cadera': '105 cm', 'Largo de pierna': '104 cm' } }
     ],
     colors: [
-      { name: 'Negro', hex: '#231f1a', images: ['img/productos/dhl-209-negro-1.jpg', 'img/productos/dhl-209-negro-2.jpg', 'img/productos/dhl-209-negro-3.jpg'], note: 'un básico infalible que combina con prácticamente todo tu clóset.' },
-      { name: 'Azul marino', hex: '#2b3550', images: ['img/productos/dhl-209-azul-marino-1.jpg', 'img/productos/dhl-209-azul-marino-2.jpg', 'img/productos/dhl-209-azul-marino-3.jpg'], note: 'un tono clásico con un toque más formal.' }
+      { name: 'Negro', hex: '#231f1a', images: ['img/productos/dhl-209-negro-1.jpg', 'img/productos/dhl-209-negro-2.jpg', 'img/productos/dhl-209-negro-3.jpg'], note: 'un básico infalible que combina con prácticamente todo tu clóset.' , stock: { '28': 12, '30': 12, '32': 5, '34': 10, '36': 10 } },
+      { name: 'Azul marino', hex: '#2b3550', images: ['img/productos/dhl-209-azul-marino-1.jpg', 'img/productos/dhl-209-azul-marino-2.jpg', 'img/productos/dhl-209-azul-marino-3.jpg'], note: 'un tono clásico con un toque más formal.' , stock: { '28': 16, '30': 5, '32': 21, '34': 23, '36': 6 } }
     ],
     description: 'Pantalón de vestir de corte slim, con tela que no se arruga. Ideal para la oficina o una boda.',
     details: {
@@ -584,9 +584,9 @@ const PRODUCTS = [
       { label: 'XXL', measurements: { 'Busto/Pecho': '105 cm', 'Cintura': '85 cm', 'Cadera': '111 cm', 'Largo': '75 cm' } }
     ],
     colors: [
-      { name: 'Verde olivo', hex: '#3f4a3a', images: ['img/productos/dhl-210-verde-olivo-1.jpg', 'img/productos/dhl-210-verde-olivo-2.jpg', 'img/productos/dhl-210-verde-olivo-3.jpg'], note: 'un tono terroso muy fácil de combinar.' },
-      { name: 'Blanco', hex: '#f4ecd8', images: ['img/productos/dhl-210-blanco-1.jpg', 'img/productos/dhl-210-blanco-2.jpg', 'img/productos/dhl-210-blanco-3.jpg'], note: 'un tono limpio y fresco, perfecto para el día a día.' },
-      { name: 'Vino', hex: '#7a2f4d', images: ['img/productos/dhl-210-vino-1.jpg', 'img/productos/dhl-210-vino-2.jpg', 'img/productos/dhl-210-vino-3.jpg'], note: 'un tono profundo que le da personalidad al look.' }
+      { name: 'Verde olivo', hex: '#3f4a3a', images: ['img/productos/dhl-210-verde-olivo-1.jpg', 'img/productos/dhl-210-verde-olivo-2.jpg', 'img/productos/dhl-210-verde-olivo-3.jpg'], note: 'un tono terroso muy fácil de combinar.' , stock: { 'S': 22, 'M': 7, 'L': 29, 'XL': 26, 'XXL': 7 } },
+      { name: 'Blanco', hex: '#f4ecd8', images: ['img/productos/dhl-210-blanco-1.jpg', 'img/productos/dhl-210-blanco-2.jpg', 'img/productos/dhl-210-blanco-3.jpg'], note: 'un tono limpio y fresco, perfecto para el día a día.' , stock: { 'S': 24, 'M': 19, 'L': 25, 'XL': 26, 'XXL': 23 } },
+      { name: 'Vino', hex: '#7a2f4d', images: ['img/productos/dhl-210-vino-1.jpg', 'img/productos/dhl-210-vino-2.jpg', 'img/productos/dhl-210-vino-3.jpg'], note: 'un tono profundo que le da personalidad al look.' , stock: { 'S': 14, 'M': 22, 'L': 8, 'XL': 26, 'XXL': 5 } }
     ],
     description: 'Playera polo de piqué, corte clásico. El punto medio entre casual y formal.',
     details: {
@@ -611,8 +611,8 @@ const PRODUCTS = [
       { label: 'XL', measurements: { 'Busto/Pecho': '100 cm', 'Cintura': '80 cm', 'Cadera': '106 cm', 'Largo': '67 cm' } }
     ],
     colors: [
-      { name: 'Terracota', hex: '#c1443c', images: ['img/productos/dhl-211-terracota-1.jpg', 'img/productos/dhl-211-terracota-2.jpg', 'img/productos/dhl-211-terracota-3.jpg'], note: 'un tono cálido, ideal para la temporada de otoño.' },
-      { name: 'Negro', hex: '#231f1a', images: ['img/productos/dhl-211-negro-1.jpg', 'img/productos/dhl-211-negro-2.jpg', 'img/productos/dhl-211-negro-3.jpg'], note: 'un básico infalible que combina con prácticamente todo tu clóset.' }
+      { name: 'Terracota', hex: '#c1443c', images: ['img/productos/dhl-211-terracota-1.jpg', 'img/productos/dhl-211-terracota-2.jpg', 'img/productos/dhl-211-terracota-3.jpg'], note: 'un tono cálido, ideal para la temporada de otoño.' , stock: { 'S': 22, 'M': 10, 'L': 5, 'XL': 15 } },
+      { name: 'Negro', hex: '#231f1a', images: ['img/productos/dhl-211-negro-1.jpg', 'img/productos/dhl-211-negro-2.jpg', 'img/productos/dhl-211-negro-3.jpg'], note: 'un básico infalible que combina con prácticamente todo tu clóset.' , stock: { 'S': 5, 'M': 25, 'L': 29, 'XL': 29 } }
     ],
     description: 'Chaleco acolchado sin mangas, ligero y abrigador. Perfecto para las temporadas de entretiempo.',
     details: {
@@ -637,9 +637,9 @@ const PRODUCTS = [
       { label: 'XL', measurements: { 'Busto/Pecho': '100 cm', 'Cintura': '80 cm', 'Cadera': '106 cm', 'Largo': '109 cm' } }
     ],
     colors: [
-      { name: 'Gris', hex: '#6b6a63', images: ['img/productos/dhl-212-gris-1.jpg', 'img/productos/dhl-212-gris-2.jpg', 'img/productos/dhl-212-gris-3.jpg'], note: 'un neutro discreto que nunca pasa de moda.' },
-      { name: 'Negro', hex: '#231f1a', images: ['img/productos/dhl-212-negro-1.jpg', 'img/productos/dhl-212-negro-2.jpg', 'img/productos/dhl-212-negro-3.jpg'], note: 'un básico infalible que combina con prácticamente todo tu clóset.' },
-      { name: 'Azul marino', hex: '#2b3550', images: ['img/productos/dhl-212-azul-marino-1.jpg', 'img/productos/dhl-212-azul-marino-2.jpg', 'img/productos/dhl-212-azul-marino-3.jpg'], note: 'un tono clásico con un toque más formal.' }
+      { name: 'Gris', hex: '#6b6a63', images: ['img/productos/dhl-212-gris-1.jpg', 'img/productos/dhl-212-gris-2.jpg', 'img/productos/dhl-212-gris-3.jpg'], note: 'un neutro discreto que nunca pasa de moda.' , stock: { 'S': 24, 'M': 0, 'L': 12, 'XL': 13 } },
+      { name: 'Negro', hex: '#231f1a', images: ['img/productos/dhl-212-negro-1.jpg', 'img/productos/dhl-212-negro-2.jpg', 'img/productos/dhl-212-negro-3.jpg'], note: 'un básico infalible que combina con prácticamente todo tu clóset.' , stock: { 'S': 22, 'M': 16, 'L': 21, 'XL': 27 } },
+      { name: 'Azul marino', hex: '#2b3550', images: ['img/productos/dhl-212-azul-marino-1.jpg', 'img/productos/dhl-212-azul-marino-2.jpg', 'img/productos/dhl-212-azul-marino-3.jpg'], note: 'un tono clásico con un toque más formal.' , stock: { 'S': 22, 'M': 10, 'L': 0, 'XL': 0 } }
     ],
     description: 'Pants tipo jogger con puño ajustado, cómodo para el día a día o para entrenar.',
     details: {
@@ -661,8 +661,8 @@ const PRODUCTS = [
       { label: 'Único', measurements: null }
     ],
     colors: [
-      { name: 'Café', hex: '#4a3826', images: ['img/productos/dhl-301-cafe-dalia-1.png', 'img/productos/dhl-301-cafe-dalia-2.png', 'img/productos/dhl-301-cafe-dalia-3.png'], note: 'un tono cálido y clásico, fácil de combinar.' },
-      { name: 'Negro', hex: '#231f1a', images: ['img/productos/dhl-301-negro-1.jpg', 'img/productos/dhl-301-negro-2.jpg', 'img/productos/dhl-301-negro-3.jpg'], note: 'un básico infalible que combina con prácticamente todo tu clóset.' }
+      { name: 'Café', hex: '#4a3826', images: ['img/productos/dhl-301-cafe-dalia-1.png', 'img/productos/dhl-301-cafe-dalia-2.png', 'img/productos/dhl-301-cafe-dalia-3.png'], note: 'un tono cálido y clásico, fácil de combinar.' , stock: { 'Único': 22 } },
+      { name: 'Negro', hex: '#231f1a', images: ['img/productos/dhl-301-negro-1.jpg', 'img/productos/dhl-301-negro-2.jpg', 'img/productos/dhl-301-negro-3.jpg'], note: 'un básico infalible que combina con prácticamente todo tu clóset.' , stock: { 'Único': 12 } }
     ],
     description: 'Cinturón de piel genuina con hebilla metálica. Un básico que combina con todo tu clóset.',
     details: {
@@ -685,8 +685,8 @@ const PRODUCTS = [
       { label: 'Único', measurements: null }
     ],
     colors: [
-      { name: 'Negro', hex: '#231f1a', images: ['img/productos/dhl-302-negro-1.jpg', 'img/productos/dhl-302-negro-2.jpg', 'img/productos/dhl-302-negro-3.jpg'], note: 'un básico infalible que combina con prácticamente todo tu clóset.' },
-      { name: 'Beige', hex: '#c9b79c', images: ['img/productos/dhl-302-beige-1.jpg', 'img/productos/dhl-302-beige-2.jpg', 'img/productos/dhl-302-beige-3.jpg'], note: 'un neutro versátil que combina con casi cualquier prenda.' }
+      { name: 'Negro', hex: '#231f1a', images: ['img/productos/dhl-302-negro-1.jpg', 'img/productos/dhl-302-negro-2.jpg', 'img/productos/dhl-302-negro-3.jpg'], note: 'un básico infalible que combina con prácticamente todo tu clóset.' , stock: { 'Único': 18 } },
+      { name: 'Beige', hex: '#c9b79c', images: ['img/productos/dhl-302-beige-1.jpg', 'img/productos/dhl-302-beige-2.jpg', 'img/productos/dhl-302-beige-3.jpg'], note: 'un neutro versátil que combina con casi cualquier prenda.' , stock: { 'Único': 0 } }
     ],
     description: 'Gorra con bordado Dahlia, ajuste trasero. Ideal para completar cualquier outfit casual.',
     details: {
@@ -709,9 +709,9 @@ const PRODUCTS = [
       { label: 'Único', measurements: null }
     ],
     colors: [
-      { name: 'Terracota', hex: '#c1443c', images: ['img/productos/dhl-303-terracota-1.jpg', 'img/productos/dhl-303-terracota-2.jpg', 'img/productos/dhl-303-terracota-3.jpg'], note: 'un tono cálido, ideal para la temporada de otoño.' },
-      { name: 'Beige', hex: '#c9b79c', images: ['img/productos/dhl-303-beige-1.jpg', 'img/productos/dhl-303-beige-2.jpg', 'img/productos/dhl-303-beige-3.jpg'], note: 'un neutro versátil que combina con casi cualquier prenda.' },
-      { name: 'Negro', hex: '#231f1a', images: ['img/productos/dhl-303-negro-1.jpg', 'img/productos/dhl-303-negro-2.jpg', 'img/productos/dhl-303-negro-3.jpg'], note: 'un básico infalible que combina con prácticamente todo tu clóset.' }
+      { name: 'Terracota', hex: '#c1443c', images: ['img/productos/dhl-303-terracota-1.jpg', 'img/productos/dhl-303-terracota-2.jpg', 'img/productos/dhl-303-terracota-3.jpg'], note: 'un tono cálido, ideal para la temporada de otoño.' , stock: { 'Único': 12 } },
+      { name: 'Beige', hex: '#c9b79c', images: ['img/productos/dhl-303-beige-1.jpg', 'img/productos/dhl-303-beige-2.jpg', 'img/productos/dhl-303-beige-3.jpg'], note: 'un neutro versátil que combina con casi cualquier prenda.' , stock: { 'Único': 22 } },
+      { name: 'Negro', hex: '#231f1a', images: ['img/productos/dhl-303-negro-1.jpg', 'img/productos/dhl-303-negro-2.jpg', 'img/productos/dhl-303-negro-3.jpg'], note: 'un básico infalible que combina con prácticamente todo tu clóset.' , stock: { 'Único': 19 } }
     ],
     description: 'Bufanda tejida, suave y abrigadora. El accesorio que le da personalidad a cualquier outfit de invierno.',
     details: {
@@ -734,8 +734,8 @@ const PRODUCTS = [
       { label: 'Único', measurements: null }
     ],
     colors: [
-      { name: 'Negro', hex: '#231f1a', images: ['img/productos/dhl-304-negro-1.jpg', 'img/productos/dhl-304-negro-2.jpg', 'img/productos/dhl-304-negro-3.jpg'], note: 'un básico infalible que combina con prácticamente todo tu clóset.' },
-      { name: 'Café', hex: '#4a3826', images: ['img/productos/dhl-304-cafe-1.jpg', 'img/productos/dhl-304-cafe-2.jpg', 'img/productos/dhl-304-cafe-3.jpg'], note: 'un tono cálido y clásico, fácil de combinar.' }
+      { name: 'Negro', hex: '#231f1a', images: ['img/productos/dhl-304-negro-1.jpg', 'img/productos/dhl-304-negro-2.jpg', 'img/productos/dhl-304-negro-3.jpg'], note: 'un básico infalible que combina con prácticamente todo tu clóset.' , stock: { 'Único': 21 } },
+      { name: 'Café', hex: '#4a3826', images: ['img/productos/dhl-304-cafe-1.jpg', 'img/productos/dhl-304-cafe-2.jpg', 'img/productos/dhl-304-cafe-3.jpg'], note: 'un tono cálido y clásico, fácil de combinar.' , stock: { 'Único': 29 } }
     ],
     description: 'Lentes de sol con protección UV y armazón resistente. El toque final para tu look del día.',
     details: {
@@ -758,8 +758,8 @@ const PRODUCTS = [
       { label: 'Único', measurements: null }
     ],
     colors: [
-      { name: 'Verde olivo', hex: '#3f4a3a', images: ['img/productos/dhl-305-verde-olivo-1.jpg', 'img/productos/dhl-305-verde-olivo-2.jpg', 'img/productos/dhl-305-verde-olivo-3.jpg'], note: 'un tono terroso muy fácil de combinar.' },
-      { name: 'Negro', hex: '#231f1a', images: ['img/productos/dhl-305-negro-1.jpg', 'img/productos/dhl-305-negro-2.jpg', 'img/productos/dhl-305-negro-3.jpg'], note: 'un básico infalible que combina con prácticamente todo tu clóset.' }
+      { name: 'Verde olivo', hex: '#3f4a3a', images: ['img/productos/dhl-305-verde-olivo-1.jpg', 'img/productos/dhl-305-verde-olivo-2.jpg', 'img/productos/dhl-305-verde-olivo-3.jpg'], note: 'un tono terroso muy fácil de combinar.' , stock: { 'Único': 22 } },
+      { name: 'Negro', hex: '#231f1a', images: ['img/productos/dhl-305-negro-1.jpg', 'img/productos/dhl-305-negro-2.jpg', 'img/productos/dhl-305-negro-3.jpg'], note: 'un básico infalible que combina con prácticamente todo tu clóset.' , stock: { 'Único': 7 } }
     ],
     description: 'Mochila resistente al agua con compartimento para laptop. Práctica para el diario o para viajar.',
     details: {
@@ -782,8 +782,8 @@ const PRODUCTS = [
       { label: 'Único', measurements: null }
     ],
     colors: [
-      { name: 'Café', hex: '#4a3826', images: ['img/productos/dhl-306-cafe-1.jpg', 'img/productos/dhl-306-cafe-2.jpg', 'img/productos/dhl-306-cafe-3.jpg'], note: 'un tono cálido y clásico, fácil de combinar.' },
-      { name: 'Negro', hex: '#231f1a', images: ['img/productos/dhl-306-negro-1.jpg', 'img/productos/dhl-306-negro-2.jpg', 'img/productos/dhl-306-negro-3.jpg'], note: 'un básico infalible que combina con prácticamente todo tu clóset.' }
+      { name: 'Café', hex: '#4a3826', images: ['img/productos/dhl-306-cafe-1.jpg', 'img/productos/dhl-306-cafe-2.jpg', 'img/productos/dhl-306-cafe-3.jpg'], note: 'un tono cálido y clásico, fácil de combinar.' , stock: { 'Único': 16 } },
+      { name: 'Negro', hex: '#231f1a', images: ['img/productos/dhl-306-negro-1.jpg', 'img/productos/dhl-306-negro-2.jpg', 'img/productos/dhl-306-negro-3.jpg'], note: 'un básico infalible que combina con prácticamente todo tu clóset.' , stock: { 'Único': 0 } }
     ],
     description: 'Cartera de piel genuina con varios compartimentos. Sencilla, resistente y minimalista.',
     details: {
@@ -806,8 +806,8 @@ const PRODUCTS = [
       { label: 'Único', measurements: null }
     ],
     colors: [
-      { name: 'Dorado', hex: '#e3b23c', images: ['img/productos/dhl-307-dorado-1.jpg', 'img/productos/dhl-307-dorado-2.jpg', 'img/productos/dhl-307-dorado-3.jpg'], note: 'un tono llamativo pensado para destacar.' },
-      { name: 'Negro', hex: '#231f1a', images: ['img/productos/dhl-307-negro-1.jpg', 'img/productos/dhl-307-negro-2.jpg', 'img/productos/dhl-307-negro-3.jpg'], note: 'un básico infalible que combina con prácticamente todo tu clóset.' }
+      { name: 'Dorado', hex: '#e3b23c', images: ['img/productos/dhl-307-dorado-1.jpg', 'img/productos/dhl-307-dorado-2.jpg', 'img/productos/dhl-307-dorado-3.jpg'], note: 'un tono llamativo pensado para destacar.' , stock: { 'Único': 16 } },
+      { name: 'Negro', hex: '#231f1a', images: ['img/productos/dhl-307-negro-1.jpg', 'img/productos/dhl-307-negro-2.jpg', 'img/productos/dhl-307-negro-3.jpg'], note: 'un básico infalible que combina con prácticamente todo tu clóset.' , stock: { 'Único': 16 } }
     ],
     description: 'Reloj de carátula limpia y correa delgada. Combina con looks formales y casuales por igual.',
     details: {
@@ -830,8 +830,8 @@ const PRODUCTS = [
       { label: 'Único', measurements: null }
     ],
     colors: [
-      { name: 'Rosa dalia', hex: '#d9769b', images: ['img/productos/dhl-308-rosa-dalia-1.jpg', 'img/productos/dhl-308-rosa-dalia-2.jpg', 'img/productos/dhl-308-rosa-dalia-3.jpg'], note: 'nuestro tono insignia: vibrante, femenino y muy Dahlia.' },
-      { name: 'Terracota', hex: '#c1443c', images: ['img/productos/dhl-308-terracota-1.jpg', 'img/productos/dhl-308-terracota-2.jpg', 'img/productos/dhl-308-terracota-3.jpg'], note: 'un tono cálido, ideal para la temporada de otoño.' }
+      { name: 'Rosa dalia', hex: '#d9769b', images: ['img/productos/dhl-308-rosa-dalia-1.jpg', 'img/productos/dhl-308-rosa-dalia-2.jpg', 'img/productos/dhl-308-rosa-dalia-3.jpg'], note: 'nuestro tono insignia: vibrante, femenino y muy Dahlia.' , stock: { 'Único': 7 } },
+      { name: 'Terracota', hex: '#c1443c', images: ['img/productos/dhl-308-terracota-1.jpg', 'img/productos/dhl-308-terracota-2.jpg', 'img/productos/dhl-308-terracota-3.jpg'], note: 'un tono cálido, ideal para la temporada de otoño.' , stock: { 'Único': 15 } }
     ],
     description: 'Paliacate de algodón con estampado propio. Úsalo en el cuello, la muñeca o la mochila.',
     details: {
@@ -854,9 +854,9 @@ const PRODUCTS = [
       { label: 'Único', measurements: null }
     ],
     colors: [
-      { name: 'Gris', hex: '#6b6a63', images: ['img/productos/dhl-309-gris-1.jpg', 'img/productos/dhl-309-gris-2.jpg', 'img/productos/dhl-309-gris-3.jpg'], note: 'un neutro discreto que nunca pasa de moda.' },
-      { name: 'Negro', hex: '#231f1a', images: ['img/productos/dhl-309-negro-1.jpg', 'img/productos/dhl-309-negro-2.jpg', 'img/productos/dhl-309-negro-3.jpg'], note: 'un básico infalible que combina con prácticamente todo tu clóset.' },
-      { name: 'Blanco', hex: '#f4ecd8', images: ['img/productos/dhl-309-blanco-1.jpg', 'img/productos/dhl-309-blanco-2.jpg', 'img/productos/dhl-309-blanco-3.jpg'], note: 'un tono limpio y fresco, perfecto para el día a día.' }
+      { name: 'Gris', hex: '#6b6a63', images: ['img/productos/dhl-309-gris-1.jpg', 'img/productos/dhl-309-gris-2.jpg', 'img/productos/dhl-309-gris-3.jpg'], note: 'un neutro discreto que nunca pasa de moda.' , stock: { 'Único': 9 } },
+      { name: 'Negro', hex: '#231f1a', images: ['img/productos/dhl-309-negro-1.jpg', 'img/productos/dhl-309-negro-2.jpg', 'img/productos/dhl-309-negro-3.jpg'], note: 'un básico infalible que combina con prácticamente todo tu clóset.' , stock: { 'Único': 28 } },
+      { name: 'Blanco', hex: '#f4ecd8', images: ['img/productos/dhl-309-blanco-1.jpg', 'img/productos/dhl-309-blanco-2.jpg', 'img/productos/dhl-309-blanco-3.jpg'], note: 'un tono limpio y fresco, perfecto para el día a día.' , stock: { 'Único': 25 } }
     ],
     description: 'Pack de 3 pares de calcetines de algodón. Cómodos, duraderos y básicos que siempre faltan.',
     details: {
@@ -879,9 +879,9 @@ const PRODUCTS = [
       { label: 'Único', measurements: null }
     ],
     colors: [
-      { name: 'Café', hex: '#4a3826', images: ['img/productos/dhl-310-cafe-1.jpg', 'img/productos/dhl-310-cafe-2.jpg', 'img/productos/dhl-310-cafe-3.jpg'], note: 'un tono cálido y clásico, fácil de combinar.' },
-      { name: 'Negro', hex: '#231f1a', images: ['img/productos/dhl-310-negro-1.jpg', 'img/productos/dhl-310-negro-2.jpg', 'img/productos/dhl-310-negro-3.jpg'], note: 'un básico infalible que combina con prácticamente todo tu clóset.' },
-      { name: 'Beige', hex: '#c9b79c', images: ['img/productos/dhl-310-beige-1.jpg', 'img/productos/dhl-310-beige-2.jpg', 'img/productos/dhl-310-beige-3.jpg'], note: 'un neutro versátil que combina con casi cualquier prenda.' }
+      { name: 'Café', hex: '#4a3826', images: ['img/productos/dhl-310-cafe-1.jpg', 'img/productos/dhl-310-cafe-2.jpg', 'img/productos/dhl-310-cafe-3.jpg'], note: 'un tono cálido y clásico, fácil de combinar.' , stock: { 'Único': 25 } },
+      { name: 'Negro', hex: '#231f1a', images: ['img/productos/dhl-310-negro-1.jpg', 'img/productos/dhl-310-negro-2.jpg', 'img/productos/dhl-310-negro-3.jpg'], note: 'un básico infalible que combina con prácticamente todo tu clóset.' , stock: { 'Único': 26 } },
+      { name: 'Beige', hex: '#c9b79c', images: ['img/productos/dhl-310-beige-1.jpg', 'img/productos/dhl-310-beige-2.jpg', 'img/productos/dhl-310-beige-3.jpg'], note: 'un neutro versátil que combina con casi cualquier prenda.' , stock: { 'Único': 23 } }
     ],
     description: 'Guantes tejidos, calientitos para el invierno sin perder estilo.',
     details: {
@@ -904,8 +904,8 @@ const PRODUCTS = [
       { label: 'Único', measurements: null }
     ],
     colors: [
-      { name: 'Dorado', hex: '#e3b23c', images: ['img/productos/dhl-311-dorado-1.jpg', 'img/productos/dhl-311-dorado-2.jpg', 'img/productos/dhl-311-dorado-3.jpg'], note: 'un tono llamativo pensado para destacar.' },
-      { name: 'Café', hex: '#4a3826', images: ['img/productos/dhl-311-cafe-1.jpg', 'img/productos/dhl-311-cafe-2.jpg', 'img/productos/dhl-311-cafe-3.jpg'], note: 'un tono cálido y clásico, fácil de combinar.' }
+      { name: 'Dorado', hex: '#e3b23c', images: ['img/productos/dhl-311-dorado-1.jpg', 'img/productos/dhl-311-dorado-2.jpg', 'img/productos/dhl-311-dorado-3.jpg'], note: 'un tono llamativo pensado para destacar.' , stock: { 'Único': 28 } },
+      { name: 'Café', hex: '#4a3826', images: ['img/productos/dhl-311-cafe-1.jpg', 'img/productos/dhl-311-cafe-2.jpg', 'img/productos/dhl-311-cafe-3.jpg'], note: 'un tono cálido y clásico, fácil de combinar.' , stock: { 'Único': 17 } }
     ],
     description: 'Pulsera hecha a mano por artesanos locales. Cada pieza es ligeramente distinta.',
     details: {
@@ -928,8 +928,8 @@ const PRODUCTS = [
       { label: 'Único', measurements: null }
     ],
     colors: [
-      { name: 'Beige', hex: '#c9b79c', images: ['img/productos/dhl-312-beige-1.jpg', 'img/productos/dhl-312-beige-2.jpg', 'img/productos/dhl-312-beige-3.jpg'], note: 'un neutro versátil que combina con casi cualquier prenda.' },
-      { name: 'Café', hex: '#4a3826', images: ['img/productos/dhl-312-cafe-1.jpg', 'img/productos/dhl-312-cafe-2.jpg', 'img/productos/dhl-312-cafe-3.jpg'], note: 'un tono cálido y clásico, fácil de combinar.' }
+      { name: 'Beige', hex: '#c9b79c', images: ['img/productos/dhl-312-beige-1.jpg', 'img/productos/dhl-312-beige-2.jpg', 'img/productos/dhl-312-beige-3.jpg'], note: 'un neutro versátil que combina con casi cualquier prenda.' , stock: { 'Único': 23 } },
+      { name: 'Café', hex: '#4a3826', images: ['img/productos/dhl-312-cafe-1.jpg', 'img/productos/dhl-312-cafe-2.jpg', 'img/productos/dhl-312-cafe-3.jpg'], note: 'un tono cálido y clásico, fácil de combinar.' , stock: { 'Único': 6 } }
     ],
     description: 'Sombrero de palma tejido a mano, ligero y fresco para los días de sol.',
     details: {
@@ -955,8 +955,8 @@ const PRODUCTS = [
       { label: 'XL', measurements: { 'Busto/Pecho': '100 cm', 'Cintura': '80 cm', 'Cadera': '106 cm', 'Largo': '67 cm' } }
     ],
     colors: [
-      { name: 'Terracota', hex: '#c1443c', images: ['img/productos/dhl-401-terracota-1.jpg', 'img/productos/dhl-401-terracota-2.jpg', 'img/productos/dhl-401-terracota-3.jpg'], note: 'un tono cálido, ideal para la temporada de otoño.' },
-      { name: 'Negro', hex: '#231f1a', images: ['img/productos/dhl-401-negro-1.jpg', 'img/productos/dhl-401-negro-2.jpg', 'img/productos/dhl-401-negro-3.jpg'], note: 'un básico infalible que combina con prácticamente todo tu clóset.' }
+      { name: 'Terracota', hex: '#c1443c', images: ['img/productos/dhl-401-terracota-1.jpg', 'img/productos/dhl-401-terracota-2.jpg', 'img/productos/dhl-401-terracota-3.jpg'], note: 'un tono cálido, ideal para la temporada de otoño.' , stock: { 'S': 14, 'M': 20, 'L': 28, 'XL': 21 } },
+      { name: 'Negro', hex: '#231f1a', images: ['img/productos/dhl-401-negro-1.jpg', 'img/productos/dhl-401-negro-2.jpg', 'img/productos/dhl-401-negro-3.jpg'], note: 'un básico infalible que combina con prácticamente todo tu clóset.' , stock: { 'S': 15, 'M': 14, 'L': 26, 'XL': 0 } }
     ],
     description: 'Chamarra ligera acolchada, perfecta para los días de otoño. Nueva colección, edición limitada.',
     details: {
@@ -981,9 +981,9 @@ const PRODUCTS = [
       { label: 'L', measurements: { 'Busto/Pecho': '95 cm', 'Cintura': '75 cm', 'Cadera': '101 cm', 'Largo': '67 cm' } }
     ],
     colors: [
-      { name: 'Sage', hex: '#7c8a63', images: ['img/productos/dhl-402-sage-dalia-1.png', 'img/productos/dhl-402-sage-dalia-2.png', 'img/productos/dhl-402-sage-dalia-3.png'], note: 'un verde suave inspirado en la naturaleza.' },
-      { name: 'Crema', hex: '#f4ecd8', images: ['img/productos/dhl-402-crema-dalia-1.png', 'img/productos/dhl-402-crema-dalia-2.png', 'img/productos/dhl-402-crema-dalia-3.png'], note: 'un tono cálido que suaviza cualquier combinación.' },
-      { name: 'Vino', hex: '#7a2f4d', images: ['img/productos/dhl-402-vino-dalia-1.png', 'img/productos/dhl-402-vino-dalia-2.png', 'img/productos/dhl-402-vino-dalia-3.png'], note: 'un tono profundo que le da personalidad al look.' }
+      { name: 'Sage', hex: '#7c8a63', images: ['img/productos/dhl-402-sage-dalia-1.png', 'img/productos/dhl-402-sage-dalia-2.png', 'img/productos/dhl-402-sage-dalia-3.png'], note: 'un verde suave inspirado en la naturaleza.' , stock: { 'XS': 12, 'S': 10, 'M': 7, 'L': 13 } },
+      { name: 'Crema', hex: '#f4ecd8', images: ['img/productos/dhl-402-crema-dalia-1.png', 'img/productos/dhl-402-crema-dalia-2.png', 'img/productos/dhl-402-crema-dalia-3.png'], note: 'un tono cálido que suaviza cualquier combinación.' , stock: { 'XS': 16, 'S': 14, 'M': 13, 'L': 22 } },
+      { name: 'Vino', hex: '#7a2f4d', images: ['img/productos/dhl-402-vino-dalia-1.png', 'img/productos/dhl-402-vino-dalia-2.png', 'img/productos/dhl-402-vino-dalia-3.png'], note: 'un tono profundo que le da personalidad al look.' , stock: { 'XS': 8, 'S': 21, 'M': 22, 'L': 8 } }
     ],
     description: 'Suéter de punto suave con cuello alto. Se ve bien solo o en capas con una chamarra.',
     details: {
@@ -1008,8 +1008,8 @@ const PRODUCTS = [
       { label: 'L', measurements: { 'Busto/Pecho': '95 cm', 'Cintura': '75 cm', 'Cadera': '101 cm', 'Largo': '55 cm' } }
     ],
     colors: [
-      { name: 'Caqui', hex: '#7c8a63', images: ['img/productos/dhl-403-caqui-dalia-1.png', 'img/productos/dhl-403-caqui-dalia-2.png', 'img/productos/dhl-403-caqui-dalia-3.png'], note: 'un neutro con un toque casual y urbano.' },
-      { name: 'Negro', hex: '#231f1a', images: ['img/productos/dhl-403-negro-dalia-1.png', 'img/productos/dhl-403-negro-dalia-2.png', 'img/productos/dhl-403-negro-dalia-3.png'], note: 'un básico infalible que combina con prácticamente todo tu clóset.' }
+      { name: 'Caqui', hex: '#7c8a63', images: ['img/productos/dhl-403-caqui-dalia-1.png', 'img/productos/dhl-403-caqui-dalia-2.png', 'img/productos/dhl-403-caqui-dalia-3.png'], note: 'un neutro con un toque casual y urbano.' , stock: { 'XS': 27, 'S': 13, 'M': 12, 'L': 25 } },
+      { name: 'Negro', hex: '#231f1a', images: ['img/productos/dhl-403-negro-dalia-1.png', 'img/productos/dhl-403-negro-dalia-2.png', 'img/productos/dhl-403-negro-dalia-3.png'], note: 'un básico infalible que combina con prácticamente todo tu clóset.' , stock: { 'XS': 9, 'S': 26, 'M': 8, 'L': 23 } }
     ],
     description: 'Falda cargo con bolsas laterales, mezcla lo funcional con lo urbano. Parte de la colección nueva.',
     details: {
@@ -1034,8 +1034,8 @@ const PRODUCTS = [
       { label: 'L', measurements: { 'Busto/Pecho': '95 cm', 'Cintura': '75 cm', 'Cadera': '101 cm', 'Largo': '101 cm' } }
     ],
     colors: [
-      { name: 'Rosa dalia', hex: '#d9769b', images: ['img/productos/dhl-404-rosa-dalia-1.png', 'img/productos/dhl-404-rosa-dalia-2.png', 'img/productos/dhl-404-rosa-dalia-3.png'], note: 'nuestro tono insignia: vibrante, femenino y muy Dahlia.' },
-      { name: 'Crema', hex: '#f4ecd8', images: ['img/productos/dhl-404-crema-dalia-1.png', 'img/productos/dhl-404-crema-dalia-2.png', 'img/productos/dhl-404-crema-dalia-3.png'], note: 'un tono cálido que suaviza cualquier combinación.' }
+      { name: 'Rosa dalia', hex: '#d9769b', images: ['img/productos/dhl-404-rosa-dalia-1.png', 'img/productos/dhl-404-rosa-dalia-2.png', 'img/productos/dhl-404-rosa-dalia-3.png'], note: 'nuestro tono insignia: vibrante, femenino y muy Dahlia.' , stock: { 'XS': 11, 'S': 13, 'M': 16, 'L': 0 } },
+      { name: 'Crema', hex: '#f4ecd8', images: ['img/productos/dhl-404-crema-dalia-1.png', 'img/productos/dhl-404-crema-dalia-2.png', 'img/productos/dhl-404-crema-dalia-3.png'], note: 'un tono cálido que suaviza cualquier combinación.' , stock: { 'XS': 24, 'S': 21, 'M': 21, 'L': 19 } }
     ],
     description: 'Vestido de punto entallado, cómodo y abrigador sin perder silueta. Recién llegado a la colección.',
     details: {
@@ -1060,9 +1060,9 @@ const PRODUCTS = [
       { label: 'XL', measurements: { 'Busto/Pecho': '100 cm', 'Cintura': '80 cm', 'Cadera': '106 cm', 'Largo': '113 cm' } }
     ],
     colors: [
-      { name: 'Café', hex: '#4a3826', images: ['img/productos/dhl-405-cafe-1.jpg', 'img/productos/dhl-405-cafe-2.jpg', 'img/productos/dhl-405-cafe-3.jpg'], note: 'un tono cálido y clásico, fácil de combinar.' },
-      { name: 'Negro', hex: '#231f1a', images: ['img/productos/dhl-405-negro-1.jpg', 'img/productos/dhl-405-negro-2.jpg', 'img/productos/dhl-405-negro-3.jpg'], note: 'un básico infalible que combina con prácticamente todo tu clóset.' },
-      { name: 'Beige', hex: '#c9b79c', images: ['img/productos/dhl-405-beige-1.jpg', 'img/productos/dhl-405-beige-2.jpg', 'img/productos/dhl-405-beige-3.jpg'], note: 'un neutro versátil que combina con casi cualquier prenda.' }
+      { name: 'Café', hex: '#4a3826', images: ['img/productos/dhl-405-cafe-1.jpg', 'img/productos/dhl-405-cafe-2.jpg', 'img/productos/dhl-405-cafe-3.jpg'], note: 'un tono cálido y clásico, fácil de combinar.' , stock: { 'S': 22, 'M': 20, 'L': 15, 'XL': 15 } },
+      { name: 'Negro', hex: '#231f1a', images: ['img/productos/dhl-405-negro-1.jpg', 'img/productos/dhl-405-negro-2.jpg', 'img/productos/dhl-405-negro-3.jpg'], note: 'un básico infalible que combina con prácticamente todo tu clóset.' , stock: { 'S': 17, 'M': 13, 'L': 0, 'XL': 9 } },
+      { name: 'Beige', hex: '#c9b79c', images: ['img/productos/dhl-405-beige-1.jpg', 'img/productos/dhl-405-beige-2.jpg', 'img/productos/dhl-405-beige-3.jpg'], note: 'un neutro versátil que combina con casi cualquier prenda.' , stock: { 'S': 19, 'M': 8, 'L': 9, 'XL': 7 } }
     ],
     description: 'Abrigo largo de corte recto, la pieza estrella de la temporada de frío. Edición limitada.',
     details: {
@@ -1088,8 +1088,8 @@ const PRODUCTS = [
       { label: 'XL', measurements: { 'Busto/Pecho': '100 cm', 'Cintura': '80 cm', 'Cadera': '106 cm', 'Largo': '75 cm' } }
     ],
     colors: [
-      { name: 'Azul marino', hex: '#2b3550', images: ['img/productos/dhl-406-azul-dalia-1.png', 'img/productos/dhl-406-azul-dalia-2.png', 'img/productos/dhl-406-azul-dalia-3.png'], note: 'un tono clásico con un toque más formal.' },
-      { name: 'Negro', hex: '#231f1a', images: ['img/productos/dhl-406-negro-dalia-1.png', 'img/productos/dhl-406-negro-dalia-2.png', 'img/productos/dhl-406-negro-dalia-3.png'], note: 'un básico infalible que combina con prácticamente todo tu clóset.' }
+      { name: 'Azul marino', hex: '#2b3550', images: ['img/productos/dhl-406-azul-dalia-1.png', 'img/productos/dhl-406-azul-dalia-2.png', 'img/productos/dhl-406-azul-dalia-3.png'], note: 'un tono clásico con un toque más formal.' , stock: { 'XS': 21, 'S': 16, 'M': 21, 'L': 10, 'XL': 22 } },
+      { name: 'Negro', hex: '#231f1a', images: ['img/productos/dhl-406-negro-dalia-1.png', 'img/productos/dhl-406-negro-dalia-2.png', 'img/productos/dhl-406-negro-dalia-3.png'], note: 'un básico infalible que combina con prácticamente todo tu clóset.' , stock: { 'XS': 8, 'S': 11, 'M': 22, 'L': 20, 'XL': 16 } }
     ],
     description: 'Blazer de hombros estructurados, entalla sin apretar. Sube de nivel cualquier outfit casual.',
     details: {
@@ -1114,9 +1114,9 @@ const PRODUCTS = [
       { label: 'XL', measurements: { 'Busto/Pecho': '100 cm', 'Cintura': '80 cm', 'Cadera': '106 cm', 'Largo': '69 cm' } }
     ],
     colors: [
-      { name: 'Morado', hex: '#6c5ce0', images: ['img/productos/dhl-407-morado-1.jpg', 'img/productos/dhl-407-morado-2.jpg', 'img/productos/dhl-407-morado-3.jpg'], note: 'un tono llamativo, perfecto para looks con personalidad.' },
-      { name: 'Negro', hex: '#231f1a', images: ['img/productos/dhl-407-negro-1.jpg', 'img/productos/dhl-407-negro-2.jpg', 'img/productos/dhl-407-negro-3.jpg'], note: 'un básico infalible que combina con prácticamente todo tu clóset.' },
-      { name: 'Gris', hex: '#6b6a63', images: ['img/productos/dhl-407-gris-1.jpg', 'img/productos/dhl-407-gris-2.jpg', 'img/productos/dhl-407-gris-3.jpg'], note: 'un neutro discreto que nunca pasa de moda.' }
+      { name: 'Morado', hex: '#6c5ce0', images: ['img/productos/dhl-407-morado-1.jpg', 'img/productos/dhl-407-morado-2.jpg', 'img/productos/dhl-407-morado-3.jpg'], note: 'un tono llamativo, perfecto para looks con personalidad.' , stock: { 'S': 0, 'M': 8, 'L': 12, 'XL': 18 } },
+      { name: 'Negro', hex: '#231f1a', images: ['img/productos/dhl-407-negro-1.jpg', 'img/productos/dhl-407-negro-2.jpg', 'img/productos/dhl-407-negro-3.jpg'], note: 'un básico infalible que combina con prácticamente todo tu clóset.' , stock: { 'S': 0, 'M': 18, 'L': 11, 'XL': 25 } },
+      { name: 'Gris', hex: '#6b6a63', images: ['img/productos/dhl-407-gris-1.jpg', 'img/productos/dhl-407-gris-2.jpg', 'img/productos/dhl-407-gris-3.jpg'], note: 'un neutro discreto que nunca pasa de moda.' , stock: { 'S': 28, 'M': 20, 'L': 13, 'XL': 10 } }
     ],
     description: 'Conjunto de sudadera y pants a juego, cómodo pero con estilo. Recién llegado.',
     details: {
@@ -1141,9 +1141,9 @@ const PRODUCTS = [
       { label: 'L', measurements: { 'Busto/Pecho': '95 cm', 'Cintura': '75 cm', 'Cadera': '101 cm', 'Largo': '101 cm' } }
     ],
     colors: [
-      { name: 'Dorado', hex: '#e3b23c', images: ['img/productos/dhl-408-dorado-dalia-1.png', 'img/productos/dhl-408-dorado-dalia-2.png', 'img/productos/dhl-408-dorado-dalia-3.png'], note: 'un tono llamativo pensado para destacar.' },
-      { name: 'Negro', hex: '#231f1a', images: ['img/productos/dhl-408-negro-dalia-1.png', 'img/productos/dhl-408-negro-dalia-2.png', 'img/productos/dhl-408-negro-dalia-3.png'], note: 'un básico infalible que combina con prácticamente todo tu clóset.' },
-      { name: 'Vino', hex: '#7a2f4d', images: ['img/productos/dhl-408-vino-dalia-1.png', 'img/productos/dhl-408-vino-dalia-2.png', 'img/productos/dhl-408-vino-dalia-3.png'], note: 'un tono profundo que le da personalidad al look.' }
+      { name: 'Dorado', hex: '#e3b23c', images: ['img/productos/dhl-408-dorado-dalia-1.png', 'img/productos/dhl-408-dorado-dalia-2.png', 'img/productos/dhl-408-dorado-dalia-3.png'], note: 'un tono llamativo pensado para destacar.' , stock: { 'XS': 18, 'S': 7, 'M': 27, 'L': 12 } },
+      { name: 'Negro', hex: '#231f1a', images: ['img/productos/dhl-408-negro-dalia-1.png', 'img/productos/dhl-408-negro-dalia-2.png', 'img/productos/dhl-408-negro-dalia-3.png'], note: 'un básico infalible que combina con prácticamente todo tu clóset.' , stock: { 'XS': 5, 'S': 26, 'M': 22, 'L': 23 } },
+      { name: 'Vino', hex: '#7a2f4d', images: ['img/productos/dhl-408-vino-dalia-1.png', 'img/productos/dhl-408-vino-dalia-2.png', 'img/productos/dhl-408-vino-dalia-3.png'], note: 'un tono profundo que le da personalidad al look.' , stock: { 'XS': 0, 'S': 15, 'M': 15, 'L': 11 } }
     ],
     description: 'Vestido satinado de caída elegante, perfecto para una fiesta o cena especial.',
     details: {
@@ -1168,7 +1168,7 @@ const PRODUCTS = [
       { label: 'XL', measurements: { 'Busto/Pecho': '100 cm', 'Cintura': '80 cm', 'Cadera': '106 cm', 'Largo': '67 cm' } }
     ],
     colors: [
-      { name: 'Negro', hex: '#231f1a', images: ['img/productos/dhl-409-negro-1.jpg', 'img/productos/dhl-409-negro-2.jpg', 'img/productos/dhl-409-negro-3.jpg'], note: 'un básico infalible que combina con prácticamente todo tu clóset.' }
+      { name: 'Negro', hex: '#231f1a', images: ['img/productos/dhl-409-negro-1.jpg', 'img/productos/dhl-409-negro-2.jpg', 'img/productos/dhl-409-negro-3.jpg'], note: 'un básico infalible que combina con prácticamente todo tu clóset.' , stock: { 'S': 0, 'M': 18, 'L': 22, 'XL': 29 } }
     ],
     description: 'Chamarra de vinil con brillo sutil, la pieza statement de la colección nueva.',
     details: {
@@ -1194,8 +1194,8 @@ const PRODUCTS = [
       { label: 'XL', measurements: { 'Busto/Pecho': '100 cm', 'Cintura': '80 cm', 'Cadera': '106 cm', 'Largo': '109 cm' } }
     ],
     colors: [
-      { name: 'Beige', hex: '#c9b79c', images: ['img/productos/dhl-410-beige-dalia-1.png', 'img/productos/dhl-410-beige-dalia-2.png', 'img/productos/dhl-410-beige-dalia-3.png'], note: 'un neutro versátil que combina con casi cualquier prenda.' },
-      { name: 'Negro', hex: '#231f1a', images: ['img/productos/dhl-410-negro-dalia-1.png', 'img/productos/dhl-410-negro-dalia-2.png', 'img/productos/dhl-410-negro-dalia-3.png'], note: 'un básico infalible que combina con prácticamente todo tu clóset.' }
+      { name: 'Beige', hex: '#c9b79c', images: ['img/productos/dhl-410-beige-dalia-1.png', 'img/productos/dhl-410-beige-dalia-2.png', 'img/productos/dhl-410-beige-dalia-3.png'], note: 'un neutro versátil que combina con casi cualquier prenda.' , stock: { 'XS': 10, 'S': 14, 'M': 10, 'L': 15, 'XL': 6 } },
+      { name: 'Negro', hex: '#231f1a', images: ['img/productos/dhl-410-negro-dalia-1.png', 'img/productos/dhl-410-negro-dalia-2.png', 'img/productos/dhl-410-negro-dalia-3.png'], note: 'un básico infalible que combina con prácticamente todo tu clóset.' , stock: { 'XS': 24, 'S': 6, 'M': 7, 'L': 8, 'XL': 22 } }
     ],
     description: 'Pantalón de pierna ancha con caída fluida, la silueta que está dominando esta temporada.',
     details: {
@@ -1220,8 +1220,8 @@ const PRODUCTS = [
       { label: 'L', measurements: { 'Busto/Pecho': '95 cm', 'Cintura': '75 cm', 'Cadera': '101 cm', 'Largo': '47 cm' } }
     ],
     colors: [
-      { name: 'Terracota', hex: '#c1443c', images: ['img/productos/dhl-411-terracota-dalia-1.png', 'img/productos/dhl-411-terracota-dalia-2.png', 'img/productos/dhl-411-terracota-dalia-3.png'], note: 'un tono cálido, ideal para la temporada de otoño.' },
-      { name: 'Negro', hex: '#231f1a', images: ['img/productos/dhl-411-negro-dalia-1.png', 'img/productos/dhl-411-negro-dalia-2.png', 'img/productos/dhl-411-negro-dalia-3.png'], note: 'un básico infalible que combina con prácticamente todo tu clóset.' }
+      { name: 'Terracota', hex: '#c1443c', images: ['img/productos/dhl-411-terracota-dalia-1.png', 'img/productos/dhl-411-terracota-dalia-2.png', 'img/productos/dhl-411-terracota-dalia-3.png'], note: 'un tono cálido, ideal para la temporada de otoño.' , stock: { 'XS': 20, 'S': 21, 'M': 21, 'L': 6 } },
+      { name: 'Negro', hex: '#231f1a', images: ['img/productos/dhl-411-negro-dalia-1.png', 'img/productos/dhl-411-negro-dalia-2.png', 'img/productos/dhl-411-negro-dalia-3.png'], note: 'un básico infalible que combina con prácticamente todo tu clóset.' , stock: { 'XS': 8, 'S': 15, 'M': 27, 'L': 19 } }
     ],
     description: 'Top estilo corset con costuras estructuradas, para un look de noche con actitud.',
     details: {
@@ -1246,8 +1246,8 @@ const PRODUCTS = [
       { label: 'XL', measurements: { 'Busto/Pecho': '100 cm', 'Cintura': '80 cm', 'Cadera': '106 cm', 'Largo': '113 cm' } }
     ],
     colors: [
-      { name: 'Beige', hex: '#c9b79c', images: ['img/productos/dhl-412-beige-1.jpg', 'img/productos/dhl-412-beige-2.jpg', 'img/productos/dhl-412-beige-3.jpg'], note: 'un neutro versátil que combina con casi cualquier prenda.' },
-      { name: 'Café', hex: '#4a3826', images: ['img/productos/dhl-412-cafe-1.jpg', 'img/productos/dhl-412-cafe-2.jpg', 'img/productos/dhl-412-cafe-3.jpg'], note: 'un tono cálido y clásico, fácil de combinar.' }
+      { name: 'Beige', hex: '#c9b79c', images: ['img/productos/dhl-412-beige-1.jpg', 'img/productos/dhl-412-beige-2.jpg', 'img/productos/dhl-412-beige-3.jpg'], note: 'un neutro versátil que combina con casi cualquier prenda.' , stock: { 'S': 15, 'M': 12, 'L': 8, 'XL': 21 } },
+      { name: 'Café', hex: '#4a3826', images: ['img/productos/dhl-412-cafe-1.jpg', 'img/productos/dhl-412-cafe-2.jpg', 'img/productos/dhl-412-cafe-3.jpg'], note: 'un tono cálido y clásico, fácil de combinar.' , stock: { 'S': 29, 'M': 13, 'L': 6, 'XL': 24 } }
     ],
     description: 'Gabardina de corte oversize, versátil entre estaciones. Nueva colección, piezas limitadas.',
     details: {

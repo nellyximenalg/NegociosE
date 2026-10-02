@@ -2238,3 +2238,13 @@ body.modal-open{ overflow: hidden; }
 }
 .size-stock-note--out{ color: var(--brick); font-weight: 600; }
 .option-pill--out{ opacity: 0.5; }
+
+.admin-color-stock{ margin-top: 12px; padding-top: 12px; border-top: 1px solid rgba(244,236,216,0.1); }
+.admin-color-stock > label{
+  display:block;
+  font-size: 0.7rem;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  color: var(--muted);
+  margin-bottom: 8px;
+}

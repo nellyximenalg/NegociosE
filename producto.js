@@ -151,11 +151,12 @@ if (!product) {
       .join('');
   }
 
-  // Muestra cuántas unidades quedan de la talla elegida (si el admin captura
-  // stock para ella) y bloquea la compra cuando está en 0.
-  function updateStockUI(size) {
+  // Muestra cuántas unidades quedan de la combinación color+talla elegida (si
+  // el admin capturó stock para ese color) y bloquea la compra cuando es 0.
+  function updateStockUI() {
     const stockNote = document.getElementById('sizeStockNote');
-    if (size.stock == null) {
+    const stock = getStockFor(product, selectedColor, selectedSize);
+    if (stock == null) {
       stockNote.hidden = true;
       maxQty = 20;
       qtyMinus.disabled = false;
@@ -166,8 +167,8 @@ if (!product) {
       return;
     }
     stockNote.hidden = false;
-    if (size.stock === 0) {
-      stockNote.textContent = 'Agotado en esta talla.';
+    if (stock === 0) {
+      stockNote.textContent = 'Agotado en este color y talla.';
       stockNote.classList.add('size-stock-note--out');
       maxQty = 0;
       qtyMinus.disabled = true;
@@ -176,9 +177,9 @@ if (!product) {
       addBtn.disabled = true;
       addBtn.textContent = 'Agotado';
     } else {
-      stockNote.textContent = size.stock <= 5 ? `¡Últimas ${size.stock} disponibles!` : `${size.stock} disponibles`;
+      stockNote.textContent = stock <= 5 ? `¡Últimas ${stock} disponibles!` : `${stock} disponibles`;
       stockNote.classList.remove('size-stock-note--out');
-      maxQty = size.stock;
+      maxQty = stock;
       qtyMinus.disabled = false;
       qtyPlus.disabled = false;
       qtyInput.disabled = false;
@@ -191,7 +192,7 @@ if (!product) {
   product.sizes.forEach((size, i) => {
     const btn = document.createElement('button');
     btn.type = 'button';
-    btn.className = 'option-pill' + (i === 0 ? ' active' : '') + (size.stock === 0 ? ' option-pill--out' : '');
+    btn.className = 'option-pill' + (i === 0 ? ' active' : '');
     btn.textContent = size.label;
     btn.addEventListener('click', () => {
       selectedSize = size.label;
@@ -199,7 +200,7 @@ if (!product) {
       sizeContainer.querySelectorAll('.option-pill').forEach(b => b.classList.remove('active'));
       btn.classList.add('active');
       renderMeasurements(size);
-      updateStockUI(size);
+      updateStockUI();
     });
     sizeContainer.appendChild(btn);
   });
@@ -217,6 +218,7 @@ if (!product) {
     selectedColorName.textContent = `· ${color.name}`;
     colorNote.textContent = color.note ? `En ${color.name.toLowerCase()}: ${color.note}` : '';
     updateGalleryForColor(color);
+    updateStockUI();
   }
 
   product.colors.forEach((color, i) => {
@@ -234,13 +236,12 @@ if (!product) {
     colorContainer.appendChild(swatch);
   });
 
-  // Estado inicial: primer color y primera talla
-  selectColor(product.colors[0]);
-
   // Agregar al carrito: simulado. Si no hay sesión, primero pide iniciar sesión.
   const addBtn = document.getElementById('addToCartBtn');
   const productMsg = document.getElementById('productMsg');
-  updateStockUI(product.sizes[0]);
+
+  // Estado inicial: primer color y primera talla (ya con addBtn disponible)
+  selectColor(product.colors[0]);
 
   addBtn.addEventListener('click', () => {
     if (!isLoggedIn()) {
