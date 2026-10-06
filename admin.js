@@ -17,7 +17,7 @@ if (checkAdminAccess()) {
   document.getElementById('adminLogoutBtn').addEventListener('click', () => {
     localStorage.removeItem('dahlia_logged_in');
     localStorage.removeItem('dahlia_user_role');
-    window.location.href = 'inicio.html#inicio';
+    window.location.href = 'index.html';
   });
 
   // ---------- Navegación del menú lateral ----------
@@ -66,12 +66,14 @@ if (checkAdminAccess()) {
   }
 
   // ---------- Pedidos (simulado, datos fijos) ----------
+  // Los productos de cada pedido suman exactamente el total (precios reales
+  // del catálogo), para que no haya inconsistencias si alguien revisa los números.
   const FAKE_ORDERS = [
-    { id: '#DHL-1042', cliente: 'Marisol Reyes', productos: 3, total: 1850, estado: 'Enviado' },
-    { id: '#DHL-1041', cliente: 'Diego Torres', productos: 1, total: 610, estado: 'En preparación' },
-    { id: '#DHL-1040', cliente: 'Ana Camacho', productos: 2, total: 1340, estado: 'Entregado' },
-    { id: '#DHL-1039', cliente: 'Luis Fernández', productos: 4, total: 2960, estado: 'Entregado' },
-    { id: '#DHL-1038', cliente: 'Paola Sánchez', productos: 1, total: 790, estado: 'Cancelado' }
+    { id: '#DHL-1042', cliente: 'Marisol Reyes', productos: ['Vestido Midi Fluido', 'Falda Plisada', 'Lentes de Sol'], total: 1850, estado: 'Enviado' },
+    { id: '#DHL-1041', cliente: 'Diego Torres', productos: ['Camisa Oxford'], total: 620, estado: 'En preparación' },
+    { id: '#DHL-1040', cliente: 'Ana Camacho', productos: ['Blusa Satinada', 'Jumpsuit Casual'], total: 1340, estado: 'Entregado' },
+    { id: '#DHL-1039', cliente: 'Luis Fernández', productos: ['Camisa Oxford', 'Pantalón Chino', 'Mochila Urbana', 'Gabardina Oversize'], total: 2960, estado: 'Entregado' },
+    { id: '#DHL-1038', cliente: 'Paola Sánchez', productos: ['Vestido Midi Fluido'], total: 790, estado: 'Cancelado' }
   ];
 
   function renderOrders() {
@@ -79,7 +81,7 @@ if (checkAdminAccess()) {
       <tr>
         <td>${o.id}</td>
         <td>${o.cliente}</td>
-        <td>${o.productos}</td>
+        <td class="admin-order-products" title="${o.productos.join(', ')}">${o.productos.join(', ')}</td>
         <td>$${o.total.toLocaleString('es-MX')} MXN</td>
         <td><span class="admin-status admin-status--${slugStatus(o.estado)}">${o.estado}</span></td>
       </tr>
@@ -252,6 +254,16 @@ if (checkAdminAccess()) {
       return;
     }
 
+    // "Talla única" también está disponible en mujer y hombre, para prendas
+    // o piezas (bufandas, cinturones, etc.) que no manejan variantes de talla.
+    const isUnica = selectedLabels.length === 1 && selectedLabels[0] === 'Única';
+
+    const unicaToggle = `
+      <label class="checkbox-field" style="margin-bottom:12px;">
+        <input type="checkbox" id="pfUnicaToggle" ${isUnica ? 'checked' : ''}> Es de talla única (sin variantes de talla)
+      </label>
+    `;
+
     const typeTabs = groups.length > 1 ? `
       <div class="admin-size-type-tabs" id="pfSizeTypeTabs">
         ${groups.map((g, i) => `<button type="button" class="admin-size-type-tab${i === 0 ? ' active' : ''}" data-size-type="${g.key}">${g.label}</button>`).join('')}
@@ -268,18 +280,32 @@ if (checkAdminAccess()) {
       </div>
     `).join('');
 
-    wrap.innerHTML = typeTabs + groupsHtml;
+    wrap.innerHTML = `${unicaToggle}<div id="pfRegularSizes" ${isUnica ? 'hidden' : ''}>${typeTabs}${groupsHtml}</div>`;
+
+    const unicaCheckbox = wrap.querySelector('#pfUnicaToggle');
+    const regularWrap = wrap.querySelector('#pfRegularSizes');
 
     function currentGroupKey() {
       const visible = wrap.querySelector('[data-size-group]:not([hidden])');
       return visible ? visible.dataset.sizeGroup : groups[0].key;
     }
 
-    wrap.querySelectorAll('input[type="checkbox"]').forEach(cb => {
-      cb.addEventListener('change', () => {
+    function refreshMeasurements() {
+      if (unicaCheckbox.checked) {
+        overlay.querySelector('#pfMeasurementsWrap').innerHTML = '';
+      } else {
         renderMeasurementFields(overlay, currentGroupKey());
-        renderColorCards(overlay);
-      });
+      }
+      renderColorCards(overlay);
+    }
+
+    unicaCheckbox.addEventListener('change', () => {
+      regularWrap.hidden = unicaCheckbox.checked;
+      refreshMeasurements();
+    });
+
+    wrap.querySelectorAll('input[type="checkbox"]:not(#pfUnicaToggle)').forEach(cb => {
+      cb.addEventListener('change', refreshMeasurements);
     });
 
     if (groups.length > 1) {
@@ -298,14 +324,12 @@ if (checkAdminAccess()) {
           wrap.querySelectorAll('[data-size-group]').forEach(group => {
             group.hidden = group.dataset.sizeGroup !== tab.dataset.sizeType;
           });
-          renderMeasurementFields(overlay, tab.dataset.sizeType);
-          renderColorCards(overlay);
+          refreshMeasurements();
         });
       });
     }
 
-    renderMeasurementFields(overlay, currentGroupKey());
-    renderColorCards(overlay);
+    refreshMeasurements();
   }
 
   // Pinta un mini-formulario de medidas por cada talla marcada, para que la
@@ -348,6 +372,8 @@ if (checkAdminAccess()) {
   // Lee del formulario las tallas marcadas (solo del grupo visible, si hay pestañas).
   function getSelectedSizeLabels(overlay, category) {
     if (category === 'accesorios') return ['Única'];
+    const unicaCheckbox = overlay.querySelector('#pfUnicaToggle');
+    if (unicaCheckbox && unicaCheckbox.checked) return ['Única'];
     const visibleGroup = overlay.querySelector('#pfSizesOptions [data-size-group]:not([hidden])');
     const scope = visibleGroup || overlay.querySelector('#pfSizesOptions');
     return Array.from(scope.querySelectorAll('input[type="checkbox"]:checked')).map(cb => cb.value);
@@ -546,6 +572,10 @@ if (checkAdminAccess()) {
               <label for="pfCuidado">Cuidado</label>
               <textarea id="pfCuidado" rows="2" placeholder="Ej. Lavado a máquina en agua fría..."></textarea>
             </div>
+            <div class="login-field" id="pfDimensionesGroup" hidden>
+              <label for="pfDimensiones">Dimensiones</label>
+              <input type="text" id="pfDimensiones" placeholder="Ej. Largo ajustable de 90 a 120 cm, ancho de 3.5 cm">
+            </div>
           </div>
           <div class="modal-actions">
             <button type="button" class="btn btn-ghost" id="pfCancel">Cancelar</button>
@@ -569,6 +599,7 @@ if (checkAdminAccess()) {
     overlay.querySelector('#pfPrice').addEventListener('input', () => updateDiscountPreview(overlay));
     overlay.querySelector('#pfCategory').addEventListener('change', (event) => {
       renderSizeOptions(overlay, event.target.value, []);
+      overlay.querySelector('#pfDimensionesGroup').hidden = event.target.value !== 'accesorios';
     });
     document.addEventListener('keydown', (event) => {
       if (event.key === 'Escape' && overlay.classList.contains('open')) closeProductForm();
@@ -648,6 +679,8 @@ if (checkAdminAccess()) {
     overlay.querySelector('#pfTela').value = details.tela || '';
     overlay.querySelector('#pfOrigen').value = details.origen || '';
     overlay.querySelector('#pfCuidado').value = details.cuidado || '';
+    overlay.querySelector('#pfDimensiones').value = details.dimensiones || '';
+    overlay.querySelector('#pfDimensionesGroup').hidden = category !== 'accesorios';
 
     const form = overlay.querySelector('#productForm');
     form.onsubmit = (event) => {
@@ -685,7 +718,8 @@ if (checkAdminAccess()) {
     const details = {
       tela: overlay.querySelector('#pfTela').value.trim(),
       cuidado: overlay.querySelector('#pfCuidado').value.trim(),
-      origen: overlay.querySelector('#pfOrigen').value.trim()
+      origen: overlay.querySelector('#pfOrigen').value.trim(),
+      dimensiones: overlay.querySelector('#pfDimensiones').value.trim()
     };
 
     // El primer color de la lista es el que define el degradado de la

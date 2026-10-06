@@ -447,6 +447,7 @@ button{ font-family:inherit; cursor:pointer; }
   box-shadow: 0 0 0 3px rgba(227,178,60,0.15);
 }
 .login-submit{ width: 100%; margin-top: 4px; }
+.login-admin-row{ text-align: right; margin: -6px 0 14px; }
 .auth-demo-hint{
   margin-top: 14px;
   font-size: 0.78rem;
@@ -1929,6 +1930,12 @@ body.modal-open{ overflow: hidden; }
 .admin-table tbody tr{ border-bottom: 1px solid rgba(244,236,216,0.08); }
 .admin-table tbody tr:last-child{ border-bottom: none; }
 .admin-table tbody tr:hover{ background: var(--surface-alt); }
+.admin-order-products{
+  max-width: 260px;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
 .admin-swatch{
   display: block;
   width: 26px; height: 26px;

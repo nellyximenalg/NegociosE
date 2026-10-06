@@ -51,8 +51,8 @@
             <label class="checkbox-field"><input type="checkbox"> Recordarme</label>
             <a href="#" class="link-muted">¿Olvidaste tu contraseña?</a>
           </div>
+          <p class="login-admin-row"><a href="#" id="adminLoginLink" class="link-muted">¿Eres admin?</a></p>
           <button type="submit" class="btn btn-primary login-submit">Entrar <span class="arrow">→</span></button>
-          
         </form>
 
         <form class="auth-card auth-form" id="signupForm">
@@ -112,6 +112,26 @@
       </svg>
     </div>
   </main>
+
+  <div class="modal-overlay" id="adminLoginModal">
+    <div class="modal-panel" role="dialog" aria-modal="true" aria-labelledby="adminLoginTitle">
+      <button type="button" class="modal-close" id="adminLoginClose" aria-label="Cerrar">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M18 6 6 18"/><path d="M6 6l12 12"/></svg>
+      </button>
+      <h3 id="adminLoginTitle">Acceso de administrador</h3>
+      <form id="adminLoginForm">
+        <div class="login-field">
+          <label for="adminLoginEmail">Correo</label>
+          <input type="text" id="adminLoginEmail" placeholder="tu@correo.com">
+        </div>
+        <div class="login-field">
+          <label for="adminLoginPassword">Contraseña</label>
+          <input type="password" id="adminLoginPassword" placeholder="••••••••">
+        </div>
+        <button type="submit" class="btn btn-primary login-submit">Entrar como administrador</button>
+      </form>
+    </div>
+  </div>
 
   <script src="auth.js"></script>
   <script src="login.js"></script>

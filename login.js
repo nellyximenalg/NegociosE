@@ -51,14 +51,56 @@ loginForm.addEventListener('submit', (event) => {
   event.preventDefault();
 
   const email = document.getElementById('loginEmail').value.trim();
-  const isAdminAccount = email.toLowerCase() === ADMIN_EMAIL;
 
   localStorage.setItem('dahlia_logged_in', 'true');
   localStorage.setItem('dahlia_user_email', email);
-  localStorage.setItem('dahlia_user_role', isAdminAccount ? 'admin' : 'cliente');
+  localStorage.setItem('dahlia_user_role', 'cliente');
   localStorage.setItem('dahlia_just_logged_in', 'true');
 
-  window.location.href = isAdminAccount ? 'admin.html' : getRedirectTarget();
+  window.location.href = getRedirectTarget();
+});
+
+// ---------- Acceso de administrador (modal aparte) ----------
+// Se abre con el enlace "¿Eres admin?" y, igual que el login normal, no
+// valida ningún campo: con solo enviarlo ya entras como administrador.
+const adminLoginLink = document.getElementById('adminLoginLink');
+const adminLoginModal = document.getElementById('adminLoginModal');
+const adminLoginForm = document.getElementById('adminLoginForm');
+
+function openAdminLoginModal() {
+  adminLoginModal.classList.add('open');
+  document.body.classList.add('modal-open');
+}
+
+function closeAdminLoginModal() {
+  adminLoginModal.classList.remove('open');
+  document.body.classList.remove('modal-open');
+}
+
+adminLoginLink.addEventListener('click', (event) => {
+  event.preventDefault();
+  openAdminLoginModal();
+});
+
+document.getElementById('adminLoginClose').addEventListener('click', closeAdminLoginModal);
+adminLoginModal.addEventListener('click', (event) => {
+  if (event.target === adminLoginModal) closeAdminLoginModal();
+});
+document.addEventListener('keydown', (event) => {
+  if (event.key === 'Escape' && adminLoginModal.classList.contains('open')) closeAdminLoginModal();
+});
+
+adminLoginForm.addEventListener('submit', (event) => {
+  event.preventDefault();
+
+  const email = document.getElementById('adminLoginEmail').value.trim() || ADMIN_EMAIL;
+
+  localStorage.setItem('dahlia_logged_in', 'true');
+  localStorage.setItem('dahlia_user_email', email);
+  localStorage.setItem('dahlia_user_role', 'admin');
+  localStorage.setItem('dahlia_just_logged_in', 'true');
+
+  window.location.href = 'admin.html';
 });
 
 // Registro simulado: ningún campo es obligatorio ni se valida. No inicia
