@@ -513,12 +513,12 @@ if (checkAdminAccess()) {
         <form id="productForm">
           <div class="login-field">
             <label for="pfName">Nombre</label>
-            <input type="text" id="pfName" required>
+            <input type="text" id="pfName">
           </div>
           <div class="admin-form-row">
             <div class="login-field">
               <label for="pfSku">SKU</label>
-              <input type="text" id="pfSku" required>
+              <input type="text" id="pfSku">
             </div>
             <div class="login-field">
               <label for="pfCategory">Categoría</label>
@@ -531,7 +531,7 @@ if (checkAdminAccess()) {
           </div>
           <div class="login-field">
             <label for="pfPrice">Precio (MXN)</label>
-            <input type="number" id="pfPrice" min="0" required>
+            <input type="number" id="pfPrice" min="0">
           </div>
           <div class="login-field">
             <label for="pfDesc">Descripción</label>
@@ -693,16 +693,20 @@ if (checkAdminAccess()) {
   }
 
   function saveProductForm(overlay, editing) {
-    if (!formColors.length) {
-      showToast('Agrega al menos un color antes de guardar.');
-      return;
-    }
-
     const name = overlay.querySelector('#pfName').value.trim();
     const sku = overlay.querySelector('#pfSku').value.trim();
     const category = overlay.querySelector('#pfCategory').value;
     const price = parseInt(overlay.querySelector('#pfPrice').value, 10) || 0;
     const description = overlay.querySelector('#pfDesc').value.trim();
+
+    // Sin campos obligatorios ni mensajes de error: si falta algo esencial,
+    // simplemente no se guarda nada, pero se avisa igual que si hubiera salido bien.
+    if (!name || !sku || !price || !formColors.length) {
+      closeProductForm();
+      showToast(editing ? 'Producto editado correctamente.' : 'Producto agregado correctamente.');
+      return;
+    }
+
     const isNew = overlay.querySelector('#pfIsNew').checked;
     const onSale = overlay.querySelector('#pfOnSale').checked;
     const discountPercent = onSale ? (parseInt(overlay.querySelector('#pfDiscountPercent').value, 10) || null) : null;
@@ -857,21 +861,21 @@ if (checkAdminAccess()) {
         <form id="promoForm">
           <div class="login-field">
             <label for="pmProduct">Producto</label>
-            <select id="pmProduct" required></select>
+            <select id="pmProduct"></select>
           </div>
           <div class="login-field">
             <label for="pmPercent">Porcentaje de descuento (%)</label>
-            <input type="number" id="pmPercent" min="1" max="90" placeholder="Ej. 20" required>
+            <input type="number" id="pmPercent" min="1" max="90" placeholder="Ej. 20">
             <p class="admin-field-hint" id="pmPreview"></p>
           </div>
           <div class="admin-form-row">
             <div class="login-field">
               <label for="pmStart">Vigente desde</label>
-              <input type="date" id="pmStart" required>
+              <input type="date" id="pmStart">
             </div>
             <div class="login-field">
               <label for="pmEnd">Vigente hasta</label>
-              <input type="date" id="pmEnd" required>
+              <input type="date" id="pmEnd">
             </div>
           </div>
           <div class="modal-actions">
@@ -943,13 +947,18 @@ if (checkAdminAccess()) {
       const percent = parseInt(overlay.querySelector('#pmPercent').value, 10) || 0;
       const start = overlay.querySelector('#pmStart').value;
       const end = overlay.querySelector('#pmEnd').value;
+      const product = products.find(p => p.id === productId);
 
-      if (end && start && end < start) {
-        showToast('La fecha "hasta" no puede ser antes que la fecha "desde".');
+      // Sin campos obligatorios ni mensajes de error: si falta algo o las
+      // fechas no tienen sentido, no se guarda nada, pero avisa igual que si
+      // hubiera salido bien.
+      const datesOk = start && end && end >= start;
+      if (!product || !percent || !datesOk) {
+        closePromoForm();
+        showToast(editing ? 'Promoción editada correctamente.' : 'Promoción agregada correctamente.');
         return;
       }
 
-      const product = products.find(p => p.id === productId);
       const discountPrice = calcDiscountPrice(product.price, percent);
 
       applyProductPatch(productId, {
