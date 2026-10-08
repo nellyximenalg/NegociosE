@@ -90,12 +90,66 @@ function renderCartItemRow(item) {
   `;
 }
 
+// Modal de confirmación propio del sitio (en vez del confirm() del navegador).
+let cartConfirmEl = null;
+
+function showCartConfirm(item, onConfirm, onCancel) {
+  if (!cartConfirmEl) {
+    cartConfirmEl = document.createElement('div');
+    cartConfirmEl.className = 'modal-overlay';
+    cartConfirmEl.id = 'cartConfirmModal';
+    cartConfirmEl.innerHTML = `
+      <div class="modal-panel modal-panel--confirm" role="dialog" aria-modal="true" aria-labelledby="cartConfirmTitle">
+        <h3 id="cartConfirmTitle">Eliminar producto</h3>
+        <p class="admin-confirm-message" id="cartConfirmMessage"></p>
+        <div class="modal-actions">
+          <button type="button" class="btn btn-ghost" id="cartConfirmCancel">Cancelar</button>
+          <button type="button" class="btn btn-primary admin-btn-danger-solid" id="cartConfirmAccept">Sí, eliminar</button>
+        </div>
+      </div>
+    `;
+    document.body.appendChild(cartConfirmEl);
+  }
+
+  const overlay = cartConfirmEl;
+  overlay.querySelector('#cartConfirmMessage').textContent =
+    `¿Estás seguro de que quieres eliminar "${item.name}" (talla ${item.size}, color ${item.color}) de tu carrito?`;
+
+  function close() {
+    overlay.classList.remove('open');
+    document.body.classList.remove('modal-open');
+    document.removeEventListener('keydown', onKey);
+  }
+  function cancel() { close(); if (onCancel) onCancel(); }
+  function onKey(e) { if (e.key === 'Escape') cancel(); }
+
+  // Se reemplazan los botones para no acumular listeners de aperturas anteriores.
+  ['#cartConfirmCancel', '#cartConfirmAccept'].forEach(sel => {
+    const old = overlay.querySelector(sel);
+    old.replaceWith(old.cloneNode(true));
+  });
+  overlay.querySelector('#cartConfirmCancel').addEventListener('click', cancel);
+  overlay.querySelector('#cartConfirmAccept').addEventListener('click', () => { close(); onConfirm(); });
+  overlay.onclick = (e) => { if (e.target === overlay) cancel(); };
+  document.addEventListener('keydown', onKey);
+
+  overlay.classList.add('open');
+  document.body.classList.add('modal-open');
+}
+
+// Pide confirmación antes de quitar una línea del carrito.
+function confirmRemoveCartItem(lineId) {
+  const item = getCart().find(i => i.lineId === lineId);
+  if (!item) return;
+  showCartConfirm(item, () => {
+    removeCartItem(lineId);
+    renderCart();
+  }, () => renderCart());
+}
+
 function attachCartEvents() {
   document.querySelectorAll('.cart-item-remove').forEach(btn => {
-    btn.addEventListener('click', () => {
-      removeCartItem(btn.dataset.lineId);
-      renderCart();
-    });
+    btn.addEventListener('click', () => confirmRemoveCartItem(btn.dataset.lineId));
   });
 
   document.querySelectorAll('.cart-item-qty .qty-btn').forEach(btn => {
@@ -105,10 +159,10 @@ function attachCartEvents() {
       if (!item) return;
       const newQty = item.qty + (btn.dataset.action === 'plus' ? 1 : -1);
       if (newQty < 1) {
-        removeCartItem(item.lineId);
-      } else {
-        updateCartItemQty(item.lineId, newQty);
+        confirmRemoveCartItem(item.lineId);
+        return;
       }
+      updateCartItemQty(item.lineId, newQty);
       renderCart();
     });
   });
@@ -118,10 +172,10 @@ function attachCartEvents() {
       const n = parseInt(input.value, 10);
       if (!isNaN(n) && n >= 1) {
         updateCartItemQty(input.dataset.lineId, n);
+        renderCart();
       } else {
-        removeCartItem(input.dataset.lineId);
+        confirmRemoveCartItem(input.dataset.lineId);
       }
-      renderCart();
     });
   });
 }

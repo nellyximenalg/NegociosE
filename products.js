@@ -557,8 +557,8 @@ const PRODUCTS = [
       { label: '36', measurements: { 'Cintura': '91 cm', 'Cadera': '105 cm', 'Largo de pierna': '104 cm' } }
     ],
     colors: [
-      { name: 'Negro', hex: '#231f1a', images: ['img/productos/dhl-209-negro-1.jpg', 'img/productos/dhl-209-negro-2.jpg', 'img/productos/dhl-209-negro-3.jpg'], note: 'un básico infalible que combina con prácticamente todo tu clóset.' , stock: { '28': 12, '30': 12, '32': 5, '34': 10, '36': 10 } },
-      { name: 'Azul marino', hex: '#2b3550', images: ['img/productos/dhl-209-azul-marino-1.jpg', 'img/productos/dhl-209-azul-marino-2.jpg', 'img/productos/dhl-209-azul-marino-3.jpg'], note: 'un tono clásico con un toque más formal.' , stock: { '28': 16, '30': 5, '32': 21, '34': 23, '36': 6 } }
+      { name: 'Negro', hex: '#231f1a', images: ['img/productos/dhl-209-negro-dalia-1.png', 'img/productos/dhl-209-negro-dalia-2.png', 'img/productos/dhl-209-negro-dalia-3.png'], note: 'un básico infalible que combina con prácticamente todo tu clóset.' , stock: { '28': 12, '30': 12, '32': 5, '34': 10, '36': 10 } },
+      { name: 'Azul marino', hex: '#2b3550', images: ['img/productos/dhl-209-azul-dalia-1.png', 'img/productos/dhl-209-azul-dalia-2.png', 'img/productos/dhl-209-azul-dalia-3.png'], note: 'un tono clásico con un toque más formal.' , stock: { '28': 16, '30': 5, '32': 21, '34': 23, '36': 6 } }
     ],
     description: 'Pantalón de vestir de corte slim, con tela que no se arruga. Ideal para la oficina o una boda.',
     details: {
@@ -685,8 +685,8 @@ const PRODUCTS = [
       { label: 'Único', measurements: null }
     ],
     colors: [
-      { name: 'Negro', hex: '#231f1a', images: ['img/productos/dhl-302-negro-1.jpg', 'img/productos/dhl-302-negro-2.jpg', 'img/productos/dhl-302-negro-3.jpg'], note: 'un básico infalible que combina con prácticamente todo tu clóset.' , stock: { 'Único': 18 } },
-      { name: 'Beige', hex: '#c9b79c', images: ['img/productos/dhl-302-beige-1.jpg', 'img/productos/dhl-302-beige-2.jpg', 'img/productos/dhl-302-beige-3.jpg'], note: 'un neutro versátil que combina con casi cualquier prenda.' , stock: { 'Único': 0 } }
+      { name: 'Negro', hex: '#231f1a', images: ['img/productos/dhl-302-negro-dalia-1.png', 'img/productos/dhl-302-negro-dalia-2.png', 'img/productos/dhl-302-negro-dalia-3.png'], note: 'un básico infalible que combina con prácticamente todo tu clóset.' , stock: { 'Único': 18 } },
+      { name: 'Beige', hex: '#c9b79c', images: ['img/productos/dhl-302-beige-dalia-1.png', 'img/productos/dhl-302-beige-dalia-2.png', 'img/productos/dhl-302-beige-dalia-3.png'], note: 'un neutro versátil que combina con casi cualquier prenda.' , stock: { 'Único': 0 } }
     ],
     description: 'Gorra con bordado Dahlia, ajuste trasero. Ideal para completar cualquier outfit casual.',
     details: {
@@ -734,8 +734,8 @@ const PRODUCTS = [
       { label: 'Único', measurements: null }
     ],
     colors: [
-      { name: 'Negro', hex: '#231f1a', images: ['img/productos/dhl-304-negro-1.jpg', 'img/productos/dhl-304-negro-2.jpg', 'img/productos/dhl-304-negro-3.jpg'], note: 'un básico infalible que combina con prácticamente todo tu clóset.' , stock: { 'Único': 21 } },
-      { name: 'Café', hex: '#4a3826', images: ['img/productos/dhl-304-cafe-1.jpg', 'img/productos/dhl-304-cafe-2.jpg', 'img/productos/dhl-304-cafe-3.jpg'], note: 'un tono cálido y clásico, fácil de combinar.' , stock: { 'Único': 29 } }
+      { name: 'Negro', hex: '#231f1a', images: ['img/productos/dhl-304-negro-dalia-1.png', 'img/productos/dhl-304-negro-dalia-2.png', 'img/productos/dhl-304-negro-dalia-3.png'], note: 'un básico infalible que combina con prácticamente todo tu clóset.' , stock: { 'Único': 21 } },
+      { name: 'Café', hex: '#4a3826', images: ['img/productos/dhl-304-cafe-dalia-1.png', 'img/productos/dhl-304-cafe-dalia-2.png', 'img/productos/dhl-304-cafe-dalia-3.png'], note: 'un tono cálido y clásico, fácil de combinar.' , stock: { 'Único': 29 } }
     ],
     description: 'Lentes de sol con protección UV y armazón resistente. El toque final para tu look del día.',
     details: {
@@ -830,8 +830,8 @@ const PRODUCTS = [
       { label: 'Único', measurements: null }
     ],
     colors: [
-      { name: 'Rosa dalia', hex: '#d9769b', images: ['img/productos/dhl-308-rosa-dalia-1.jpg', 'img/productos/dhl-308-rosa-dalia-2.jpg', 'img/productos/dhl-308-rosa-dalia-3.jpg'], note: 'nuestro tono insignia: vibrante, femenino y muy Dahlia.' , stock: { 'Único': 7 } },
-      { name: 'Terracota', hex: '#c1443c', images: ['img/productos/dhl-308-terracota-1.jpg', 'img/productos/dhl-308-terracota-2.jpg', 'img/productos/dhl-308-terracota-3.jpg'], note: 'un tono cálido, ideal para la temporada de otoño.' , stock: { 'Único': 15 } }
+      { name: 'Rosa dalia', hex: '#d9769b', images: ['img/productos/dhl-308-rosa-dalia-1.png', 'img/productos/dhl-308-rosa-dalia-2.png', 'img/productos/dhl-308-rosa-dalia-3.png'], note: 'nuestro tono insignia: vibrante, femenino y muy Dahlia.' , stock: { 'Único': 7 } },
+      { name: 'Terracota', hex: '#c1443c', images: ['img/productos/dhl-308-terracota-dalia-1.png', 'img/productos/dhl-308-terracota-dalia-2.png', 'img/productos/dhl-308-terracota-dalia-3.png'], note: 'un tono cálido, ideal para la temporada de otoño.' , stock: { 'Único': 15 } }
     ],
     description: 'Paliacate de algodón con estampado propio. Úsalo en el cuello, la muñeca o la mochila.',
     details: {
