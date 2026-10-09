@@ -1168,7 +1168,7 @@ const PRODUCTS = [
       { label: 'XL', measurements: { 'Busto/Pecho': '100 cm', 'Cintura': '80 cm', 'Cadera': '106 cm', 'Largo': '67 cm' } }
     ],
     colors: [
-      { name: 'Negro', hex: '#231f1a', images: ['img/productos/dhl-409-negro-1.jpg', 'img/productos/dhl-409-negro-2.jpg', 'img/productos/dhl-409-negro-3.jpg'], note: 'un básico infalible que combina con prácticamente todo tu clóset.' , stock: { 'S': 0, 'M': 18, 'L': 22, 'XL': 29 } }
+      { name: 'Negro', hex: '#231f1a', images: ['img/productos/dhl-409-negro-dalia-1.png', 'img/productos/dhl-409-negro-dalia-2.png', 'img/productos/dhl-409-negro-dalia-3.png'], note: 'un básico infalible que combina con prácticamente todo tu clóset.' , stock: { 'S': 0, 'M': 18, 'L': 22, 'XL': 29 } }
     ],
     description: 'Chamarra de vinil con brillo sutil, la pieza statement de la colección nueva.',
     details: {
@@ -1246,8 +1246,8 @@ const PRODUCTS = [
       { label: 'XL', measurements: { 'Busto/Pecho': '100 cm', 'Cintura': '80 cm', 'Cadera': '106 cm', 'Largo': '113 cm' } }
     ],
     colors: [
-      { name: 'Beige', hex: '#c9b79c', images: ['img/productos/dhl-412-beige-1.jpg', 'img/productos/dhl-412-beige-2.jpg', 'img/productos/dhl-412-beige-3.jpg'], note: 'un neutro versátil que combina con casi cualquier prenda.' , stock: { 'S': 15, 'M': 12, 'L': 8, 'XL': 21 } },
-      { name: 'Café', hex: '#4a3826', images: ['img/productos/dhl-412-cafe-1.jpg', 'img/productos/dhl-412-cafe-2.jpg', 'img/productos/dhl-412-cafe-3.jpg'], note: 'un tono cálido y clásico, fácil de combinar.' , stock: { 'S': 29, 'M': 13, 'L': 6, 'XL': 24 } }
+      { name: 'Beige', hex: '#c9b79c', images: ['img/productos/dhl-412-beige-dalia-1.png', 'img/productos/dhl-412-beige-dalia-2.png', 'img/productos/dhl-412-beige-dalia-3.png'], note: 'un neutro versátil que combina con casi cualquier prenda.' , stock: { 'S': 15, 'M': 12, 'L': 8, 'XL': 21 } },
+      { name: 'Café', hex: '#4a3826', images: ['img/productos/dhl-412-cafe-dalia-1.png', 'img/productos/dhl-412-cafe-dalia-2.png', 'img/productos/dhl-412-cafe-dalia-3.png'], note: 'un tono cálido y clásico, fácil de combinar.' , stock: { 'S': 29, 'M': 13, 'L': 6, 'XL': 24 } }
     ],
     description: 'Gabardina de corte oversize, versátil entre estaciones. Nueva colección, piezas limitadas.',
     details: {
