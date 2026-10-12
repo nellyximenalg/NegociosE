@@ -31,9 +31,17 @@ function getStockFor(product, colorName, sizeLabel) {
 
 // Una promoción solo cuenta si el producto está marcado "Oferta" Y, si tiene
 // fechas de vigencia, hoy cae dentro de ese rango (sin fechas = siempre activa).
+// Fecha de hoy en hora LOCAL (YYYY-MM-DD). toISOString() usa UTC y en México,
+// después de las 6 pm, ya marcaría el día siguiente.
+function getTodayLocal() {
+  const d = new Date();
+  const pad = n => String(n).padStart(2, '0');
+  return `${d.getFullYear()}-${pad(d.getMonth() + 1)}-${pad(d.getDate())}`;
+}
+
 function isPromoActive(product) {
   if (!product.onSale) return false;
-  const today = new Date().toISOString().slice(0, 10);
+  const today = getTodayLocal();
   if (product.saleStart && today < product.saleStart) return false;
   if (product.saleEnd && today > product.saleEnd) return false;
   return true;

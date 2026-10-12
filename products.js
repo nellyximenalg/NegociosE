@@ -686,7 +686,7 @@ const PRODUCTS = [
     ],
     colors: [
       { name: 'Negro', hex: '#231f1a', images: ['img/productos/dhl-302-negro-dalia-1.png', 'img/productos/dhl-302-negro-dalia-2.png', 'img/productos/dhl-302-negro-dalia-3.png'], note: 'un básico infalible que combina con prácticamente todo tu clóset.' , stock: { 'Único': 18 } },
-      { name: 'Beige', hex: '#c9b79c', images: ['img/productos/dhl-302-beige-dalia-1.png', 'img/productos/dhl-302-beige-dalia-2.png', 'img/productos/dhl-302-beige-dalia-3.png'], note: 'un neutro versátil que combina con casi cualquier prenda.' , stock: { 'Único': 0 } }
+      { name: 'Beige', hex: '#c9b79c', images: ['img/productos/dhl-302-beige-dalia-1.png', 'img/productos/dhl-302-beige-dalia-2.png', 'img/productos/dhl-302-beige-dalia-3.png'], note: 'un neutro versátil que combina con casi cualquier prenda.' , stock: { 'Único': 12 } }
     ],
     description: 'Gorra con bordado Dahlia, ajuste trasero. Ideal para completar cualquier outfit casual.',
     details: {
@@ -709,9 +709,9 @@ const PRODUCTS = [
       { label: 'Único', measurements: null }
     ],
     colors: [
-      { name: 'Terracota', hex: '#c1443c', images: ['img/productos/dhl-303-terracota-1.jpg', 'img/productos/dhl-303-terracota-2.jpg', 'img/productos/dhl-303-terracota-3.jpg'], note: 'un tono cálido, ideal para la temporada de otoño.' , stock: { 'Único': 12 } },
-      { name: 'Beige', hex: '#c9b79c', images: ['img/productos/dhl-303-beige-1.jpg', 'img/productos/dhl-303-beige-2.jpg', 'img/productos/dhl-303-beige-3.jpg'], note: 'un neutro versátil que combina con casi cualquier prenda.' , stock: { 'Único': 22 } },
-      { name: 'Negro', hex: '#231f1a', images: ['img/productos/dhl-303-negro-1.jpg', 'img/productos/dhl-303-negro-2.jpg', 'img/productos/dhl-303-negro-3.jpg'], note: 'un básico infalible que combina con prácticamente todo tu clóset.' , stock: { 'Único': 19 } }
+      { name: 'Terracota', hex: '#c1443c', images: ['img/productos/dhl-303-terracota-1.png', 'img/productos/dhl-303-terracota-2.png', 'img/productos/dhl-303-terracota-3.png'], note: 'un tono cálido, ideal para la temporada de otoño.' , stock: { 'Único': 12 } },
+      { name: 'Beige', hex: '#c9b79c', images: ['img/productos/dhl-303-beige-1.png', 'img/productos/dhl-303-beige-2.png', 'img/productos/dhl-303-beige-3.png'], note: 'un neutro versátil que combina con casi cualquier prenda.' , stock: { 'Único': 22 } },
+      { name: 'Negro', hex: '#231f1a', images: ['img/productos/dhl-303-negro-1.png', 'img/productos/dhl-303-negro-2.png', 'img/productos/dhl-303-negro-3.png'], note: 'un básico infalible que combina con prácticamente todo tu clóset.' , stock: { 'Único': 19 } }
     ],
     description: 'Bufanda tejida, suave y abrigadora. El accesorio que le da personalidad a cualquier outfit de invierno.',
     details: {
@@ -758,8 +758,8 @@ const PRODUCTS = [
       { label: 'Único', measurements: null }
     ],
     colors: [
-      { name: 'Verde olivo', hex: '#3f4a3a', images: ['img/productos/dhl-305-verde-olivo-1.jpg', 'img/productos/dhl-305-verde-olivo-2.jpg', 'img/productos/dhl-305-verde-olivo-3.jpg'], note: 'un tono terroso muy fácil de combinar.' , stock: { 'Único': 22 } },
-      { name: 'Negro', hex: '#231f1a', images: ['img/productos/dhl-305-negro-1.jpg', 'img/productos/dhl-305-negro-2.jpg', 'img/productos/dhl-305-negro-3.jpg'], note: 'un básico infalible que combina con prácticamente todo tu clóset.' , stock: { 'Único': 7 } }
+      { name: 'Verde olivo', hex: '#3f4a3a', images: ['img/productos/dhl-305-verde-dalia-1.png', 'img/productos/dhl-305-verde-dalia-2.png', 'img/productos/dhl-305-verde-dalia-3.png'], note: 'un tono terroso muy fácil de combinar.' , stock: { 'Único': 22 } },
+      { name: 'Negro', hex: '#231f1a', images: ['img/productos/dhl-305-negro-dalia-1.png', 'img/productos/dhl-305-negro-dalia-2.png', 'img/productos/dhl-305-negro-dalia-3.png'], note: 'un básico infalible que combina con prácticamente todo tu clóset.' , stock: { 'Único': 7 } }
     ],
     description: 'Mochila resistente al agua con compartimento para laptop. Práctica para el diario o para viajar.',
     details: {
@@ -782,8 +782,8 @@ const PRODUCTS = [
       { label: 'Único', measurements: null }
     ],
     colors: [
-      { name: 'Café', hex: '#4a3826', images: ['img/productos/dhl-306-cafe-1.jpg', 'img/productos/dhl-306-cafe-2.jpg', 'img/productos/dhl-306-cafe-3.jpg'], note: 'un tono cálido y clásico, fácil de combinar.' , stock: { 'Único': 16 } },
-      { name: 'Negro', hex: '#231f1a', images: ['img/productos/dhl-306-negro-1.jpg', 'img/productos/dhl-306-negro-2.jpg', 'img/productos/dhl-306-negro-3.jpg'], note: 'un básico infalible que combina con prácticamente todo tu clóset.' , stock: { 'Único': 0 } }
+      { name: 'Café', hex: '#4a3826', images: ['img/productos/dhl-306-cafe-dalia-1.png', 'img/productos/dhl-306-cafe-dalia-2.png', 'img/productos/dhl-306-cafe-dalia-3.png'], note: 'un tono cálido y clásico, fácil de combinar.' , stock: { 'Único': 16 } },
+      { name: 'Negro', hex: '#231f1a', images: ['img/productos/dhl-306-negro-dalia-1.png', 'img/productos/dhl-306-negro-dalia-2.png', 'img/productos/dhl-306-negro-dalia-3.png'], note: 'un básico infalible que combina con prácticamente todo tu clóset.' , stock: { 'Único': 0 } }
     ],
     description: 'Cartera de piel genuina con varios compartimentos. Sencilla, resistente y minimalista.',
     details: {
@@ -806,8 +806,8 @@ const PRODUCTS = [
       { label: 'Único', measurements: null }
     ],
     colors: [
-      { name: 'Dorado', hex: '#e3b23c', images: ['img/productos/dhl-307-dorado-1.jpg', 'img/productos/dhl-307-dorado-2.jpg', 'img/productos/dhl-307-dorado-3.jpg'], note: 'un tono llamativo pensado para destacar.' , stock: { 'Único': 16 } },
-      { name: 'Negro', hex: '#231f1a', images: ['img/productos/dhl-307-negro-1.jpg', 'img/productos/dhl-307-negro-2.jpg', 'img/productos/dhl-307-negro-3.jpg'], note: 'un básico infalible que combina con prácticamente todo tu clóset.' , stock: { 'Único': 16 } }
+      { name: 'Dorado', hex: '#e3b23c', images: ['img/productos/dhl-307-dorado-dalia-1.png', 'img/productos/dhl-307-dorado-dalia-2.png', 'img/productos/dhl-307-dorado-dalia-3.png'], note: 'un tono llamativo pensado para destacar.' , stock: { 'Único': 16 } },
+      { name: 'Negro', hex: '#231f1a', images: ['img/productos/dhl-307-negro-dalia-1.png', 'img/productos/dhl-307-negro-dalia-2.png', 'img/productos/dhl-307-negro-dalia-3.png'], note: 'un básico infalible que combina con prácticamente todo tu clóset.' , stock: { 'Único': 16 } }
     ],
     description: 'Reloj de carátula limpia y correa delgada. Combina con looks formales y casuales por igual.',
     details: {

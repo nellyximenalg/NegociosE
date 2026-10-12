@@ -775,7 +775,7 @@ if (checkAdminAccess()) {
 
   // ---------- Promociones ----------
   function promoStatus(p) {
-    const today = new Date().toISOString().slice(0, 10);
+    const today = getTodayLocal();
     if (p.saleStart && today < p.saleStart) return { label: 'Programada', slug: 'en-preparacion' };
     if (p.saleEnd && today > p.saleEnd) return { label: 'Expirada', slug: 'cancelado' };
     return { label: 'Activa', slug: 'entregado' };
@@ -916,7 +916,7 @@ if (checkAdminAccess()) {
   }
 
   function todayStr() {
-    return new Date().toISOString().slice(0, 10);
+    return getTodayLocal();
   }
 
   function openPromoForm(editId) {
