@@ -156,34 +156,44 @@ if (!product) {
   function updateStockUI() {
     const stockNote = document.getElementById('sizeStockNote');
     const stock = getStockFor(product, selectedColor, selectedSize);
+    const inCart = getCartQtyFor(product.id, selectedColor, selectedSize);
+    const setEnabled = (on) => {
+      qtyMinus.disabled = !on;
+      qtyPlus.disabled = !on;
+      qtyInput.disabled = !on;
+      addBtn.disabled = !on;
+    };
+
     if (stock == null) {
       stockNote.hidden = true;
       maxQty = 20;
-      qtyMinus.disabled = false;
-      qtyPlus.disabled = false;
-      qtyInput.disabled = false;
-      addBtn.disabled = false;
+      setEnabled(true);
       addBtn.textContent = 'Agregar al carrito';
       return;
     }
+
+    // Lo que ya está en el carrito cuenta contra el stock.
+    const available = Math.max(0, Math.min(20, stock) - inCart);
     stockNote.hidden = false;
+
     if (stock === 0) {
       stockNote.textContent = 'Agotado en este color y talla.';
       stockNote.classList.add('size-stock-note--out');
       maxQty = 0;
-      qtyMinus.disabled = true;
-      qtyPlus.disabled = true;
-      qtyInput.disabled = true;
-      addBtn.disabled = true;
+      setEnabled(false);
       addBtn.textContent = 'Agotado';
+    } else if (available === 0) {
+      stockNote.textContent = `Ya tienes en tu carrito todas las piezas disponibles (${inCart}).`;
+      stockNote.classList.add('size-stock-note--out');
+      maxQty = 0;
+      setEnabled(false);
+      addBtn.textContent = 'Sin más disponibles';
     } else {
-      stockNote.textContent = stock <= 5 ? `¡Últimas ${stock} disponibles!` : `${stock} disponibles`;
+      const base = stock <= 5 ? `¡Últimas ${stock} disponibles!` : `${stock} disponibles`;
+      stockNote.textContent = inCart ? `${base} · ya tienes ${inCart} en tu carrito` : base;
       stockNote.classList.remove('size-stock-note--out');
-      maxQty = stock;
-      qtyMinus.disabled = false;
-      qtyPlus.disabled = false;
-      qtyInput.disabled = false;
-      addBtn.disabled = false;
+      maxQty = available;
+      setEnabled(true);
       addBtn.textContent = 'Agregar al carrito';
       if (quantity > maxQty) setQuantity(maxQty);
     }
@@ -251,10 +261,15 @@ if (!product) {
     }
     const sizeObj = product.sizes.find(s => s.label === selectedSize);
     const colorObj = product.colors.find(c => c.name === selectedColor);
-    addToCart(product, sizeObj, colorObj, quantity);
-    const totalTxt = `$${formatPrice(getEffectivePrice(product) * quantity)} MXN`;
-    productMsg.textContent = `Agregado al carrito: ${quantity} x talla ${selectedSize}, color ${selectedColor} (${totalTxt}).`;
+    const added = addToCart(product, sizeObj, colorObj, quantity);
+    if (added < 1) {
+      productMsg.textContent = 'No hay más piezas disponibles de este color y talla.';
+    } else {
+      const totalTxt = `$${formatPrice(getEffectivePrice(product) * added)} MXN`;
+      productMsg.textContent = `Agregado al carrito: ${added} x talla ${selectedSize}, color ${selectedColor} (${totalTxt}).`;
+    }
     productMsg.hidden = false;
+    updateStockUI();
   });
 
   // ---------- Productos relacionados ----------

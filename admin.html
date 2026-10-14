@@ -26,7 +26,8 @@
         <button type="button" class="admin-nav-link active" data-view="resumen">Resumen</button>
         <button type="button" class="admin-nav-link" data-view="productos">Productos</button>
         <button type="button" class="admin-nav-link" data-view="pedidos">Pedidos</button>
-        <button type="button" class="admin-nav-link" data-view="promociones">Promociones</button>
+        <button type="button" class="admin-nav-link" data-view="promociones">Descuentos</button>
+        <button type="button" class="admin-nav-link" data-view="cupones">Cupones</button>
       </nav>
     </aside>
 
@@ -65,8 +66,8 @@
 
       <section class="admin-view" id="view-promociones">
         <div class="admin-view-head">
-          <h1>Promociones</h1>
-          <button type="button" class="btn btn-primary" id="btnAddPromo">+ Agregar promoción</button>
+          <h1>Descuentos</h1>
+          <button type="button" class="btn btn-primary" id="btnAddPromo">+ Agregar descuento</button>
         </div>
         <p class="admin-hint">Elige un producto, el porcentaje y la vigencia. También puedes marcar "Oferta" desde la sección Productos.</p>
         <p class="admin-hint" id="adminPromosEmpty" hidden>Todavía no tienes ninguna promoción configurada.</p>
@@ -78,11 +79,27 @@
         </div>
       </section>
 
+      <section class="admin-view" id="view-cupones">
+        <div class="admin-view-head">
+          <h1>Cupones</h1>
+          <button type="button" class="btn btn-primary" id="btnAddCoupon">+ Agregar cupón</button>
+        </div>
+        <p class="admin-hint">Los cupones no cambian el precio de los productos (eso se hace en Descuentos). Son códigos que la clienta aplica en su carrito, solo con los productos que el cupón cubre.</p>
+        <p class="admin-hint" id="adminCouponsEmpty" hidden>Todavía no tienes ningún cupón configurado.</p>
+        <div class="admin-table-wrap">
+          <table class="admin-table">
+            <thead><tr><th>Código</th><th>Cupón</th><th>Descuento</th><th>Aplica a</th><th>Compra mín.</th><th>Vigencia</th><th>Estado</th><th></th></tr></thead>
+            <tbody id="adminCouponsBody"></tbody>
+          </table>
+        </div>
+      </section>
+
     </main>
   </div>
 
   <script src="auth.js"></script>
   <script src="products.js"></script>
+  <script src="coupons.js"></script>
   <script src="admin.js"></script>
 </body>
 </html>

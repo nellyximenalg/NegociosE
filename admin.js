@@ -53,6 +53,7 @@ if (checkAdminAccess()) {
       { label: 'Productos', value: products.length },
       { label: 'Pedidos', value: FAKE_ORDERS.length },
       { label: 'Promociones activas', value: promos },
+      { label: 'Cupones activos', value: getCoupons().filter(isCouponUsable).length },
       { label: 'Cuentas registradas', value: accounts + 128 },
       { label: 'Unidades en stock', value: stockTracked.length ? totalStock : '—' },
       { label: 'Productos agotados', value: outOfStock }
@@ -980,12 +981,278 @@ if (checkAdminAccess()) {
     document.body.classList.add('modal-open');
   }
 
+  // ---------- Cupones ----------
+  // Los cupones no tocan el precio de los productos: la clienta los aplica en el carrito
+  // y solo funcionan con los productos que el cupón cubre (todos, una línea o productos puntuales).
+  const COUPON_STATE_BADGES = {
+    activa: { label: 'Activo', slug: 'entregado' },
+    programada: { label: 'Programado', slug: 'en-preparacion' },
+    expirada: { label: 'Expirado', slug: 'cancelado' },
+    pausada: { label: 'Pausado', slug: 'enviado' }
+  };
+
+  function renderCouponsTable() {
+    const coupons = getCoupons();
+    document.getElementById('adminCouponsBody').innerHTML = coupons.map(c => {
+      const badge = COUPON_STATE_BADGES[couponState(c)];
+      const vigencia = (c.start || c.end)
+        ? `${formatDateEs(c.start) || '—'} – ${formatDateEs(c.end) || '—'}`
+        : 'Sin fecha límite';
+      return `
+      <tr>
+        <td><span class="admin-coupon-code">${escHtml(c.code)}</span></td>
+        <td>${escHtml(c.title)}</td>
+        <td>${escHtml(couponValueLabel(c))}</td>
+        <td>${escHtml(couponScopeLabel(c))}</td>
+        <td>${c.minPurchase ? '$' + formatPrice(c.minPurchase) : '—'}</td>
+        <td>${vigencia}</td>
+        <td><span class="admin-status admin-status--${badge.slug}">${badge.label}</span></td>
+        <td class="admin-table-actions">
+          <button type="button" class="btn btn-ghost btn-sm" data-toggle-coupon="${escHtml(c.id)}">${c.active ? 'Pausar' : 'Activar'}</button>
+          <button type="button" class="btn btn-ghost btn-sm" data-edit-coupon="${escHtml(c.id)}">Editar</button>
+          <button type="button" class="btn btn-ghost btn-sm admin-btn-danger" data-remove-coupon="${escHtml(c.id)}">Eliminar</button>
+        </td>
+      </tr>
+    `;
+    }).join('');
+    document.getElementById('adminCouponsEmpty').hidden = coupons.length > 0;
+
+    document.querySelectorAll('[data-toggle-coupon]').forEach(btn => {
+      btn.addEventListener('click', () => {
+        const list = getCoupons();
+        const c = list.find(x => x.id === btn.dataset.toggleCoupon);
+        if (!c) return;
+        c.active = !c.active;
+        saveCoupons(list);
+        renderCouponsTable();
+        renderStats();
+        showToast(c.active ? 'Cupón activado.' : 'Cupón pausado.');
+      });
+    });
+    document.querySelectorAll('[data-edit-coupon]').forEach(btn => {
+      btn.addEventListener('click', () => openCouponForm(btn.dataset.editCoupon));
+    });
+    document.querySelectorAll('[data-remove-coupon]').forEach(btn => {
+      btn.addEventListener('click', () => removeCoupon(btn.dataset.removeCoupon));
+    });
+  }
+
+  function removeCoupon(id) {
+    const c = getCoupons().find(x => x.id === id);
+    if (!c) return;
+    showConfirmModal(`¿Eliminar el cupón "${c.code}"? Las clientas ya no podrán usarlo.`, () => {
+      saveCoupons(getCoupons().filter(x => x.id !== id));
+      renderCouponsTable();
+      renderStats();
+      showToast('Cupón eliminado correctamente.');
+    });
+  }
+
+  let couponModalEl = null;
+
+  function buildCouponModal() {
+    const overlay = document.createElement('div');
+    overlay.className = 'modal-overlay';
+    overlay.id = 'couponFormModal';
+    overlay.innerHTML = `
+      <div class="modal-panel modal-panel--wide" role="dialog" aria-modal="true" aria-labelledby="couponFormTitle">
+        <button type="button" class="modal-close" aria-label="Cerrar">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M18 6 6 18"/><path d="M6 6l12 12"/></svg>
+        </button>
+        <h3 id="couponFormTitle">Agregar cupón</h3>
+        <form id="couponForm" novalidate>
+          <div class="admin-form-row">
+            <div class="login-field">
+              <label for="cpCode">Código</label>
+              <input type="text" id="cpCode" maxlength="20" placeholder="Ej. VERANO10" autocomplete="off">
+            </div>
+            <div class="login-field">
+              <label for="cpTitle">Nombre del cupón</label>
+              <input type="text" id="cpTitle" maxlength="60" placeholder="Ej. 10% en Accesorios">
+            </div>
+          </div>
+          <div class="login-field">
+            <label for="cpDesc">Descripción (la ve la clienta)</label>
+            <input type="text" id="cpDesc" maxlength="120" placeholder="Ej. Descuento en toda la línea de accesorios.">
+          </div>
+          <div class="admin-form-row">
+            <div class="login-field">
+              <label for="cpType">Tipo de descuento</label>
+              <select id="cpType">
+                <option value="percent">Porcentaje (%)</option>
+                <option value="amount">Monto fijo ($)</option>
+              </select>
+            </div>
+            <div class="login-field">
+              <label for="cpValue" id="cpValueLabel">Porcentaje de descuento (%)</label>
+              <input type="number" id="cpValue" min="1" placeholder="Ej. 10">
+            </div>
+          </div>
+          <div class="admin-form-row">
+            <div class="login-field">
+              <label for="cpScope">Aplica a</label>
+              <select id="cpScope">
+                <option value="all">Todos los productos</option>
+                <option value="category">Una línea (categoría)</option>
+                <option value="products">Productos específicos</option>
+              </select>
+            </div>
+            <div class="login-field">
+              <label for="cpMin">Compra mínima ($)</label>
+              <input type="number" id="cpMin" min="0" placeholder="0 = sin mínimo">
+            </div>
+          </div>
+          <div class="login-field" id="cpCategoryWrap" hidden>
+            <label for="cpCategory">Línea</label>
+            <select id="cpCategory"></select>
+          </div>
+          <div class="login-field" id="cpProductsWrap" hidden>
+            <label>Productos que cubre</label>
+            <div class="admin-product-checks" id="cpProducts"></div>
+          </div>
+          <div class="admin-form-row">
+            <div class="login-field">
+              <label for="cpStart">Vigente desde</label>
+              <input type="date" id="cpStart">
+            </div>
+            <div class="login-field">
+              <label for="cpEnd">Vigente hasta</label>
+              <input type="date" id="cpEnd">
+            </div>
+          </div>
+          <label class="checkbox-field cp-active-field"><input type="checkbox" id="cpActive" checked> Cupón activo</label>
+          <div class="modal-actions">
+            <button type="button" class="btn btn-ghost" id="cpCancel">Cancelar</button>
+            <button type="submit" class="btn btn-primary">Guardar</button>
+          </div>
+        </form>
+      </div>
+    `;
+    document.body.appendChild(overlay);
+
+    const close = () => {
+      overlay.classList.remove('open');
+      document.body.classList.remove('modal-open');
+    };
+    overlay._close = close;
+    overlay.addEventListener('click', (e) => { if (e.target === overlay) close(); });
+    overlay.querySelector('.modal-close').addEventListener('click', close);
+    overlay.querySelector('#cpCancel').addEventListener('click', close);
+    document.addEventListener('keydown', (e) => {
+      if (e.key === 'Escape' && overlay.classList.contains('open')) close();
+    });
+
+    const syncType = () => {
+      const isPercent = overlay.querySelector('#cpType').value === 'percent';
+      overlay.querySelector('#cpValueLabel').textContent = isPercent ? 'Porcentaje de descuento (%)' : 'Monto de descuento ($)';
+      overlay.querySelector('#cpValue').placeholder = isPercent ? 'Ej. 10' : 'Ej. 100';
+    };
+    const syncScope = () => {
+      const scope = overlay.querySelector('#cpScope').value;
+      overlay.querySelector('#cpCategoryWrap').hidden = scope !== 'category';
+      overlay.querySelector('#cpProductsWrap').hidden = scope !== 'products';
+    };
+    overlay.querySelector('#cpType').addEventListener('change', syncType);
+    overlay.querySelector('#cpScope').addEventListener('change', syncScope);
+    overlay._syncType = syncType;
+    overlay._syncScope = syncScope;
+
+    return overlay;
+  }
+
+  function openCouponForm(editId) {
+    const overlay = couponModalEl || (couponModalEl = buildCouponModal());
+    const products = getStoreProducts();
+    const editing = editId ? getCoupons().find(c => c.id === editId) : null;
+    const q = (sel) => overlay.querySelector(sel);
+
+    // Líneas disponibles según los productos reales de la tienda.
+    const categories = Array.from(new Set(products.map(p => p.category))).filter(Boolean);
+    q('#cpCategory').innerHTML = categories.map(cat => `<option value="${escHtml(cat)}">${escHtml(COUPON_CATEGORY_LABELS[cat] || capitalize(cat))}</option>`).join('');
+    q('#cpProducts').innerHTML = products.map(p => `
+      <label class="checkbox-field"><input type="checkbox" value="${p.id}"> ${escHtml(p.name)} <span class="admin-check-sku">${escHtml(p.sku)}</span></label>
+    `).join('');
+
+    q('#couponFormTitle').textContent = editing ? 'Editar cupón' : 'Agregar cupón';
+    q('#cpCode').value = editing ? editing.code : '';
+    q('#cpTitle').value = editing ? editing.title : '';
+    q('#cpDesc').value = editing ? (editing.description || '') : '';
+    q('#cpType').value = editing ? editing.type : 'percent';
+    q('#cpValue').value = editing ? editing.value : '';
+    q('#cpScope').value = editing ? editing.scope : 'all';
+    q('#cpMin').value = editing && editing.minPurchase ? editing.minPurchase : '';
+    q('#cpStart').value = editing ? (editing.start || '') : '';
+    q('#cpEnd').value = editing ? (editing.end || '') : '';
+    q('#cpActive').checked = editing ? !!editing.active : true;
+    if (editing && editing.scope === 'category') q('#cpCategory').value = editing.category;
+    if (editing && editing.scope === 'products') {
+      q('#cpProducts').querySelectorAll('input').forEach(cb => {
+        cb.checked = (editing.productIds || []).includes(parseInt(cb.value, 10));
+      });
+    }
+    overlay._syncType();
+    overlay._syncScope();
+
+    q('#couponForm').onsubmit = (event) => {
+      event.preventDefault();
+      const code = q('#cpCode').value.trim().toUpperCase().replace(/\s+/g, '');
+      const title = q('#cpTitle').value.trim();
+      const type = q('#cpType').value;
+      const value = parseFloat(q('#cpValue').value);
+      const scope = q('#cpScope').value;
+      const minPurchase = parseFloat(q('#cpMin').value) || 0;
+      const start = q('#cpStart').value;
+      const end = q('#cpEnd').value;
+      const list = getCoupons();
+
+      if (!/^[A-Z0-9_-]{3,20}$/.test(code)) { showToast('El código debe tener de 3 a 20 letras o números, sin espacios.'); return; }
+      if (list.some(c => c.code.toUpperCase() === code && (!editing || c.id !== editing.id))) { showToast('Ya existe un cupón con ese código.'); return; }
+      if (!title) { showToast('Escribe el nombre del cupón.'); return; }
+      if (!value || value <= 0 || (type === 'percent' && value > 90)) {
+        showToast(type === 'percent' ? 'El porcentaje debe estar entre 1 y 90.' : 'Escribe un monto de descuento mayor a 0.');
+        return;
+      }
+      if (minPurchase < 0) { showToast('La compra mínima no puede ser negativa.'); return; }
+      if (start && end && end < start) { showToast('La fecha final no puede ser anterior a la inicial.'); return; }
+
+      const category = scope === 'category' ? q('#cpCategory').value : '';
+      const productIds = scope === 'products'
+        ? Array.from(q('#cpProducts').querySelectorAll('input:checked')).map(cb => parseInt(cb.value, 10))
+        : [];
+      if (scope === 'products' && !productIds.length) { showToast('Elige al menos un producto para este cupón.'); return; }
+
+      const data = {
+        code, title,
+        description: q('#cpDesc').value.trim(),
+        type, value, scope, category, productIds, minPurchase, start, end,
+        active: q('#cpActive').checked
+      };
+
+      if (editing) {
+        const i = list.findIndex(c => c.id === editing.id);
+        list[i] = Object.assign({}, list[i], data);
+      } else {
+        list.push(Object.assign({ id: 'cp_' + Date.now() }, data));
+      }
+      saveCoupons(list);
+      overlay._close();
+      renderCouponsTable();
+      renderStats();
+      showToast(editing ? 'Cupón editado correctamente.' : 'Cupón agregado correctamente.');
+    };
+
+    overlay.classList.add('open');
+    document.body.classList.add('modal-open');
+  }
+
   // ---------- Inicializar ----------
   document.getElementById('btnAddProduct').addEventListener('click', () => openProductForm(null));
   document.getElementById('btnAddPromo').addEventListener('click', () => openPromoForm(null));
+  document.getElementById('btnAddCoupon').addEventListener('click', () => openCouponForm(null));
 
   renderStats();
   renderOrders();
   renderProductsTable();
   renderPromosTable();
+  renderCouponsTable();
 }

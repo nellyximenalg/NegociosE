@@ -105,13 +105,36 @@ function saveCart(cart) {
 
 // Agrega un producto al carrito (o suma la cantidad si ya estaba esa combinación
 // exacta de talla y color).
+// Máximo que se puede comprar de una combinación producto + color + talla:
+// el stock disponible (si el admin lo capturó) con tope de 20 por línea.
+function getMaxQtyFor(productId, colorName, sizeLabel) {
+  const p = getStoreProducts().find(x => x.id === productId);
+  if (!p) return 20;
+  const stock = getStockFor(p, colorName, sizeLabel);
+  return stock == null ? 20 : Math.min(20, stock);
+}
+
+// Cuántas piezas de esa combinación ya están en el carrito.
+function getCartQtyFor(productId, colorName, sizeLabel) {
+  const item = getCart().find(i => i.lineId === `${productId}__${sizeLabel}__${colorName}`);
+  return item ? item.qty : 0;
+}
+
+// Regresa cuántas piezas se agregaron realmente (puede ser menos de las pedidas
+// si no alcanza el stock, o 0 si ya no hay más disponibles).
 function addToCart(product, size, color, quantity) {
   const cart = getCart();
   const lineId = `${product.id}__${size.label}__${color.name}`;
   const existing = cart.find(item => item.lineId === lineId);
+  const max = getMaxQtyFor(product.id, color.name, size.label);
+  let added = 0;
   if (existing) {
-    existing.qty = Math.min(20, existing.qty + quantity);
+    const before = existing.qty;
+    existing.qty = Math.min(max, before + quantity);
+    added = existing.qty - before;
   } else {
+    added = Math.min(max, quantity);
+    if (added < 1) return 0;
     cart.push({
       lineId,
       productId: product.id,
@@ -122,17 +145,18 @@ function addToCart(product, size, color, quantity) {
       color: color.name,
       image: (color.images && color.images[0]) || '',
       gradient: product.gradient,
-      qty: quantity
+      qty: added
     });
   }
   saveCart(cart);
+  return added;
 }
 
 function updateCartItemQty(lineId, qty) {
   const cart = getCart();
   const item = cart.find(i => i.lineId === lineId);
   if (!item) return;
-  item.qty = Math.max(1, Math.min(20, qty));
+  item.qty = Math.max(1, Math.min(getMaxQtyFor(item.productId, item.color, item.size), qty));
   saveCart(cart);
 }
 
@@ -146,9 +170,14 @@ function getCartCount() {
 }
 
 function getCartTotals() {
+  // Si coupons.js está cargado, el total ya incluye el cupón aplicado (si hay uno válido).
+  if (typeof computeCartPricing === 'function') {
+    const p = computeCartPricing();
+    return { subtotal: p.subtotal, discount: p.discount, total: p.total, coupon: p.coupon };
+  }
   const cart = getCart();
   const subtotal = cart.reduce((sum, i) => sum + i.price * i.qty, 0);
-  return { subtotal, total: subtotal };
+  return { subtotal, discount: 0, total: subtotal, coupon: null };
 }
 
 // Actualiza la insignia numérica del carrito en el header, en todas las páginas.
@@ -379,6 +408,7 @@ function buildAddToCartModal() {
       <div class="option-group">
         <span class="option-label">Talla <span class="option-selected-name" id="modalSizeName"></span></span>
         <div class="option-pills" id="modalSizeOptions"></div>
+        <p class="size-stock-note" id="modalStockNote" hidden></p>
       </div>
 
       <div class="add-to-cart-row">
@@ -430,6 +460,8 @@ function openAddToCartModal(product) {
   const qtyMinus = overlay.querySelector('#modalQtyMinus');
   const qtyPlus = overlay.querySelector('#modalQtyPlus');
   const confirmBtn = overlay.querySelector('#modalConfirmAdd');
+  const stockNoteEl = overlay.querySelector('#modalStockNote');
+  let maxQty = 20;
 
   skuEl.textContent = product.sku;
   nameEl.textContent = product.name;
@@ -470,6 +502,7 @@ function openAddToCartModal(product) {
         selectedColor = color;
         renderColors();
         updateImage();
+        updateStock();
       });
       colorOptionsEl.appendChild(swatch);
     });
@@ -486,6 +519,7 @@ function openAddToCartModal(product) {
       pill.addEventListener('click', () => {
         selectedSize = size;
         renderSizes();
+        updateStock();
       });
       sizeOptionsEl.appendChild(pill);
     });
@@ -493,27 +527,84 @@ function openAddToCartModal(product) {
   }
 
   function setQuantity(n) {
-    quantity = Math.min(20, Math.max(1, n || 1));
+    quantity = Math.min(maxQty || 1, Math.max(1, n || 1));
     qtyInput.value = quantity;
     renderPrice();
   }
 
+  // Muestra cuántas piezas hay de la combinación color + talla elegida (descontando
+  // las que ya están en el carrito) y bloquea la compra si no hay disponibles.
+  function updateStock() {
+    const stock = getStockFor(product, selectedColor.name, selectedSize.label);
+    const inCart = getCartQtyFor(product.id, selectedColor.name, selectedSize.label);
+    const setEnabled = (on) => {
+      qtyMinus.disabled = !on;
+      qtyPlus.disabled = !on;
+      qtyInput.disabled = !on;
+      confirmBtn.disabled = !on;
+    };
+
+    if (stock == null) {
+      stockNoteEl.hidden = true;
+      maxQty = 20;
+      setEnabled(true);
+      confirmBtn.textContent = 'Agregar al carrito';
+      return;
+    }
+
+    const available = Math.max(0, Math.min(20, stock) - inCart);
+    stockNoteEl.hidden = false;
+
+    if (stock === 0) {
+      stockNoteEl.textContent = 'Agotado en este color y talla.';
+      stockNoteEl.classList.add('size-stock-note--out');
+      maxQty = 0;
+      setEnabled(false);
+      confirmBtn.textContent = 'Agotado';
+    } else if (available === 0) {
+      stockNoteEl.textContent = `Ya tienes en tu carrito todas las piezas disponibles (${inCart}).`;
+      stockNoteEl.classList.add('size-stock-note--out');
+      maxQty = 0;
+      setEnabled(false);
+      confirmBtn.textContent = 'Sin más disponibles';
+    } else {
+      const base = stock <= 5 ? `¡Últimas ${stock} disponibles!` : `${stock} disponibles`;
+      stockNoteEl.textContent = inCart ? `${base} · ya tienes ${inCart} en tu carrito` : base;
+      stockNoteEl.classList.remove('size-stock-note--out');
+      maxQty = available;
+      setEnabled(true);
+      confirmBtn.textContent = 'Agregar al carrito';
+      if (quantity > maxQty) setQuantity(maxQty);
+    }
+  }
+
   qtyMinus.onclick = () => setQuantity(quantity - 1);
-  qtyPlus.onclick = () => setQuantity(quantity + 1);
+  qtyPlus.onclick = () => {
+    if (quantity >= maxQty) { showToast(`Solo hay ${maxQty} disponible${maxQty === 1 ? '' : 's'}.`); return; }
+    setQuantity(quantity + 1);
+  };
   qtyInput.oninput = () => {
     const n = parseInt(qtyInput.value, 10);
-    if (!isNaN(n)) setQuantity(n);
+    if (isNaN(n)) return;
+    if (n > maxQty && maxQty > 0) showToast(`Solo hay ${maxQty} disponible${maxQty === 1 ? '' : 's'}.`);
+    setQuantity(n);
   };
 
   confirmBtn.onclick = () => {
-    addToCart(product, selectedSize, selectedColor, quantity);
+    const added = addToCart(product, selectedSize, selectedColor, quantity);
     closeAddToCartModal();
-    const totalTxt = `$${formatPrice(product.price * quantity)} MXN`;
-    showToast(`Agregado al carrito: ${quantity} x ${product.name}, talla ${selectedSize.label}, color ${selectedColor.name} (${totalTxt}).`);
+    if (added < 1) {
+      showToast('No hay más piezas disponibles de este color y talla.');
+      return;
+    }
+    const totalTxt = `$${formatPrice(getEffectivePrice(product) * added)} MXN`;
+    showToast(`Agregado al carrito: ${added} x ${product.name}, talla ${selectedSize.label}, color ${selectedColor.name} (${totalTxt}).`);
   };
 
   renderColors();
   renderSizes();
+  quantity = 1;
+  updateStock();
   setQuantity(1);
   updateImage();
 
