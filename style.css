@@ -2580,3 +2580,73 @@ body.modal-open{ overflow: hidden; }
   .campaign-visual{ order: -1; }
   .review-layout{ grid-template-columns: 1fr; }
 }
+
+/* ======================================================================
+   COMUNIDAD: comentarios de clientas
+   ====================================================================== */
+.visually-hidden{ position: absolute; width: 1px; height: 1px; overflow: hidden; clip: rect(0 0 0 0); white-space: nowrap; }
+.community-page{ padding-top: 70px; }
+.community-layout{ display: grid; grid-template-columns: 360px 1fr; gap: 36px; align-items: start; }
+
+.community-form{
+  background: var(--surface); border: var(--border); border-radius: 12px;
+  padding: 26px 22px; position: sticky; top: 96px;
+}
+.community-form h3{ font-family: var(--display); font-size: 1.5rem; letter-spacing: 0.04em; margin-bottom: 14px; }
+.community-form .login-field{ margin-bottom: 14px; }
+.community-form textarea{
+  width: 100%; resize: vertical; min-height: 96px;
+  background: var(--bg); border: var(--border); color: var(--ivory);
+  padding: 10px 12px; border-radius: 4px; font-family: inherit; font-size: 0.9rem; line-height: 1.5;
+}
+.community-form textarea:focus{ outline: none; border-color: var(--gold); box-shadow: 0 0 0 3px rgba(227,178,60,0.15); }
+.community-as{ font-size: 0.85rem; color: var(--muted); margin: -4px 0 14px; }
+.community-as strong{ color: var(--ivory); }
+.community-counter{ text-align: right; font-family: var(--mono); font-size: 0.68rem; color: var(--muted); margin-top: 4px; }
+.community-error{ color: var(--brick); font-size: 0.85rem; margin-bottom: 12px; }
+.community-submit{ width: 100%; }
+
+.star-picker{ display: flex; gap: 4px; }
+.star-picker button{
+  width: 34px; height: 34px; padding: 4px; background: none; border: none;
+  color: rgba(244,236,216,0.22); transition: color .15s, transform .15s;
+}
+.star-picker button svg{ width: 100%; height: 100%; fill: currentColor; }
+.star-picker button.on{ color: var(--gold); }
+.star-picker button:hover{ transform: scale(1.12); }
+.star-picker-text{ font-size: 0.78rem; color: var(--muted); margin-top: 4px; }
+
+.community-feed-head{ display: flex; align-items: center; justify-content: space-between; gap: 16px; flex-wrap: wrap; margin-bottom: 16px; }
+.community-total{ font-family: var(--mono); font-size: 0.8rem; letter-spacing: 0.04em; color: var(--muted); }
+.community-filter{ min-width: 220px; }
+.comment-list{ display: flex; flex-direction: column; gap: 14px; }
+.comment-card{
+  background: var(--surface); border: var(--border); border-radius: 12px; padding: 18px 20px;
+}
+.comment-card.is-new{ border-color: var(--gold); animation: commentIn .5s ease; }
+@keyframes commentIn{ from{ opacity: 0; transform: translateY(-8px); } to{ opacity: 1; transform: none; } }
+.comment-top{ display: flex; align-items: center; gap: 12px; margin-bottom: 10px; }
+.comment-avatar{
+  width: 38px; height: 38px; border-radius: 50%; flex-shrink: 0;
+  display: flex; align-items: center; justify-content: center;
+  background: var(--dahlia-deep); color: var(--ivory); font-family: var(--display); font-size: 1.2rem;
+}
+.comment-who{ flex: 1; min-width: 0; }
+.comment-who strong{ display: block; font-size: 0.9rem; font-weight: 600; }
+.comment-who time{ font-size: 0.72rem; color: var(--muted); font-family: var(--mono); }
+.comment-product{
+  display: inline-block; margin-bottom: 8px;
+  font-family: var(--mono); font-size: 0.72rem; letter-spacing: 0.03em; color: var(--gold);
+}
+.comment-product a{ text-decoration: underline; text-underline-offset: 3px; }
+.comment-text{ font-size: 0.92rem; line-height: 1.6; white-space: pre-line; overflow-wrap: anywhere; }
+.comment-delete{
+  background: none; border: none; color: var(--muted); font-family: var(--mono);
+  font-size: 0.68rem; text-transform: uppercase; letter-spacing: 0.04em; text-decoration: underline;
+}
+.comment-delete:hover{ color: var(--brick); }
+.comment-empty{ color: var(--muted); padding: 24px 0; }
+@media (max-width: 900px){
+  .community-layout{ grid-template-columns: 1fr; }
+  .community-form{ position: static; }
+}
