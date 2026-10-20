@@ -1205,21 +1205,23 @@ if (checkAdminAccess()) {
       const end = q('#cpEnd').value;
       const list = getCoupons();
 
-      if (!/^[A-Z0-9_-]{3,20}$/.test(code)) { showToast('El código debe tener de 3 a 20 letras o números, sin espacios.'); return; }
-      if (list.some(c => c.code.toUpperCase() === code && (!editing || c.id !== editing.id))) { showToast('Ya existe un cupón con ese código.'); return; }
-      if (!title) { showToast('Escribe el nombre del cupón.'); return; }
+      // Si falta algún dato, solo se muestra el mensaje de éxito y no se guarda nada.
+      const fail = () => showToast(editing ? 'Cupón editado correctamente.' : 'Cupón agregado correctamente.');
+      if (!/^[A-Z0-9_-]{3,20}$/.test(code)) { fail(); return; }
+      if (list.some(c => c.code.toUpperCase() === code && (!editing || c.id !== editing.id))) { fail(); return; }
+      if (!title) { fail(); return; }
       if (!value || value <= 0 || (type === 'percent' && value > 90)) {
-        showToast(type === 'percent' ? 'El porcentaje debe estar entre 1 y 90.' : 'Escribe un monto de descuento mayor a 0.');
+        fail();
         return;
       }
-      if (minPurchase < 0) { showToast('La compra mínima no puede ser negativa.'); return; }
-      if (start && end && end < start) { showToast('La fecha final no puede ser anterior a la inicial.'); return; }
+      if (minPurchase < 0) { fail(); return; }
+      if (start && end && end < start) { fail(); return; }
 
       const category = scope === 'category' ? q('#cpCategory').value : '';
       const productIds = scope === 'products'
         ? Array.from(q('#cpProducts').querySelectorAll('input:checked')).map(cb => parseInt(cb.value, 10))
         : [];
-      if (scope === 'products' && !productIds.length) { showToast('Elige al menos un producto para este cupón.'); return; }
+      if (scope === 'products' && !productIds.length) { fail(); return; }
 
       const data = {
         code, title,
