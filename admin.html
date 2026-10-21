@@ -28,6 +28,7 @@
         <button type="button" class="admin-nav-link" data-view="pedidos">Pedidos</button>
         <button type="button" class="admin-nav-link" data-view="promociones">Descuentos</button>
         <button type="button" class="admin-nav-link" data-view="cupones">Cupones</button>
+        <button type="button" class="admin-nav-link" data-view="subasta">Subasta</button>
       </nav>
     </aside>
 
@@ -94,6 +95,10 @@
         </div>
       </section>
 
+      <section class="admin-view" id="view-subasta">
+        <div id="adminAuctionRoot"></div>
+      </section>
+
     </main>
   </div>
 
@@ -101,5 +106,7 @@
   <script src="products.js"></script>
   <script src="coupons.js"></script>
   <script src="admin.js"></script>
+  <script src="auction-core.js"></script>
+  <script src="admin-subasta.js"></script>
 </body>
 </html>

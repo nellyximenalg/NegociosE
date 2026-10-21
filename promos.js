@@ -65,7 +65,7 @@
     }
 
     if (!isLoggedIn()) {
-      showMsg(`El código <strong>${escHtml(coupon.code)}</strong> es válido. <a href="login.html?redirect=inicio.html">Inicia sesión</a> para aplicarlo a tu carrito.`, 'ok');
+      showMsg(`El código <strong>${escHtml(coupon.code)}</strong> es válido. <a href="login.html?redirect=promos.html">Inicia sesión</a> para aplicarlo a tu carrito.`, 'ok');
       return;
     }
 

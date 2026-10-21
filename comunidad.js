@@ -265,6 +265,7 @@
       stars: rating,
       text,
       date: new Date().toISOString(),
+      email: isLoggedIn() ? (localStorage.getItem('dahlia_user_email') || '') : '',
       mine: true
     };
     list.push(comment);

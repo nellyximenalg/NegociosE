@@ -17,12 +17,12 @@
       <nav class="nav-links" id="navLinks">
         <a href="inicio.html#inicio">Inicio</a>
         <a href="catalogo.html">Catálogo</a>
-        <a href="inicio.html#promos">Promos</a>
+        <a href="promos.html">Promos</a>
         <a href="campana.html">Campaña</a>
         <a href="comunidad.html">Comunidad</a>
         <a href="marketplace.html">Marketplace</a>
         <a href="inicio.html#nosotros">Nosotros</a>
-        <a href="inicio.html#contacto">Contacto</a>
+        <a href="subasta.html">Subasta</a>
       </nav>
       <div class="header-actions">
         <a href="login.html" id="navAuthLink" class="icon-btn" aria-label="Iniciar sesión" title="Iniciar sesión">
@@ -45,7 +45,11 @@
 
       <div class="product-detail-grid" id="productRoot">
         <div class="product-gallery">
-          <div class="prod-image product-detail-image" id="productImage"></div>
+          <div class="product-image-wrap" id="productGalleryWrap">
+            <div class="prod-image product-detail-image" id="productImage"></div>
+            <button type="button" class="img-arrow img-arrow--prev" data-custom="1" data-dir="-1" aria-label="Foto anterior" hidden><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="m15 18-6-6 6-6"/></svg></button>
+            <button type="button" class="img-arrow img-arrow--next" data-custom="1" data-dir="1" aria-label="Foto siguiente" hidden><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="m9 18 6-6-6-6"/></svg></button>
+          </div>
           <div class="gallery-thumbs" id="productThumbs"></div>
         </div>
         <div class="product-detail-info">

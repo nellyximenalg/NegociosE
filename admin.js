@@ -429,9 +429,31 @@ if (checkAdminAccess()) {
     `).join('');
     wrap.querySelectorAll('.admin-palette-swatch').forEach(btn => {
       btn.addEventListener('click', () => {
-        formColors.push({ hex: btn.dataset.hex, name: btn.dataset.name, note: '', images: ['', '', ''], stock: {} });
+        formColors.push({ hex: btn.dataset.hex, name: btn.dataset.name, note: '', images: [], stock: {} });
         renderColorCards(overlay);
       });
+    });
+  }
+
+  // Reduce la foto antes de guardarla para que quepa en el almacenamiento del navegador.
+  function compressImageFile(file) {
+    return new Promise((resolve, reject) => {
+      const reader = new FileReader();
+      reader.onerror = reject;
+      reader.onload = () => {
+        const img = new Image();
+        img.onerror = reject;
+        img.onload = () => {
+          const scale = Math.min(1, 700 / Math.max(img.width, img.height));
+          const canvas = document.createElement('canvas');
+          canvas.width = Math.round(img.width * scale);
+          canvas.height = Math.round(img.height * scale);
+          canvas.getContext('2d').drawImage(img, 0, 0, canvas.width, canvas.height);
+          resolve(canvas.toDataURL('image/jpeg', 0.72));
+        };
+        img.src = reader.result;
+      };
+      reader.readAsDataURL(file);
     });
   }
 
@@ -447,6 +469,7 @@ if (checkAdminAccess()) {
 
     list.innerHTML = formColors.map((c, i) => {
       if (!c.stock) c.stock = {};
+      c.images = (c.images || []).filter(Boolean);
       return `
       <div class="admin-color-card" data-color-index="${i}">
         <div class="admin-color-card-head">
@@ -455,10 +478,16 @@ if (checkAdminAccess()) {
           ${formColors.length > 1 ? `<button type="button" class="admin-color-remove" data-remove-color="${i}" aria-label="Quitar color">×</button>` : ''}
         </div>
         <textarea class="pf-color-note" rows="2" placeholder="Descripción de este color (aparece debajo del selector de color)">${c.note}</textarea>
-        <div class="admin-form-row admin-form-row--3">
-          <input type="text" class="pf-color-img" data-img-index="0" placeholder="Imagen 1 (ruta o URL)" value="${c.images[0]}">
-          <input type="text" class="pf-color-img" data-img-index="1" placeholder="Imagen 2 (ruta o URL)" value="${c.images[1]}">
-          <input type="text" class="pf-color-img" data-img-index="2" placeholder="Imagen 3 (ruta o URL)" value="${c.images[2]}">
+        <p class="admin-field-hint">Fotos de este color (hasta 3)</p>
+        <div class="mk-photos">
+          ${c.images.map((src, j) => `
+            <div class="mk-photo">
+              <img src="${String(src).replace(/"/g, '&quot;')}" alt="Foto ${j + 1}" onerror="this.style.opacity=0.2">
+              <button type="button" class="mk-photo-remove" data-photo-remove="${i}:${j}" aria-label="Quitar foto ${j + 1}">×</button>
+            </div>
+          `).join('')}
+          ${c.images.length < 3 ? `<button type="button" class="mk-photo-add" data-photo-add="${i}"><span>+</span>Agregar foto</button>` : ''}
+          <input type="file" accept="image/*" multiple hidden data-photo-file="${i}">
         </div>
         ${sizeLabels.length ? `
           <div class="admin-color-stock">
@@ -481,9 +510,20 @@ if (checkAdminAccess()) {
       const i = parseInt(card.dataset.colorIndex, 10);
       card.querySelector('.pf-color-name').addEventListener('input', (e) => { formColors[i].name = e.target.value; });
       card.querySelector('.pf-color-note').addEventListener('input', (e) => { formColors[i].note = e.target.value; });
-      card.querySelectorAll('.pf-color-img').forEach(input => {
-        input.addEventListener('input', (e) => {
-          formColors[i].images[parseInt(e.target.dataset.imgIndex, 10)] = e.target.value;
+      const fileInput = card.querySelector('[data-photo-file]');
+      const addBtn = card.querySelector('[data-photo-add]');
+      if (addBtn) addBtn.addEventListener('click', () => fileInput.click());
+      fileInput.addEventListener('change', async () => {
+        const free = 3 - formColors[i].images.length;
+        for (const f of Array.from(fileInput.files).slice(0, free)) {
+          try { formColors[i].images.push(await compressImageFile(f)); } catch (err) { showToast('No se pudo leer una de las fotos.'); }
+        }
+        renderColorCards(overlay);
+      });
+      card.querySelectorAll('[data-photo-remove]').forEach(btn => {
+        btn.addEventListener('click', () => {
+          formColors[i].images.splice(parseInt(btn.dataset.photoRemove.split(':')[1], 10), 1);
+          renderColorCards(overlay);
         });
       });
       card.querySelectorAll('[data-stock-label]').forEach(input => {
@@ -657,7 +697,7 @@ if (checkAdminAccess()) {
           hex: c.hex,
           name: c.name || '',
           note: c.note || '',
-          images: [0, 1, 2].map(i => (c.images && c.images[i]) || ''),
+          images: (c.images || []).filter(Boolean).slice(0, 3),
           stock: Object.assign({}, c.stock || {})
         }))
       : [];

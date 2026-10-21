@@ -1,3 +1,6 @@
+// Marketplace C2C: las clientas publican sus productos y los ven otras clientas.
+// Funciona en dos páginas: marketplace.html (todas las publicaciones) y
+// perfil.html (la sección "Mis publicaciones"). Todo es simulado: se guarda en localStorage.
 (function () {
   const KEY = 'dahlia_marketplace';
   const MAX_PHOTOS = 3;
@@ -78,11 +81,15 @@
     return new Date(iso).toLocaleDateString('es-MX', { day: 'numeric', month: 'short', year: 'numeric' });
   }
 
-  function imageHtml(item, index) {
-    const src = (item.images || [])[index || 0];
-    return `<div class="mk-img" style="background:${GRADIENTS[item.category] || GRADIENTS.mujer}">
+  // withArrows: en las tarjetas del Marketplace, si hay más de una foto salen las flechas.
+  function imageHtml(item, index, withArrows) {
+    const imgs = item.images || [];
+    const src = imgs[index || 0];
+    const many = withArrows && imgs.length > 1;
+    return `<div class="mk-img" style="background:${GRADIENTS[item.category] || GRADIENTS.mujer}"${many ? ` data-images="${imagesAttr(imgs)}"` : ''}>
       <span class="mk-img-ph">${esc(item.name.charAt(0).toUpperCase())}</span>
-      ${src ? `<img src="${esc(src)}" alt="${esc(item.name)}" loading="lazy" onerror="this.remove()">` : ''}
+      ${src ? `<img src="${esc(src)}" alt="${esc(item.name)}" loading="lazy" onload="this.parentNode.classList.add('has-img')" onerror="this.remove()">` : ''}
+      ${many ? imgArrowsGeneric() : ''}
     </div>`;
   }
 
@@ -336,12 +343,22 @@
   const grid = document.getElementById('mkGrid');
   if (grid) {
     let category = 'todos';
+    let query = '';
+    const searchInput = document.getElementById('mkSearch');
+    const searchClear = document.getElementById('mkSearchClear');
+    // Compara sin importar mayúsculas ni acentos ("vestido" encuentra "Vestído").
+    const norm = (t) => String(t || '').normalize('NFD').replace(/[\u0300-\u036f]/g, '').toLowerCase();
+    function matchesQuery(x) {
+      if (!query) return true;
+      const hay = norm([x.name, x.description, x.seller, CATS[x.category], x.size ? 'talla ' + x.size : '', x.condition].join(' '));
+      return norm(query).split(/\s+/).filter(Boolean).every(term => hay.includes(term));
+    }
     const filters = document.getElementById('mkFilters');
     const countEl = document.getElementById('mkCount');
 
     function renderPage() {
       const all = load().sort((a, b) => new Date(b.date) - new Date(a.date));
-      const list = category === 'todos' ? all : all.filter(x => x.category === category);
+      const list = (category === 'todos' ? all : all.filter(x => x.category === category)).filter(matchesQuery);
 
       filters.innerHTML = [['todos', 'Todos']].concat(Object.entries(CATS)).map(([k, label]) =>
         `<button type="button" class="mk-chip${k === category ? ' active' : ''}" data-cat="${k}">${label}</button>`).join('');
@@ -349,12 +366,14 @@
       countEl.textContent = `${list.length} ${list.length === 1 ? 'publicación' : 'publicaciones'}`;
 
       if (!list.length) {
-        grid.innerHTML = '<p class="comment-empty">Todavía no hay publicaciones en esta categoría. ¡Sé la primera en publicar!</p>';
+        grid.innerHTML = query
+          ? `<p class="comment-empty">No encontramos publicaciones para "${esc(query.trim())}". Prueba con otra palabra o cambia la categoría.</p>`
+          : '<p class="comment-empty">Todavía no hay publicaciones en esta categoría. ¡Sé la primera en publicar!</p>';
         return;
       }
       grid.innerHTML = list.map(x => `
         <article class="mk-card" data-open="${esc(x.id)}" tabindex="0" role="button" aria-label="Ver ${esc(x.name)}">
-          ${imageHtml(x)}
+          ${imageHtml(x, 0, true)}
           <span class="mk-badge mk-badge--${x.condition === 'nuevo' ? 'new' : 'used'}">${x.condition === 'nuevo' ? 'Nuevo' : 'Usado'}</span>
           ${isMine(x) ? '<span class="mk-badge mk-badge--mine">Tuyo</span>' : ''}
           <div class="mk-card-body">
@@ -401,7 +420,7 @@
         body.innerHTML = `
           <div class="mk-detail">
             <div>
-              <div class="mk-detail-main">${imageHtml(x, current)}</div>
+              <div class="mk-detail-main">${imageHtml(x, current)}${imgs.length > 1 ? imgArrowsCustom() : ''}</div>
               ${imgs.length > 1 ? `<div class="mk-detail-thumbs">${imgs.map((s, i) => `<button type="button" class="campaign-thumb${i === current ? ' active' : ''}" data-i="${i}" aria-label="Foto ${i + 1}"><img src="${esc(s)}" alt="" onerror="this.remove()"></button>`).join('')}</div>` : ''}
             </div>
             <div class="mk-detail-info">
@@ -415,6 +434,10 @@
                 : '<button type="button" class="btn btn-primary" id="mkContact">Contactar al vendedor</button>'}
             </div>
           </div>`;
+        body.querySelectorAll('.mk-detail-main .img-arrow').forEach(b => b.addEventListener('click', () => {
+          current = (current + parseInt(b.dataset.dir, 10) + imgs.length) % imgs.length;
+          paint();
+        }));
         body.querySelectorAll('[data-i]').forEach(b => b.addEventListener('click', () => { current = parseInt(b.dataset.i, 10); paint(); }));
         const contact = body.querySelector('#mkContact');
         if (contact) contact.addEventListener('click', () => {
@@ -427,6 +450,19 @@
       detailEl.classList.add('open');
       document.body.classList.add('modal-open');
     }
+
+    searchInput.addEventListener('input', () => {
+      query = searchInput.value;
+      searchClear.hidden = !query;
+      renderPage();
+    });
+    searchClear.addEventListener('click', () => {
+      searchInput.value = '';
+      query = '';
+      searchClear.hidden = true;
+      renderPage();
+      searchInput.focus();
+    });
 
     document.getElementById('mkAddBtn').addEventListener('click', () => openForm(null));
     document.addEventListener('mk:changed', renderPage);

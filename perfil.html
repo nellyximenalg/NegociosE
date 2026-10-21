@@ -17,12 +17,12 @@
       <nav class="nav-links" id="navLinks">
         <a href="inicio.html#inicio">Inicio</a>
         <a href="catalogo.html">Catálogo</a>
-        <a href="inicio.html#promos">Promos</a>
+        <a href="promos.html">Promos</a>
         <a href="campana.html">Campaña</a>
         <a href="comunidad.html">Comunidad</a>
         <a href="marketplace.html">Marketplace</a>
         <a href="inicio.html#nosotros">Nosotros</a>
-        <a href="inicio.html#contacto">Contacto</a>
+        <a href="subasta.html">Subasta</a>
       </nav>
       <div class="header-actions">
         <a href="login.html" id="navAuthLink" class="icon-btn" aria-label="Iniciar sesión" title="Iniciar sesión">
@@ -57,6 +57,10 @@
             <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M20.6 13.4 13.4 20.6a2 2 0 0 1-2.8 0L3 13V3h10l7.6 7.6a2 2 0 0 1 0 2.8Z"/><circle cx="7.5" cy="7.5" r="1.5"/></svg>
             Mis publicaciones
           </button>
+          <button type="button" class="account-nav-btn" data-panel="comentarios">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z"/></svg>
+            Mis comentarios
+          </button>
           <button type="button" class="account-nav-btn" data-panel="cuenta">
             <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><circle cx="12" cy="12" r="3"/><path d="M19.4 15a1.65 1.65 0 0 0 .33 1.82l.06.06a2 2 0 1 1-2.83 2.83l-.06-.06a1.65 1.65 0 0 0-1.82-.33 1.65 1.65 0 0 0-1 1.51V21a2 2 0 0 1-4 0v-.09A1.65 1.65 0 0 0 9 19.4a1.65 1.65 0 0 0-1.82.33l-.06.06a2 2 0 1 1-2.83-2.83l.06-.06a1.65 1.65 0 0 0 .33-1.82 1.65 1.65 0 0 0-1.51-1H3a2 2 0 0 1 0-4h.09A1.65 1.65 0 0 0 4.6 9a1.65 1.65 0 0 0-.33-1.82l-.06-.06a2 2 0 1 1 2.83-2.83l.06.06a1.65 1.65 0 0 0 1.82.33H9a1.65 1.65 0 0 0 1-1.51V3a2 2 0 0 1 4 0v.09a1.65 1.65 0 0 0 1 1.51 1.65 1.65 0 0 0 1.82-.33l.06-.06a2 2 0 1 1 2.83 2.83l-.06.06a1.65 1.65 0 0 0-.33 1.82V9a1.65 1.65 0 0 0 1.51 1H21a2 2 0 0 1 0 4h-.09a1.65 1.65 0 0 0-1.51 1Z"/></svg>
             Configuración de la cuenta
@@ -83,6 +87,15 @@
               <button type="button" class="btn btn-primary btn-sm" id="myListingAdd">+ Publicar producto</button>
             </div>
             <div id="myListings"></div>
+          </div>
+
+          <!-- Mis comentarios -->
+          <div class="account-panel" id="panel-comentarios">
+            <div class="mk-panel-head">
+              <h2 class="account-panel-title">Mis comentarios</h2>
+              <a href="comunidad.html" class="btn btn-primary btn-sm">Ir a Comunidad</a>
+            </div>
+            <div id="myComments"></div>
           </div>
 
           <!-- Configuración de la cuenta -->
@@ -211,6 +224,7 @@
   <script src="auth.js"></script>
   <script src="script.js"></script>
   <script src="marketplace.js"></script>
+  <script src="mis-comentarios.js"></script>
   <script src="perfil.js"></script>
 </body>
 </html>

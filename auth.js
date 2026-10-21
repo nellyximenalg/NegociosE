@@ -64,7 +64,13 @@ function getAdminOverrides() {
 }
 
 function saveAdminOverrides(overrides) {
-  localStorage.setItem('dahlia_admin_overrides', JSON.stringify(overrides));
+  try {
+    localStorage.setItem('dahlia_admin_overrides', JSON.stringify(overrides));
+  } catch (e) {
+    // Las fotos subidas desde archivo ocupan espacio del navegador; si ya no cabe, se avisa.
+    if (typeof showToast === 'function') showToast('No se pudo guardar: las fotos pesan demasiado. Usa menos fotos o más ligeras.');
+    throw e;
+  }
 }
 
 // Devuelve el catálogo completo tal como debe verse en la tienda: los
@@ -258,6 +264,74 @@ function showToast(message) {
 // Prueba si la primera foto real del producto (primer color) existe y, si
 // carga bien, la pone como fondo de la tarjeta. Si no existe todavía o falla,
 // se queda con el degradado que ya estaba puesto como respaldo.
+// ---------- Flechas para navegar entre las fotos (tarjetas, producto, subasta, campaña, marketplace) ----------
+const CHEVRON_L = '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="m15 18-6-6 6-6"/></svg>';
+const CHEVRON_R = '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="m9 18 6-6-6-6"/></svg>';
+
+// Flechas "genéricas": el contenedor trae data-images="ruta1|ruta2|..." y el cambio de foto
+// lo hace el manejador global de abajo (sirve para tarjetas ya pintadas).
+function imgArrowsGeneric() {
+  return `<span class="img-arrow img-arrow--prev" role="button" tabindex="0" aria-label="Foto anterior" data-dir="-1">${CHEVRON_L}</span>` +
+         `<span class="img-arrow img-arrow--next" role="button" tabindex="0" aria-label="Foto siguiente" data-dir="1">${CHEVRON_R}</span>`;
+}
+// Flechas "propias": la página que las usa se encarga de cambiar la foto.
+function imgArrowsCustom() {
+  return `<button type="button" class="img-arrow img-arrow--prev" data-custom="1" data-dir="-1" aria-label="Foto anterior">${CHEVRON_L}</button>` +
+         `<button type="button" class="img-arrow img-arrow--next" data-custom="1" data-dir="1" aria-label="Foto siguiente">${CHEVRON_R}</button>`;
+}
+function imagesAttr(images) {
+  return String(images.join('|')).replace(/"/g, '&quot;');
+}
+
+function showBoxImage(box, src) {
+  if (box.classList.contains('mk-img')) {
+    let img = box.querySelector(':scope > img');
+    if (!img) { img = document.createElement('img'); img.alt = ''; box.appendChild(img); }
+    img.onload = () => box.classList.add('has-img');
+    img.src = src;
+    return;
+  }
+  box.style.backgroundImage = `url('${src}')`;
+  box.style.backgroundColor = '#f5f5f6';
+  box.style.backgroundSize = 'contain';
+  box.style.backgroundRepeat = 'no-repeat';
+  box.style.backgroundPosition = 'center';
+}
+
+function stepBoxImage(box, dir) {
+  if (!box || !box.dataset.images) return;
+  const imgs = box.dataset.images.split('|').filter(Boolean);
+  const n = imgs.length;
+  if (n < 2) return;
+  let i = parseInt(box.dataset.index || '0', 10);
+  let tries = 0;
+  const attempt = () => {
+    i = (i + dir + n) % n;
+    tries++;
+    const test = new Image();
+    test.onload = () => { box.dataset.index = i; showBoxImage(box, imgs[i]); };
+    test.onerror = () => { if (tries < n) attempt(); }; // salta fotos que no existen
+    test.src = imgs[i];
+  };
+  attempt();
+}
+
+document.addEventListener('click', function (e) {
+  const btn = e.target.closest && e.target.closest('.img-arrow');
+  if (!btn || btn.dataset.custom) return;
+  e.preventDefault();
+  e.stopPropagation(); // que no abra el producto ni la tarjeta
+  stepBoxImage(btn.closest('[data-images]'), parseInt(btn.dataset.dir, 10));
+}, true);
+document.addEventListener('keydown', function (e) {
+  if (e.key !== 'Enter' && e.key !== ' ') return;
+  const btn = e.target.closest && e.target.closest('.img-arrow[role="button"]');
+  if (!btn || btn.dataset.custom) return;
+  e.preventDefault();
+  e.stopPropagation();
+  stepBoxImage(btn.closest('[data-images]'), parseInt(btn.dataset.dir, 10));
+}, true);
+
 function setCardImage(el, product) {
   const firstColor = product.colors && product.colors[0];
   const firstImg = firstColor && firstColor.images && firstColor.images[0];
@@ -266,7 +340,7 @@ function setCardImage(el, product) {
   const test = new Image();
   test.onload = () => {
     el.style.backgroundImage = `url('${firstImg}')`;
-    el.style.backgroundColor = '#211d17';
+    el.style.backgroundColor = '#f5f5f6';
     el.style.backgroundSize = 'contain';
     el.style.backgroundRepeat = 'no-repeat';
     el.style.backgroundPosition = 'center';
@@ -328,9 +402,11 @@ function renderPriceTag(p) {
 // HTML de una tarjeta de producto, usado en el catálogo, destacados y novedades.
 function renderProductCard(p) {
   const { rating, reviews } = getProductRating(p);
+  const cardImgs = ((p.colors && p.colors[0] && p.colors[0].images) || []).filter(Boolean);
+  const hasMany = cardImgs.length > 1;
   return `
     <div class="prod-card">
-      <a href="producto.html?id=${p.id}" class="prod-image" data-product-id="${p.id}" style="background:${p.gradient};">${renderProductBadges(p)}</a>
+      <a href="producto.html?id=${p.id}" class="prod-image" data-product-id="${p.id}"${hasMany ? ` data-images="${imagesAttr(cardImgs)}"` : ''} style="background:${p.gradient};">${renderProductBadges(p)}${hasMany ? imgArrowsGeneric() : ''}</a>
       <div class="prod-tag">
         <div style="display:flex;align-items:center;">
           <span class="hole"></span>

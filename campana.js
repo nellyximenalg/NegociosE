@@ -69,10 +69,11 @@
       </div>
       <div class="campaign-visual">
         <div class="campaign-main-image" id="campaignMain" style="background:${product.gradient}">
-          ${images[imageIndex] ? `<img src="${images[imageIndex]}" alt="${escHtml(product.name)} en ${escHtml(color.name)}" onerror="this.remove()">` : ''}
+          ${images[imageIndex] ? `<img src="${images[imageIndex]}" alt="${escHtml(product.name)} en ${escHtml(color.name)}" onload="this.parentNode.classList.add('has-img')" onerror="this.remove()">` : ''}
           ${onSale ? '<span class="campaign-badge">Oferta</span>' : product.isNew ? '<span class="campaign-badge" style="background:var(--sage)">Nuevo</span>' : ''}
+          ${images.length > 1 ? imgArrowsCustom() : ''}
         </div>
-        ${images.length > 1 ? `<div class="campaign-thumbs">${images.map((src, i) => `<button type="button" class="campaign-thumb${i === imageIndex ? ' active' : ''}" data-index="${i}" aria-label="Foto ${i + 1}"><img src="${src}" alt="" onerror="this.remove()"></button>`).join('')}</div>` : ''}
+        ${images.length > 1 ? `<div class="campaign-thumbs">${images.map((src, i) => `<button type="button" class="campaign-thumb${i === imageIndex ? ' active' : ''}" data-index="${i}" aria-label="Foto ${i + 1}"><img src="${src}" alt="" onload="this.parentNode.classList.add('has-img')" onerror="this.remove()"></button>`).join('')}</div>` : ''}
       </div>
     `;
 
@@ -81,6 +82,12 @@
       btn.addEventListener('click', () => {
         color = product.colors.find(c => c.name === btn.dataset.color) || color;
         imageIndex = 0;
+        renderHero();
+      });
+    });
+    hero.querySelectorAll('.campaign-main-image .img-arrow').forEach(btn => {
+      btn.addEventListener('click', () => {
+        imageIndex = (imageIndex + parseInt(btn.dataset.dir, 10) + images.length) % images.length;
         renderHero();
       });
     });

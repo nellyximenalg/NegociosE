@@ -80,7 +80,28 @@ if (!product) {
   const thumbsContainer = document.getElementById('productThumbs');
   let loadedImageOk = {}; // cache: ruta -> true/false, para no probar la misma imagen varias veces
 
+  // Foto actual (para las flechas anterior / siguiente)
+  let galleryImages = [], galleryIndex = 0, galleryHex = '';
+
+  function syncGalleryUI() {
+    thumbsContainer.querySelectorAll('.gallery-thumb').forEach((t, i) => t.classList.toggle('active', i === galleryIndex));
+    document.querySelectorAll('#productGalleryWrap .img-arrow').forEach(b => { b.hidden = galleryImages.length < 2; });
+  }
+
+  function stepGallery(delta) {
+    if (galleryImages.length < 2) return;
+    showImageAt(galleryImages, (galleryIndex + delta + galleryImages.length) % galleryImages.length, galleryHex);
+  }
+
+  document.querySelectorAll('#productGalleryWrap .img-arrow').forEach(b => {
+    b.addEventListener('click', () => stepGallery(parseInt(b.dataset.dir, 10)));
+  });
+
   function showImageAt(images, index, colorHex) {
+    galleryImages = images;
+    galleryIndex = index;
+    galleryHex = colorHex;
+    syncGalleryUI();
     const src = images[index];
     if (loadedImageOk[src] === false) {
       renderPlaceholder(colorHex);
