@@ -1,0 +1,160 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Guía de tallas — Dahlia</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Bebas+Neue&family=Work+Sans:wght@400;500;600&family=IBM+Plex+Mono:wght@500&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="style.css">
+</head>
+<body>
+
+  <header class="site-header">
+    <div class="wrap">
+      <a href="inicio.html" class="logo"><svg class="logo-flower" width="16" height="16" viewBox="0 0 32 32" fill="none" xmlns="http://www.w3.org/2000/svg" aria-hidden="true"><circle cx="16" cy="9" r="6" fill="var(--dahlia)"/><circle cx="23" cy="16" r="6" fill="var(--gold)"/><circle cx="16" cy="23" r="6" fill="var(--dahlia)"/><circle cx="9" cy="16" r="6" fill="var(--gold)"/><circle cx="16" cy="16" r="4.5" fill="var(--bg)"/></svg>DAHLIA</a>
+      <nav class="nav-links" id="navLinks">
+        <a href="inicio.html">Inicio</a>
+        <a href="catalogo.html">Catálogo</a>
+        <a href="promos.html">Promos</a>
+        <a href="campana.html">Campaña</a>
+        <a href="comunidad.html">Comunidad</a>
+        <a href="marketplace.html">Marketplace</a>
+        <a href="inicio.html#nosotros">Nosotros</a>
+        <a href="subasta.html">Subasta</a>
+      </nav>
+      <div class="header-actions">
+        <a href="login.html" id="navAuthLink" class="icon-btn" aria-label="Iniciar sesión" title="Iniciar sesión">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2"/><circle cx="12" cy="7" r="4"/></svg>
+        </a>
+        <button class="cart-btn icon-btn" id="cartBtn" aria-label="Ver carrito">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M6 2 3 6v14a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2V6l-3-4Z"/><path d="M3 6h18"/><path d="M16 10a4 4 0 0 1-8 0"/></svg>
+          <span class="cart-count" id="cartCount">0</span>
+        </button>
+        <button class="menu-toggle" id="menuToggle" aria-label="Abrir menú" aria-expanded="false">
+          <span></span><span></span><span></span>
+        </button>
+      </div>
+    </div>
+  </header>
+
+  <section class="section mk-page size-guide">
+    <div class="wrap">
+      <div class="mk-head">
+        <div>
+          <h2>Guía de tallas</h2>
+          <p>Encuentra tu talla ideal. Todas las medidas están en centímetros y corresponden a tu cuerpo, no a la prenda.</p>
+        </div>
+      </div>
+
+      <div class="mk-chips size-tabs" id="sizeTabs" role="tablist">
+        <button type="button" class="mk-chip active" data-tab="mujer" role="tab">Mujer</button>
+        <button type="button" class="mk-chip" data-tab="hombre" role="tab">Hombre</button>
+        <button type="button" class="mk-chip" data-tab="accesorios" role="tab">Accesorios</button>
+      </div>
+
+      <div class="size-layout">
+        <div class="size-main">
+          <div class="size-table-wrap" id="sizeTableWrap"></div>
+          <p class="size-note" id="sizeNote"></p>
+        </div>
+
+        <aside class="size-side">
+          <div class="size-card" id="sizeCalc">
+            <h3>¿Qué talla soy?</h3>
+            <p class="size-card-sub">Escribe tus medidas y te recomendamos una talla.</p>
+            <form id="sizeForm" novalidate>
+              <div class="login-field"><label for="szBust" id="szBustLabel">Busto (cm)</label><input type="number" id="szBust" min="50" max="160" inputmode="numeric" placeholder="Ej. 90"></div>
+              <div class="login-field"><label for="szWaist">Cintura (cm)</label><input type="number" id="szWaist" min="40" max="160" inputmode="numeric" placeholder="Ej. 70"></div>
+              <div class="login-field"><label for="szHip">Cadera (cm)</label><input type="number" id="szHip" min="60" max="170" inputmode="numeric" placeholder="Ej. 96"></div>
+              <button type="submit" class="btn btn-primary size-calc-btn">Ver mi talla</button>
+            </form>
+            <p class="size-result" id="sizeResult" role="status" hidden></p>
+          </div>
+        </aside>
+      </div>
+
+      <div class="size-measure">
+        <h3>Cómo tomarte las medidas</h3>
+        <div class="size-steps">
+          <div class="size-step"><span>1</span><div><strong>Busto / pecho</strong><p>Rodea la parte más ancha del pecho con la cinta, sin apretar y paralela al piso.</p></div></div>
+          <div class="size-step"><span>2</span><div><strong>Cintura</strong><p>Mide la parte más angosta del torso, normalmente justo arriba del ombligo.</p></div></div>
+          <div class="size-step"><span>3</span><div><strong>Cadera</strong><p>Rodea la parte más ancha de la cadera, con los pies juntos.</p></div></div>
+        </div>
+        <p class="size-tip">Consejo: si estás entre dos tallas, elige la mayor para una prenda más cómoda, o la menor si prefieres un ajuste más entallado. Si tienes dudas, escríbenos desde la sección de contacto.</p>
+      </div>
+    </div>
+  </section>
+
+  <footer>
+    <div class="wrap">
+      <div class="footer-grid">
+        <div>
+          <a href="inicio.html" class="logo"><svg class="logo-flower" width="16" height="16" viewBox="0 0 32 32" fill="none" xmlns="http://www.w3.org/2000/svg" aria-hidden="true"><circle cx="16" cy="9" r="6" fill="var(--dahlia)"/><circle cx="23" cy="16" r="6" fill="var(--gold)"/><circle cx="16" cy="23" r="6" fill="var(--dahlia)"/><circle cx="9" cy="16" r="6" fill="var(--gold)"/><circle cx="16" cy="16" r="4.5" fill="var(--bg)"/></svg>DAHLIA</a>
+          <p style="color:var(--muted); margin-top:14px; font-size:0.88rem; max-width:260px;">
+            Tienda de ropa para cada estilo y ocasión. Aguascalientes, México.
+          </p>
+        </div>
+        <div>
+          <h4>Tienda</h4>
+          <ul>
+            <li><a href="catalogo.html?cat=mujer">Mujer</a></li>
+            <li><a href="catalogo.html?cat=hombre">Hombre</a></li>
+            <li><a href="catalogo.html?cat=accesorios">Accesorios</a></li>
+            <li><a href="catalogo.html?cat=novedades">Novedades</a></li>
+          </ul>
+        </div>
+        <div>
+          <h4>Ayuda</h4>
+          <ul>
+            <li><a href="#">Envíos</a></li>
+            <li><a href="#">Cambios y devoluciones</a></li>
+            <li><a href="guia-tallas.html">Guía de tallas</a></li>
+            <li><a href="inicio.html#contacto">Contacto</a></li>
+          </ul>
+        </div>
+        <div class="footer-col-last">
+          <div id="newsletterClub">
+            <h4>Únete al club</h4>
+            <p style="color:var(--muted); font-size:0.85rem; margin-bottom:6px;">Ofertas y novedades directo a tu correo.</p>
+            <form class="newsletter" id="newsletterForm">
+              <input type="text" id="newsletterEmail" placeholder="tu@correo.com" aria-label="Correo electrónico">
+              <button type="submit">Unirme</button>
+            </form>
+            <p class="newsletter-msg" id="newsletterMsg" hidden></p>
+          </div>
+          <div class="social-icons footer-social">
+            <a href="#" class="social-icon social-icon--sm" aria-label="Facebook"><svg viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M13.5 21v-7.8h2.6l.4-3h-3V8.2c0-.87.24-1.46 1.5-1.46H16.6V4.1C16.3 4.06 15.3 4 14.2 4c-2.3 0-3.9 1.4-3.9 4v2.2H7.7v3h2.6V21h3.2z"/></svg></a>
+            <a href="#" class="social-icon social-icon--sm" aria-label="Instagram"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" aria-hidden="true"><rect x="3.5" y="3.5" width="17" height="17" rx="5"/><circle cx="12" cy="12" r="4.2"/><circle cx="17.2" cy="6.8" r="1"/></svg></a>
+            <a href="#" class="social-icon social-icon--sm" aria-label="Twitter"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" aria-hidden="true"><path d="M5.5 5.5l13 13M18.5 5.5l-13 13"/></svg></a>
+            <a href="#" class="social-icon social-icon--sm" aria-label="TikTok"><svg viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M14.5 3.5c.4 2 1.9 3.5 4 3.8v2.6c-1.5-.05-2.9-.5-4-1.3v6.1c0 3-2.4 5.3-5.3 5.3S3.9 17.7 3.9 14.8c0-2.9 2.3-5.2 5.2-5.3v2.7c-1.4.1-2.5 1.3-2.5 2.6 0 1.5 1.2 2.7 2.7 2.7s2.7-1.2 2.7-2.7V3.5h2.5z"/></svg></a>
+          </div>
+          <div class="footer-payments">
+            <h4>Métodos de pago</h4>
+            <div class="payment-icons">
+              <span class="payment-badge visa">VISA</span>
+              <span class="payment-badge mastercard"><span class="mc-circle red"></span><span class="mc-circle yellow"></span></span>
+              <span class="payment-badge amex">AMEX</span>
+              <span class="payment-badge paypal">PayPal</span>
+              <span class="payment-badge oxxo">OXXO</span>
+              <span class="payment-badge mercadopago">Mercado Pago</span>
+              <span class="payment-badge applepay"> Pay</span>
+              <span class="payment-badge spei">SPEI</span>
+            </div>
+          </div>
+        </div>
+      </div>
+      <div class="footer-bottom">
+        <span>© 2026 Dahlia. Todos los derechos reservados.</span>
+        <span>Aguascalientes, MX</span>
+      </div>
+    </div>
+  </footer>
+
+  <script src="auth.js"></script>
+  <script src="products.js"></script>
+  <script src="script.js"></script>
+  <script src="guia-tallas.js"></script>
+</body>
+</html>
