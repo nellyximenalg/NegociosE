@@ -879,9 +879,9 @@ const PRODUCTS = [
       { label: 'Único', measurements: null }
     ],
     colors: [
-      { name: 'Café', hex: '#4a3826', images: ['img/productos/dhl-310-cafe-1.jpg', 'img/productos/dhl-310-cafe-2.jpg', 'img/productos/dhl-310-cafe-3.jpg'], note: 'un tono cálido y clásico, fácil de combinar.' , stock: { 'Único': 25 } },
-      { name: 'Negro', hex: '#231f1a', images: ['img/productos/dhl-310-negro-1.jpg', 'img/productos/dhl-310-negro-2.jpg', 'img/productos/dhl-310-negro-3.jpg'], note: 'un básico infalible que combina con prácticamente todo tu clóset.' , stock: { 'Único': 26 } },
-      { name: 'Beige', hex: '#c9b79c', images: ['img/productos/dhl-310-beige-1.jpg', 'img/productos/dhl-310-beige-2.jpg', 'img/productos/dhl-310-beige-3.jpg'], note: 'un neutro versátil que combina con casi cualquier prenda.' , stock: { 'Único': 23 } }
+      { name: 'Café', hex: '#4a3826', images: ['img/productos/dhl-310-cafe-1.png', 'img/productos/dhl-310-cafe-2.png', 'img/productos/dhl-310-cafe-3.npg'], note: 'un tono cálido y clásico, fácil de combinar.' , stock: { 'Único': 25 } },
+      { name: 'Negro', hex: '#231f1a', images: ['img/productos/dhl-310-negro-1.png', 'img/productos/dhl-310-negro-2.png', 'img/productos/dhl-310-negro-3.npg'], note: 'un básico infalible que combina con prácticamente todo tu clóset.' , stock: { 'Único': 26 } },
+      { name: 'Beige', hex: '#c9b79c', images: ['img/productos/dhl-310-beige-1.png', 'img/productos/dhl-310-beige-2.png', 'img/productos/dhl-310-beige-3.npg'], note: 'un neutro versátil que combina con casi cualquier prenda.' , stock: { 'Único': 23 } }
     ],
     description: 'Guantes tejidos, calientitos para el invierno sin perder estilo.',
     details: {
