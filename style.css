@@ -3011,3 +3011,8 @@ body.modal-open{ overflow: hidden; }
 @media (max-width: 900px){
   .size-layout{ grid-template-columns: 1fr; }
 }
+
+/* Campaña: formulario para dejar un comentario */
+.campaign-comment{ margin-top: 40px; }
+.community-form--inline{ position: static; max-width: 560px; }
+.review-card.is-new{ border-color: var(--gold); animation: commentIn .5s ease; }

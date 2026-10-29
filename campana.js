@@ -127,6 +127,9 @@
   ];
   const DISTRIBUTION = [[5, 74], [4, 18], [3, 5], [2, 2], [1, 1]];
 
+  let newestCommentId = null;
+  const commentDate = (iso) => new Date(iso).toLocaleDateString('es-MX', { day: 'numeric', month: 'short', year: 'numeric' });
+
   function renderReviews() {
     document.getElementById('reviewSummary').innerHTML = `
       <div class="review-summary-score">${rating.toFixed(1)}</div>
@@ -136,7 +139,24 @@
         <div class="review-bar"><span>${s}</span><span class="review-bar-track"><span class="review-bar-fill" style="width:${pct}%"></span></span><span>${pct}%</span></div>
       `).join('')}
     `;
-    document.getElementById('reviewGrid').innerHTML = REVIEWS.map(r => `
+    // Comentarios de la Comunidad sobre este producto (los más nuevos primero), luego los de ejemplo.
+    const community = loadCommunityComments()
+      .filter(c => c.productId === product.id)
+      .sort((a, b) => new Date(b.date) - new Date(a.date));
+    const communityHtml = community.map(c => `
+      <article class="review-card${c.id === newestCommentId ? ' is-new' : ''}">
+        <div class="review-card-top">
+          <span class="prod-stars">${renderStars(c.stars)}</span>
+          <span class="review-verified">Comunidad</span>
+        </div>
+        <p>“${escHtml(c.text)}”</p>
+        <div class="review-author">
+          <span class="review-avatar">${escHtml(c.name.charAt(0).toUpperCase())}</span>
+          <div><strong>${escHtml(c.name)}</strong><span>${escHtml(commentDate(c.date))}</span></div>
+        </div>
+      </article>
+    `).join('');
+    document.getElementById('reviewGrid').innerHTML = communityHtml + REVIEWS.map(r => `
       <article class="review-card">
         <div class="review-card-top">
           <span class="prod-stars">${renderStars(r.stars)}</span>
@@ -165,8 +185,93 @@
     document.getElementById('campaignBuyFinal').addEventListener('click', buyNow);
   }
 
+  // ---------- Deja tu comentario (se guarda en Comunidad y en Mis comentarios) ----------
+  function renderCommentForm() {
+    const box = document.getElementById('campaignComment');
+    if (!box) return;
+    const STAR = '<svg viewBox="0 0 24 24"><polygon points="12 2.5 15.1 9 22.2 10 17 14.9 18.3 22 12 18.6 5.7 22 7 14.9 1.8 10 8.9 9"/></svg>';
+    const WORDS = ['', 'Malo', 'Regular', 'Bien', 'Muy bueno', 'Excelente'];
+    const email = isLoggedIn() ? (localStorage.getItem('dahlia_user_email') || '') : '';
+    const base = email.split('@')[0].replace(/[._-]+/g, ' ').trim();
+    const loggedName = base ? base.replace(/\b\w/g, ch => ch.toUpperCase()) : '';
+
+    box.innerHTML = `
+      <form class="community-form community-form--inline" id="campCommentForm" novalidate>
+        <h3>Deja tu comentario</h3>
+        <p class="community-as">Sobre: <strong>${escHtml(product.name)}</strong></p>
+        ${loggedName
+          ? `<p class="community-as">Comentando como <strong>${escHtml(loggedName)}</strong></p>`
+          : `<div class="login-field"><label for="ccName">Tu nombre</label><input type="text" id="ccName" maxlength="30" placeholder="Ej. Ana" autocomplete="name"></div>`}
+        <div class="login-field">
+          <label>Tu calificación</label>
+          <div class="star-picker" id="ccStars" role="radiogroup">
+            ${[1, 2, 3, 4, 5].map(n => `<button type="button" role="radio" aria-checked="false" aria-label="${n} estrella${n === 1 ? '' : 's'}" data-star="${n}">${STAR}</button>`).join('')}
+          </div>
+          <p class="star-picker-text" id="ccStarsText">Toca una estrella</p>
+        </div>
+        <div class="login-field">
+          <label for="ccText">Comentario</label>
+          <textarea id="ccText" rows="4" maxlength="300" placeholder="¿Qué te pareció? Talla, tela, color, entrega..."></textarea>
+          <p class="community-counter"><span id="ccCount">0</span>/300</p>
+        </div>
+        <button type="submit" class="btn btn-primary community-submit">Publicar</button>
+      </form>`;
+
+    let rating = 0;
+    const starBtns = Array.from(box.querySelectorAll('#ccStars button'));
+    const starsText = box.querySelector('#ccStarsText');
+    const paint = (hover) => {
+      const shown = hover || rating;
+      starBtns.forEach((b, i) => { b.classList.toggle('on', i + 1 <= shown); b.setAttribute('aria-checked', String(i + 1 === rating)); });
+      starsText.textContent = shown ? `${shown} de 5 · ${WORDS[shown]}` : 'Toca una estrella';
+    };
+    starBtns.forEach((b, i) => {
+      b.addEventListener('click', () => { rating = i + 1; paint(0); });
+      b.addEventListener('mouseenter', () => paint(i + 1));
+      b.addEventListener('focus', () => paint(i + 1));
+    });
+    box.querySelector('#ccStars').addEventListener('mouseleave', () => paint(0));
+    box.querySelector('#ccStars').addEventListener('focusout', () => paint(0));
+    const textEl = box.querySelector('#ccText');
+    textEl.addEventListener('input', () => { box.querySelector('#ccCount').textContent = textEl.value.length; });
+
+    box.querySelector('#campCommentForm').addEventListener('submit', (event) => {
+      event.preventDefault();
+      const nameInput = box.querySelector('#ccName');
+      const name = loggedName || (nameInput ? nameInput.value.trim() : '');
+      const text = textEl.value.trim();
+
+      // Si falta algún dato, solo se muestra el mensaje de gracias y no se agrega nada.
+      if (!name || !rating || text.length < 10) {
+        showToast('¡Gracias! Tu comentario ya está publicado.');
+        return;
+      }
+      const list = loadCommunityComments();
+      const comment = {
+        id: 'c_' + Date.now(),
+        productId: product.id,
+        productName: product.name,
+        name,
+        stars: rating,
+        text,
+        date: new Date().toISOString(),
+        email,
+        mine: true
+      };
+      list.push(comment);
+      saveCommunityComments(list);
+      newestCommentId = comment.id;
+      showToast('¡Gracias! Tu comentario ya está publicado.');
+      renderReviews();
+      renderCommentForm();
+      const grid = document.getElementById('reviewGrid');
+      if (grid) grid.scrollIntoView({ behavior: 'smooth', block: 'center' });
+    });
+  }
+
   renderHero();
   renderFeatures();
   renderReviews();
+  renderCommentForm();
   renderFinal();
 })();
