@@ -1,5 +1,4 @@
-// Comunidad: la clienta deja un comentario sobre un producto, con estrellas y fecha.
-// Todo es simulado: se guarda en localStorage (no hay backend todavía).
+
 (function () {
   const COMMENTS_KEY = 'dahlia_community_comments';
   const STAR_PATH = '<svg viewBox="0 0 24 24"><polygon points="12 2.5 15.1 9 22.2 10 17 14.9 18.3 22 12 18.6 5.7 22 7 14.9 1.8 10 8.9 9"/></svg>';

@@ -1,6 +1,4 @@
-// Marketplace C2C: las clientas publican sus productos y los ven otras clientas.
-// Funciona en dos páginas: marketplace.html (todas las publicaciones) y
-// perfil.html (la sección "Mis publicaciones"). Todo es simulado: se guarda en localStorage.
+
 (function () {
   const KEY = 'dahlia_marketplace';
   const MAX_PHOTOS = 3;

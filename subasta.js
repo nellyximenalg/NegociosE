@@ -1,8 +1,5 @@
-// Subasta simulada de un producto especial (que no está en el catálogo).
-// Las ofertas, el tiempo restante y todo lo demás se guardan solo en este navegador.
+
 (function () {
-  // La subasta (producto, precios, duración) se edita desde el panel de administrador;
-  // los valores predeterminados están en auction-core.js.
   const CFG = getAuctionConfig();
   const BIDS_KEY = AUCTION_KEYS.bids;
   const END_KEY = AUCTION_KEYS.end;
