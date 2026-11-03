@@ -11,8 +11,7 @@
 
   const esc = (s) => String(s == null ? '' : s).replace(/[&<>"']/g, ch => ({ '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;', "'": '&#39;' }[ch]));
 
-  // ---------- Publicaciones de ejemplo (productos que NO están en el catálogo) ----------
-  // Las fotos van en img/marketplace/ con estos nombres. Si falta una, se ve un fondo de color.
+
   const SEED = [
     { n: 1, name: 'Chamarra de piel vintage', category: 'hombre', condition: 'usado', price: 1200, size: 'L', seller: 'Carlos M.', daysAgo: 1, description: 'Chamarra de piel genuina estilo motociclista, en muy buen estado. Forro interior completo y cierres que funcionan perfecto.' },
     { n: 2, name: 'Vestido floral de verano', category: 'mujer', condition: 'usado', price: 320, size: 'M', seller: 'Daniela R.', daysAgo: 2, description: 'Vestido ligero con estampado de flores, largo a la rodilla. Usado dos veces, sin manchas ni defectos.' },
@@ -41,8 +40,7 @@
       }
       const list = JSON.parse(raw);
       if (!Array.isArray(list)) return [];
-      // Los productos de ejemplo siempre toman sus fotos del código (así, si cambias
-      // el nombre o la extensión de la imagen, se actualiza aunque ya estén guardados).
+      
       list.forEach(item => {
         const seed = SEED.find(x => x.id === item.id);
         if (seed) item.images = seed.images.slice();
@@ -79,7 +77,7 @@
     return new Date(iso).toLocaleDateString('es-MX', { day: 'numeric', month: 'short', year: 'numeric' });
   }
 
-  // withArrows: en las tarjetas del Marketplace, si hay más de una foto salen las flechas.
+  
   function imageHtml(item, index, withArrows) {
     const imgs = item.images || [];
     const src = imgs[index || 0];
@@ -121,7 +119,7 @@
     });
   }
 
-  // ---------- Formulario "Agrega tu producto" (mismo estilo que el del admin) ----------
+  // ---------- Formulario "Agrega tu producto" 
   let formEl = null;
   let photos = [];
   let editingId = null;
@@ -261,7 +259,7 @@
     const price = parseFloat(q('#mfPrice').value);
     const description = q('#mfDesc').value.trim();
 
-    // Si falta algún dato, solo se muestra el mensaje de éxito y no se guarda nada.
+    
     if (!name || !price || price <= 0 || description.length < 10 || !photos.length) {
       q('#mfError').hidden = true;
       showToast(editingId ? 'Cambios guardados.' : 'Publicado correctamente.');

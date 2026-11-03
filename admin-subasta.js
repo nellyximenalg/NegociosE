@@ -1,5 +1,4 @@
-// Panel de administrador > Subasta: ver el estado, editar el producto y administrar las ofertas.
-// Usa los datos compartidos de auction-core.js (la misma subasta que ven las clientas).
+
 (function () {
   const root = document.getElementById('adminAuctionRoot');
   if (!root || typeof isAdmin !== 'function' || !isAdmin()) return;
