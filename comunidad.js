@@ -1,4 +1,5 @@
-
+// Comunidad: reseñas (producto + estrellas) y comentarios generales (nombre + texto).
+// Todo es simulado: se guarda en localStorage (no hay backend todavía).
 (function () {
   const COMMENTS_KEY = 'dahlia_community_comments';
   const STAR_PATH = '<svg viewBox="0 0 24 24"><polygon points="12 2.5 15.1 9 22.2 10 17 14.9 18.3 22 12 18.6 5.7 22 7 14.9 1.8 10 8.9 9"/></svg>';
@@ -106,10 +107,10 @@
     renderFilter(all);
     const f = filterSel.value;
     const shown = f === 'all' ? all : all.filter(c => String(c.productId) === f);
-    totalEl.textContent = `${shown.length} comentario${shown.length === 1 ? '' : 's'}`;
+    totalEl.textContent = `${shown.length} ${shown.length === 1 ? 'reseña' : 'reseñas'}`;
 
     if (!shown.length) {
-      listEl.innerHTML = '<p class="comment-empty">Aún no hay comentarios para este producto. ¡Sé la primera en opinar!</p>';
+      listEl.innerHTML = '<p class="comment-empty">Aún no hay reseñas para este producto. ¡Sé la primera en opinar!</p>';
       return;
     }
     listEl.innerHTML = shown.map(c => {
@@ -123,73 +124,18 @@
             <span class="comment-avatar">${escHtml(c.name.charAt(0).toUpperCase())}</span>
             <div class="comment-who">
               <strong>${escHtml(c.name)}</strong>
-              <time datetime="${escHtml(c.date)}">${escHtml(formatDate(c.date))}</time>
+              <time datetime="${escHtml(c.date)}">${escHtml(formatDate(c.date))}</time><span class="comment-edited">${commentEditedLabel(c)}</span>
             </div>
             <span class="prod-stars" aria-label="${c.stars} de 5 estrellas">${renderStars(c.stars)}</span>
           </div>
           <span class="comment-product">Sobre: ${productHtml}</span>
           <p class="comment-text">${escHtml(c.text)}</p>
-          ${c.mine ? `<button type="button" class="comment-delete" data-delete="${escHtml(c.id)}">Eliminar mi comentario</button>` : ''}
+          ${isMyComment(c) ? communityActionsHtml(c) : ''}
         </article>
       `;
     }).join('');
 
-    listEl.querySelectorAll('[data-delete]').forEach(btn => {
-      btn.addEventListener('click', () => confirmDeleteComment(btn.dataset.delete));
-    });
-  }
-
-  // Ventana de confirmación propia del sitio (igual que la del carrito).
-  let confirmEl = null;
-
-  function confirmDeleteComment(id) {
-    const comment = loadComments().find(c => c.id === id);
-    if (!comment) return;
-
-    if (!confirmEl) {
-      confirmEl = document.createElement('div');
-      confirmEl.className = 'modal-overlay';
-      confirmEl.id = 'commentConfirmModal';
-      confirmEl.innerHTML = `
-        <div class="modal-panel modal-panel--confirm" role="dialog" aria-modal="true" aria-labelledby="commentConfirmTitle">
-          <h3 id="commentConfirmTitle">Eliminar comentario</h3>
-          <p class="admin-confirm-message" id="commentConfirmMessage"></p>
-          <div class="modal-actions">
-            <button type="button" class="btn btn-ghost" id="commentConfirmCancel">Cancelar</button>
-            <button type="button" class="btn btn-primary admin-btn-danger-solid" id="commentConfirmAccept">Sí, eliminar</button>
-          </div>
-        </div>
-      `;
-      document.body.appendChild(confirmEl);
-    }
-    const overlay = confirmEl;
-    overlay.querySelector('#commentConfirmMessage').textContent =
-      `¿Seguro que quieres eliminar tu comentario sobre "${comment.productName}"? Esta acción no se puede deshacer.`;
-
-    function close() {
-      overlay.classList.remove('open');
-      document.body.classList.remove('modal-open');
-      document.removeEventListener('keydown', onKey);
-    }
-    function onKey(e) { if (e.key === 'Escape') close(); }
-
-    // Se reemplazan los botones para no acumular listeners de aperturas anteriores.
-    ['#commentConfirmCancel', '#commentConfirmAccept'].forEach(sel => {
-      const old = overlay.querySelector(sel);
-      old.replaceWith(old.cloneNode(true));
-    });
-    overlay.querySelector('#commentConfirmCancel').addEventListener('click', close);
-    overlay.querySelector('#commentConfirmAccept').addEventListener('click', () => {
-      close();
-      saveComments(loadComments().filter(c => c.id !== id));
-      renderList();
-      showToast('Comentario eliminado.');
-    });
-    overlay.onclick = (e) => { if (e.target === overlay) close(); };
-    document.addEventListener('keydown', onKey);
-
-    overlay.classList.add('open');
-    document.body.classList.add('modal-open');
+    bindCommentActions(listEl, renderList);
   }
 
   filterSel.addEventListener('change', renderList);
@@ -206,7 +152,7 @@
     // Si falta algún dato, solo se muestra el mensaje de gracias y no se agrega nada.
     const incomplete = !name || !productId || !rating || text.length < 10;
     if (incomplete) {
-      showToast('¡Gracias! Tu comentario ya está publicado.');
+      showToast('¡Gracias! Tu reseña ya está publicada.');
       return;
     }
 
@@ -234,10 +180,93 @@
     paintStars(0);
     filterSel.value = 'all';
     renderList();
-    showToast('¡Gracias! Tu comentario ya está publicado.');
+    showToast('¡Gracias! Tu reseña ya está publicada.');
     const first = listEl.querySelector('.comment-card');
     if (first) first.scrollIntoView({ behavior: 'smooth', block: 'center' });
   });
 
   renderList();
+})();
+
+// ======================================================================
+// Comentarios generales: nombre + texto (sin producto ni estrellas)
+// ======================================================================
+(function () {
+  const form = document.getElementById('postForm');
+  if (!form) return;
+
+  const esc = (s) => String(s == null ? '' : s).replace(/[&<>"']/g, ch => ({ '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;', "'": '&#39;' }[ch]));
+  const authorEl = document.getElementById('pfAuthor');
+  const textEl = document.getElementById('pfText');
+  const countEl = document.getElementById('pfCount');
+  const listEl = document.getElementById('postList');
+  const totalEl = document.getElementById('pfTotal');
+  let newestId = null;
+
+  // Si hay sesión, el nombre viene de la cuenta (se puede cambiar).
+  const email = isLoggedIn() ? (localStorage.getItem('dahlia_user_email') || '') : '';
+  const base = email.split('@')[0].replace(/[._-]+/g, ' ').trim();
+  if (base) authorEl.value = base.replace(/\b\w/g, ch => ch.toUpperCase());
+
+  textEl.addEventListener('input', () => { countEl.textContent = textEl.value.length; });
+
+  function formatDate(iso) {
+    const d = new Date(iso);
+    return `${d.toLocaleDateString('es-MX', { day: 'numeric', month: 'short', year: 'numeric' })}, ${d.toLocaleTimeString('es-MX', { hour: 'numeric', minute: '2-digit' })}`;
+  }
+
+  function render() {
+    const posts = loadCommunityPosts().sort((a, b) => new Date(b.date) - new Date(a.date));
+    totalEl.textContent = `${posts.length} ${posts.length === 1 ? 'comentario' : 'comentarios'}`;
+    if (!posts.length) {
+      listEl.innerHTML = '<p class="comment-empty">Todavía no hay comentarios. ¡Sé la primera en escribir!</p>';
+      return;
+    }
+    listEl.innerHTML = posts.map(p => `
+      <article class="comment-card${p.id === newestId ? ' is-new' : ''}">
+        <div class="comment-top">
+          <span class="comment-avatar">${esc(p.name.charAt(0).toUpperCase())}</span>
+          <div class="comment-who">
+            <strong>${esc(p.name)}</strong>
+            <time datetime="${esc(p.date)}">${esc(formatDate(p.date))}</time><span class="comment-edited">${commentEditedLabel(p)}</span>
+          </div>
+        </div>
+        <p class="comment-text">${esc(p.text)}</p>
+        ${isMyComment(p) ? postActionsHtml(p) : ''}
+      </article>
+    `).join('');
+    bindPostActions(listEl, render);
+  }
+
+  form.addEventListener('submit', (event) => {
+    event.preventDefault();
+    const name = authorEl.value.trim();
+    const text = textEl.value.trim();
+
+    // Si falta algún dato, solo se muestra el mensaje de gracias y no se agrega nada.
+    if (!name || text.length < 5) {
+      showToast('¡Gracias! Tu comentario ya está publicado.');
+      return;
+    }
+    const list = loadCommunityPosts();
+    const post = {
+      id: 'p_' + Date.now(),
+      name,
+      text,
+      date: new Date().toISOString(),
+      email,
+      mine: true
+    };
+    list.push(post);
+    saveCommunityPosts(list);
+    newestId = post.id;
+    textEl.value = '';
+    countEl.textContent = '0';
+    render();
+    showToast('¡Gracias! Tu comentario ya está publicado.');
+    const first = listEl.querySelector('.comment-card');
+    if (first) first.scrollIntoView({ behavior: 'smooth', block: 'center' });
+  });
+
+  render();
 })();

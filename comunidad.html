@@ -42,13 +42,13 @@
   <section class="section community-page">
     <div class="wrap">
       <div class="section-head">
-        <h2>Comunidad Dahlia</h2>
-        <p>Cuéntanos qué te pareció tu compra y lee lo que opinan otras clientas.</p>
+        <h2>Reseñas</h2>
+        <p>Cuéntanos qué te pareció tu compra y lee las reseñas de otras clientas.</p>
       </div>
 
       <div class="community-layout">
         <form class="community-form" id="commentForm" novalidate>
-          <h3>Deja tu comentario</h3>
+          <h3>Deja tu reseña</h3>
 
           <div class="login-field" id="cmNameField">
             <label for="cmName">Tu nombre</label>
@@ -68,7 +68,7 @@
           </div>
 
           <div class="login-field">
-            <label for="cmText">Comentario</label>
+            <label for="cmText">Tu reseña</label>
             <textarea id="cmText" rows="4" maxlength="300" placeholder="¿Qué te pareció? Talla, tela, color, entrega..."></textarea>
             <p class="community-counter"><span id="cmCount">0</span>/300</p>
           </div>
@@ -86,6 +86,40 @@
             </div>
           </div>
           <div class="comment-list" id="commentList"></div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <hr class="stitch">
+
+  <section class="section community-posts" id="comentarios">
+    <div class="wrap">
+      <div class="section-head">
+        <h2>Comentarios</h2>
+        <p>Conversa con la comunidad: dudas, ideas y recomendaciones.</p>
+      </div>
+
+      <div class="community-layout">
+        <form class="community-form" id="postForm" novalidate>
+          <h3>Deja tu comentario</h3>
+          <div class="login-field">
+            <label for="pfAuthor">Tu nombre</label>
+            <input type="text" id="pfAuthor" maxlength="30" placeholder="Ej. Ana" autocomplete="name">
+          </div>
+          <div class="login-field">
+            <label for="pfText">Comentario</label>
+            <textarea id="pfText" rows="4" maxlength="300" placeholder="Escribe tu comentario..."></textarea>
+            <p class="community-counter"><span id="pfCount">0</span>/300</p>
+          </div>
+          <button type="submit" class="btn btn-primary community-submit">Publicar</button>
+        </form>
+
+        <div class="community-feed">
+          <div class="community-feed-head">
+            <p class="community-total" id="pfTotal"></p>
+          </div>
+          <div class="comment-list" id="postList"></div>
         </div>
       </div>
     </div>

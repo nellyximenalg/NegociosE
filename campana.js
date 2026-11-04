@@ -152,8 +152,9 @@
         <p>“${escHtml(c.text)}”</p>
         <div class="review-author">
           <span class="review-avatar">${escHtml(c.name.charAt(0).toUpperCase())}</span>
-          <div><strong>${escHtml(c.name)}</strong><span>${escHtml(commentDate(c.date))}</span></div>
+          <div><strong>${escHtml(c.name)}</strong><span>${escHtml(commentDate(c.date))}${commentEditedLabel(c)}</span></div>
         </div>
+        ${isMyComment(c) ? communityActionsHtml(c) : ''}
       </article>
     `).join('');
     document.getElementById('reviewGrid').innerHTML = communityHtml + REVIEWS.map(r => `
@@ -169,6 +170,7 @@
         </div>
       </article>
     `).join('');
+    bindCommentActions(document.getElementById('reviewGrid'), renderReviews);
   }
 
   // ---------- Cierre con llamado a la acción ----------
@@ -185,7 +187,7 @@
     document.getElementById('campaignBuyFinal').addEventListener('click', buyNow);
   }
 
-  // ---------- Deja tu comentario (se guarda en Comunidad y en Mis comentarios) ----------
+  // ---------- Deja tu reseña (se guarda en Comunidad y en Mis reseñas) ----------
   function renderCommentForm() {
     const box = document.getElementById('campaignComment');
     if (!box) return;
@@ -197,7 +199,7 @@
 
     box.innerHTML = `
       <form class="community-form community-form--inline" id="campCommentForm" novalidate>
-        <h3>Deja tu comentario</h3>
+        <h3>Deja tu reseña</h3>
         <p class="community-as">Sobre: <strong>${escHtml(product.name)}</strong></p>
         ${loggedName
           ? `<p class="community-as">Comentando como <strong>${escHtml(loggedName)}</strong></p>`
@@ -210,7 +212,7 @@
           <p class="star-picker-text" id="ccStarsText">Toca una estrella</p>
         </div>
         <div class="login-field">
-          <label for="ccText">Comentario</label>
+          <label for="ccText">Tu reseña</label>
           <textarea id="ccText" rows="4" maxlength="300" placeholder="¿Qué te pareció? Talla, tela, color, entrega..."></textarea>
           <p class="community-counter"><span id="ccCount">0</span>/300</p>
         </div>
@@ -243,7 +245,7 @@
 
       // Si falta algún dato, solo se muestra el mensaje de gracias y no se agrega nada.
       if (!name || !rating || text.length < 10) {
-        showToast('¡Gracias! Tu comentario ya está publicado.');
+        showToast('¡Gracias! Tu reseña ya está publicada.');
         return;
       }
       const list = loadCommunityComments();
@@ -261,7 +263,7 @@
       list.push(comment);
       saveCommunityComments(list);
       newestCommentId = comment.id;
-      showToast('¡Gracias! Tu comentario ya está publicado.');
+      showToast('¡Gracias! Tu reseña ya está publicada.');
       renderReviews();
       renderCommentForm();
       const grid = document.getElementById('reviewGrid');

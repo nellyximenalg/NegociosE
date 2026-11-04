@@ -57,6 +57,10 @@
             <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M20.6 13.4 13.4 20.6a2 2 0 0 1-2.8 0L3 13V3h10l7.6 7.6a2 2 0 0 1 0 2.8Z"/><circle cx="7.5" cy="7.5" r="1.5"/></svg>
             Mis publicaciones
           </button>
+          <button type="button" class="account-nav-btn" data-panel="resenas">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><polygon points="12 2.5 15.1 9 22.2 10 17 14.9 18.3 22 12 18.6 5.7 22 7 14.9 1.8 10 8.9 9"/></svg>
+            Mis reseñas
+          </button>
           <button type="button" class="account-nav-btn" data-panel="comentarios">
             <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z"/></svg>
             Mis comentarios
@@ -84,18 +88,36 @@
           <div class="account-panel" id="panel-publicaciones">
             <div class="mk-panel-head">
               <h2 class="account-panel-title">Mis publicaciones</h2>
-              <button type="button" class="btn btn-primary btn-sm" id="myListingAdd">+ Publicar producto</button>
+              <div class="mk-panel-actions">
+                <a href="marketplace.html" class="btn btn-ghost btn-sm">Ir a Marketplace</a>
+                <button type="button" class="btn btn-primary btn-sm" id="myListingAdd">+ Publicar producto</button>
+              </div>
             </div>
             <div id="myListings"></div>
+          </div>
+
+          <!-- Mis reseñas -->
+          <div class="account-panel" id="panel-resenas">
+            <div class="mk-panel-head">
+              <h2 class="account-panel-title">Mis reseñas</h2>
+              <div class="mk-panel-actions">
+                <a href="comunidad.html" class="btn btn-ghost btn-sm">Ir a Comunidad</a>
+                <button type="button" class="btn btn-primary btn-sm" id="myReviewAdd">+ Agregar reseña</button>
+              </div>
+            </div>
+            <div id="myReviews"></div>
           </div>
 
           <!-- Mis comentarios -->
           <div class="account-panel" id="panel-comentarios">
             <div class="mk-panel-head">
               <h2 class="account-panel-title">Mis comentarios</h2>
-              <a href="comunidad.html" class="btn btn-primary btn-sm">Ir a Comunidad</a>
+              <div class="mk-panel-actions">
+                <a href="comunidad.html#comentarios" class="btn btn-ghost btn-sm">Ir a Comunidad</a>
+                <button type="button" class="btn btn-primary btn-sm" id="myPostAdd">+ Agregar comentario</button>
+              </div>
             </div>
-            <div id="myComments"></div>
+            <div id="myPosts"></div>
           </div>
 
           <!-- Configuración de la cuenta -->
@@ -224,6 +246,8 @@
   <script src="auth.js"></script>
   <script src="script.js"></script>
   <script src="marketplace.js"></script>
+  <script src="products.js"></script>
+  <script src="community-core.js"></script>
   <script src="mis-comentarios.js"></script>
   <script src="perfil.js"></script>
 </body>
