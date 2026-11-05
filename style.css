@@ -3034,3 +3034,10 @@ body.modal-open{ overflow: hidden; }
 
 /* Perfil: Editar / Eliminar de reseñas y comentarios como botones */
 .comment-actions--btns{ justify-content: flex-end; gap: 10px; margin-top: 14px; }
+
+/* Marketplace: editar / eliminar publicaciones propias */
+.mk-card-actions{ display: flex; gap: 8px; margin-top: 12px; }
+.mk-detail-owner{ margin-top: 16px; }
+.mk-detail-owner .mk-detail-mine{ margin-top: 0; margin-bottom: 12px; }
+.mk-detail-owner .mk-row-actions{ gap: 10px; }
+.mk-detail-info .mk-detail-owner .btn{ margin-top: 0; }

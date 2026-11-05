@@ -1,4 +1,6 @@
-
+// Marketplace C2C: las clientas publican sus productos y los ven otras clientas.
+// Funciona en dos páginas: marketplace.html (todas las publicaciones) y
+// perfil.html (la sección "Mis publicaciones"). Todo es simulado: se guarda en localStorage.
 (function () {
   const KEY = 'dahlia_marketplace';
   const MAX_PHOTOS = 3;
@@ -11,7 +13,8 @@
 
   const esc = (s) => String(s == null ? '' : s).replace(/[&<>"']/g, ch => ({ '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;', "'": '&#39;' }[ch]));
 
-
+  // ---------- Publicaciones de ejemplo (productos que NO están en el catálogo) ----------
+  // Las fotos van en img/marketplace/ con estos nombres. Si falta una, se ve un fondo de color.
   const SEED = [
     { n: 1, name: 'Chamarra de piel vintage', category: 'hombre', condition: 'usado', price: 1200, size: 'L', seller: 'Carlos M.', daysAgo: 1, description: 'Chamarra de piel genuina estilo motociclista, en muy buen estado. Forro interior completo y cierres que funcionan perfecto.' },
     { n: 2, name: 'Vestido floral de verano', category: 'mujer', condition: 'usado', price: 320, size: 'M', seller: 'Daniela R.', daysAgo: 2, description: 'Vestido ligero con estampado de flores, largo a la rodilla. Usado dos veces, sin manchas ni defectos.' },
@@ -40,7 +43,8 @@
       }
       const list = JSON.parse(raw);
       if (!Array.isArray(list)) return [];
-      
+      // Los productos de ejemplo siempre toman sus fotos del código (así, si cambias
+      // el nombre o la extensión de la imagen, se actualiza aunque ya estén guardados).
       list.forEach(item => {
         const seed = SEED.find(x => x.id === item.id);
         if (seed) item.images = seed.images.slice();
@@ -77,7 +81,7 @@
     return new Date(iso).toLocaleDateString('es-MX', { day: 'numeric', month: 'short', year: 'numeric' });
   }
 
-  
+  // withArrows: en las tarjetas del Marketplace, si hay más de una foto salen las flechas.
   function imageHtml(item, index, withArrows) {
     const imgs = item.images || [];
     const src = imgs[index || 0];
@@ -119,7 +123,7 @@
     });
   }
 
-  // ---------- Formulario "Agrega tu producto" 
+  // ---------- Formulario "Agrega tu producto" (mismo estilo que el del admin) ----------
   let formEl = null;
   let photos = [];
   let editingId = null;
@@ -259,7 +263,7 @@
     const price = parseFloat(q('#mfPrice').value);
     const description = q('#mfDesc').value.trim();
 
-    
+    // Si falta algún dato, solo se muestra el mensaje de éxito y no se guarda nada.
     if (!name || !price || price <= 0 || description.length < 10 || !photos.length) {
       q('#mfError').hidden = true;
       showToast(editingId ? 'Cambios guardados.' : 'Publicado correctamente.');
@@ -377,14 +381,21 @@
             <h3>${esc(x.name)}</h3>
             <p class="mk-card-price">$${formatPrice(x.price)} MXN</p>
             <p class="mk-card-seller">${esc(x.seller)} · ${esc(timeAgo(x.date))}</p>
+            ${isMine(x) ? `<div class="mk-card-actions">
+              <button type="button" class="btn btn-ghost btn-sm" data-mk-edit="${esc(x.id)}">Editar</button>
+              <button type="button" class="btn btn-ghost btn-sm admin-btn-danger" data-mk-del="${esc(x.id)}">Eliminar</button>
+            </div>` : ''}
           </div>
         </article>
       `).join('');
       grid.querySelectorAll('[data-open]').forEach(card => {
         const open = () => openDetail(card.dataset.open);
         card.addEventListener('click', open);
-        card.addEventListener('keydown', (e) => { if (e.key === 'Enter' || e.key === ' ') { e.preventDefault(); open(); } });
+        card.addEventListener('keydown', (e) => { if (e.target === card && (e.key === 'Enter' || e.key === ' ')) { e.preventDefault(); open(); } });
       });
+      // Editar / eliminar desde la tarjeta (sin abrir el detalle)
+      grid.querySelectorAll('[data-mk-edit]').forEach(b => b.addEventListener('click', (e) => { e.stopPropagation(); openForm(b.dataset.mkEdit); }));
+      grid.querySelectorAll('[data-mk-del]').forEach(b => b.addEventListener('click', (e) => { e.stopPropagation(); confirmDelete(b.dataset.mkDel); }));
     }
 
     // ----- Detalle de una publicación -----
@@ -426,7 +437,13 @@
               <p class="mk-detail-desc">${esc(x.description)}</p>
               <p class="mk-card-seller">Publicado por <strong>${esc(x.seller)}</strong> · ${esc(timeAgo(x.date))}</p>
               ${isMine(x)
-                ? '<p class="mk-detail-mine">Esta es tu publicación. Puedes editarla o eliminarla desde tu perfil, en Mis publicaciones.</p>'
+                ? `<div class="mk-detail-owner">
+                    <p class="mk-detail-mine">Esta es tu publicación.</p>
+                    <div class="mk-row-actions">
+                      <button type="button" class="btn btn-ghost btn-sm" id="mkDetailEdit">Editar</button>
+                      <button type="button" class="btn btn-ghost btn-sm admin-btn-danger" id="mkDetailDelete">Eliminar</button>
+                    </div>
+                  </div>`
                 : '<button type="button" class="btn btn-primary" id="mkContact">Contactar al vendedor</button>'}
             </div>
           </div>`;
@@ -435,11 +452,15 @@
           paint();
         }));
         body.querySelectorAll('[data-i]').forEach(b => b.addEventListener('click', () => { current = parseInt(b.dataset.i, 10); paint(); }));
+        const editBtn = body.querySelector('#mkDetailEdit');
+        if (editBtn) editBtn.addEventListener('click', () => { detailEl._close(); openForm(x.id); });
+        const delBtn = body.querySelector('#mkDetailDelete');
+        if (delBtn) delBtn.addEventListener('click', () => { detailEl._close(); confirmDelete(x.id); });
         const contact = body.querySelector('#mkContact');
         if (contact) contact.addEventListener('click', () => {
           if (!isLoggedIn()) { requireLogin(); return; }
           detailEl._close();
-          showToast(`Mensaje enviado a ${x.seller}. Te responderá pronto.`);
+          showToast(`Mensaje enviado a ${x.seller}. Te responderá pronto (simulado).`);
         });
       };
       paint();
