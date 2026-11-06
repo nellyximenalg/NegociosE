@@ -1,5 +1,4 @@
-// Perfil: "Mis reseñas" (producto + estrellas) y "Mis comentarios" (nombre + texto).
-// Se pueden editar y eliminar desde aquí; los cambios se ven también en Comunidad y en Campaña.
+
 (function () {
   const reviewsBox = document.getElementById('myReviews');
   const postsBox = document.getElementById('myPosts');

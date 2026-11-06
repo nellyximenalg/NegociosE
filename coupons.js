@@ -1,23 +1,4 @@
-// Lógica compartida de CUPONES (simulada, guardada en localStorage).
-// Se usa en: inicio.html (sección Promos), carrito.html (aplicar cupón) y admin.html (sección Cupones).
-// Requiere que auth.js y products.js ya estén cargados.
-//
-// Los cupones NO cambian el precio de los productos (eso lo hace la sección "Promociones"
-// del admin). Un cupón es un código que el cliente aplica en el carrito, y solo afecta a
-// los productos seleccionados que cumplan con lo que el cupón cubre.
-//
-// Forma de un cupón:
-// {
-//   id, code, title, description,
-//   type: 'percent' | 'amount',      // % de descuento o monto fijo en pesos
-//   value: number,
-//   scope: 'all' | 'category' | 'products',
-//   category: 'mujer' | 'hombre' | 'accesorios' (si scope = 'category'),
-//   productIds: [ids] (si scope = 'products'),
-//   minPurchase: number,             // compra mínima (sobre los productos a los que aplica)
-//   start, end: 'YYYY-MM-DD' o '',
-//   active: true | false
-// }
+
 
 const COUPONS_KEY = 'dahlia_coupons';
 

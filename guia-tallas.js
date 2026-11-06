@@ -1,9 +1,9 @@
-// Guía de tallas: tablas de medidas por línea y una pequeña calculadora de talla.
+
 (function () {
   const tabs = document.getElementById('sizeTabs');
   if (!tabs) return;
 
-  // Medidas del cuerpo en cm: [mín, máx] para cada talla.
+
   const GUIDE = {
     mujer: {
       cols: ['Talla', 'Busto', 'Cintura', 'Cadera'],

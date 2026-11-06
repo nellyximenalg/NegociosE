@@ -1,7 +1,6 @@
-// Líneas del carrito marcadas por la clienta para usar un cupón.
+
 let cartSelection = new Set();
 
-// Pinta el contenido del carrito según el estado: sin sesión, vacío, o con productos.
 function renderCart() {
   const root = document.getElementById('cartRoot');
   if (!root) return;
