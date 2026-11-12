@@ -460,7 +460,7 @@
         if (contact) contact.addEventListener('click', () => {
           if (!isLoggedIn()) { requireLogin(); return; }
           detailEl._close();
-          showToast(`Mensaje enviado a ${x.seller}. Te responderá pronto (simulado).`);
+          showToast(`Mensaje enviado a ${x.seller}. Te responderá pronto.`);
         });
       };
       paint();

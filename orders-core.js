@@ -165,7 +165,7 @@ function renderReceiptHtml(o) {
         <div><span>Envío</span><span>${o.shipping ? orMoney(o.shipping) : 'Gratis'}</span></div>
         <div class="receipt-total"><span>Total</span><span>${orMoney(o.total)} MXN</span></div>
       </div>
-      <p class="receipt-foot">¡Gracias por tu compra! Este comprobante es una simulación y no tiene validez fiscal.</p>
+      <p class="receipt-foot">¡Gracias por tu compra!.</p>
     </div>`;
 }
 

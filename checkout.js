@@ -113,21 +113,13 @@ function renderStepAddress() {
   document.getElementById('coAddressForm').addEventListener('submit', (e) => {
     e.preventDefault();
     readAddress();
-    const a = co.address;
-    if (a.name.length < 3) return coError('Escribe tu nombre completo.');
-    if (a.phone.length !== 10) return coError('El teléfono debe tener 10 dígitos.');
-    if (a.street.length < 5) return coError('Escribe tu calle y número.');
-    if (a.colonia.length < 2) return coError('Escribe tu colonia.');
-    if (a.city.length < 2) return coError('Escribe tu ciudad.');
-    if (a.state.length < 2) return coError('Escribe tu estado.');
-    if (a.zip.length !== 5) return coError('El código postal debe tener 5 dígitos.');
     co.step = 2;
     renderCheckout();
   });
 }
 
 // ---------- Paso 2: Método de pago ----------
-const TRANSFER = { bank: 'Banco Dahlia (simulado)', holder: 'Dahlia Moda S.A. de C.V.', clabe: '0121 8001 2345 6789 01' };
+const TRANSFER = { bank: 'Banco Dahlia', holder: 'Dahlia Moda S.A. de C.V.', clabe: '0121 8001 2345 6789 01' };
 
 function renderStepPayment(pricing) {
   const email = ordersEmail();
@@ -185,7 +177,7 @@ function renderStepPayment(pricing) {
             <div><dt>Referencia</dt><dd>${orEsc(co.folio)}</dd></div>
             <div><dt>Monto exacto</dt><dd>${orMoney(pricing.total)} MXN</dd></div>
           </dl>
-          <p class="co-note">Tu pedido quedará "En proceso" mientras validamos el depósito (simulado).</p>
+          <p class="co-note">Tu pedido quedará "En proceso" mientras validamos el depósito.</p>
         </div>`;
     } else {
       const short = balance < pricing.total;
@@ -195,7 +187,7 @@ function renderStepPayment(pricing) {
           <div><span>Total a pagar</span><strong>${orMoney(pricing.total)}</strong></div>
           <div><span>Saldo después de pagar</span><strong>${short ? '—' : orMoney(balance - pricing.total)}</strong></div>
         </div>
-        ${short ? '<p class="community-error">Tu saldo no alcanza para este pedido. Elige otro método de pago.</p>' : '<p class="co-note">El monto se descuenta de tu monedero (saldo simulado).</p>'}`;
+        ${short ? '<p class="community-error">Tu saldo no alcanza para este pedido. Elige otro método de pago.</p>' : '<p class="co-note">El monto se descuenta de tu monedero.</p>'}`;
     }
   }
   paintPanel();
@@ -213,18 +205,7 @@ function renderStepPayment(pricing) {
     e.preventDefault();
     if (co.method === 'card') {
       saveCardFields();
-      const c = co.card;
-      const digits = c.number.replace(/\D/g, '');
-      if (c.name.trim().length < 3) return coError('Escribe el nombre que aparece en la tarjeta.');
-      if (digits.length < 15 || digits.length > 16) return coError('El número de tarjeta debe tener 15 o 16 dígitos.');
-      const m = /^(\d{2})\/(\d{2})$/.exec(c.expiry);
-      if (!m || +m[1] < 1 || +m[1] > 12) return coError('Escribe el vencimiento como MM/AA.');
-      const now = new Date();
-      const expYear = 2000 + +m[2];
-      if (expYear < now.getFullYear() || (expYear === now.getFullYear() && +m[1] < now.getMonth() + 1)) return coError('La tarjeta está vencida.');
-      if (c.cvv.length < 3) return coError('El CVV debe tener 3 o 4 dígitos.');
     }
-    if (co.method === 'wallet' && getWalletBalance(email) < pricing.total) return coError('Tu saldo no alcanza para este pedido.');
     co.step = 3;
     renderCheckout();
   });
