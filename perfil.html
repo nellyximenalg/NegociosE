@@ -51,7 +51,7 @@
         <nav class="account-nav">
           <button type="button" class="account-nav-btn active" data-panel="pedidos">
             <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M20 7 12 3 4 7v10l8 4 8-4V7Z"/><path d="M4 7l8 4 8-4"/><path d="M12 11v10"/></svg>
-            Pedidos
+            Mis compras
           </button>
           <button type="button" class="account-nav-btn" data-panel="publicaciones">
             <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M20.6 13.4 13.4 20.6a2 2 0 0 1-2.8 0L3 13V3h10l7.6 7.6a2 2 0 0 1 0 2.8Z"/><circle cx="7.5" cy="7.5" r="1.5"/></svg>
@@ -78,10 +78,12 @@
         <div class="account-content">
           <!-- Pedidos -->
           <div class="account-panel active" id="panel-pedidos">
-            <h2 class="account-panel-title">Pedidos</h2>
-            <div class="account-card">
-              <p class="placeholder-text" style="margin-bottom:0;">Próximamente vas a poder ver aquí el historial de tus pedidos.</p>
+            <div class="mk-panel-head">
+              <h2 class="account-panel-title">Mis compras</h2>
+              <a href="catalogo.html" class="btn btn-ghost btn-sm">Ir al catálogo</a>
             </div>
+            <div class="mk-chips orders-filters" id="myOrdersFilters"></div>
+            <div id="myOrders"></div>
           </div>
 
           <!-- Mis publicaciones -->
@@ -248,6 +250,8 @@
   <script src="marketplace.js"></script>
   <script src="products.js"></script>
   <script src="community-core.js"></script>
+  <script src="orders-core.js"></script>
+  <script src="mis-pedidos.js"></script>
   <script src="mis-comentarios.js"></script>
   <script src="perfil.js"></script>
 </body>

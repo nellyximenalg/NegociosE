@@ -1,4 +1,3 @@
-
 let cartSelection = new Set();
 
 function renderCart() {
@@ -80,7 +79,7 @@ function renderCart() {
   attachCartEvents();
 
   document.getElementById('checkoutBtn').addEventListener('click', () => {
-    openTermsModal(showCheckoutPlaceholder);
+    openTermsModal(startCheckout);
   });
 }
 
@@ -366,18 +365,5 @@ function attachCartEvents() {
   });
 }
 
-// Después de aceptar los términos y condiciones: todavía no hay checkout real,
-// así que mostramos un aviso de "próximo paso" en vez de cobrar nada.
-function showCheckoutPlaceholder() {
-  const root = document.getElementById('cartRoot');
-  root.innerHTML = `
-    <div class="checkout-placeholder">
-      <span class="eyebrow">Paso siguiente</span>
-      <h2>Estamos trabajando en el proceso de pago</h2>
-      <p>Ya aceptaste los términos y condiciones. El pago y el envío todavía no están conectados — eso llega en la siguiente etapa del proyecto. ¡Gracias por tu paciencia!</p>
-      <a href="catalogo.html" class="btn btn-primary">Seguir comprando</a>
-    </div>
-  `;
-}
 
 renderCart();

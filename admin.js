@@ -77,8 +77,32 @@ if (checkAdminAccess()) {
     { id: '#DHL-1038', cliente: 'Paola Sánchez', productos: ['Vestido Midi Fluido'], total: 790, estado: 'Cancelado' }
   ];
 
+  // Pedidos hechos de verdad desde el checkout (los de ejemplo del historial no se cuentan).
+  function getRealOrders() {
+    const labels = { processing: 'En preparación', shipped: 'Enviado', delivered: 'Entregado', cancelled: 'Cancelado' };
+    const out = [];
+    for (let i = 0; i < localStorage.length; i++) {
+      const key = localStorage.key(i);
+      if (!key || key.indexOf('dahlia_orders_') !== 0) continue;
+      try {
+        (JSON.parse(localStorage.getItem(key)) || []).forEach(o => {
+          if (o.sample) return;
+          out.push({
+            id: '#' + o.id,
+            cliente: (o.customer && o.customer.name) || o.email,
+            productos: o.items.map(it => it.name),
+            total: o.total,
+            estado: labels[o.status] || 'En preparación',
+            date: o.date
+          });
+        });
+      } catch (e) { /* se ignora */ }
+    }
+    return out.sort((a, b) => new Date(b.date) - new Date(a.date));
+  }
+
   function renderOrders() {
-    document.getElementById('adminOrdersBody').innerHTML = FAKE_ORDERS.map(o => `
+    document.getElementById('adminOrdersBody').innerHTML = getRealOrders().concat(FAKE_ORDERS).map(o => `
       <tr>
         <td>${o.id}</td>
         <td>${o.cliente}</td>
